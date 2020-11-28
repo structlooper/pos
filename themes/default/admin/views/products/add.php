@@ -263,11 +263,15 @@ if (!empty($variants)) {
 
                         <div id="attrs"></div>
 
+                        <!--<div class="form-group">-->
+                        <!--    <input type="checkbox" class="checkbox" name="attributes"-->
+                        <!--           id="attributes" <?= $this->input->post('attributes') || $product_options ? 'checked="checked"' : ''; ?>><label-->
+                        <!--        for="attributes"-->
+                        <!--        class="padding05"><?= lang('product_has_attributes'); ?></label> <?= lang('eg_sizes_colors'); ?>-->
+                        <!--</div>-->
                         <div class="form-group">
-                            <input type="checkbox" class="checkbox" name="attributes"
-                                   id="attributes" <?= $this->input->post('attributes') || $product_options ? 'checked="checked"' : ''; ?>><label
-                                for="attributes"
-                                class="padding05"><?= lang('product_has_attributes'); ?></label> <?= lang('eg_sizes_colors'); ?>
+                            <label for="productDetails">Products</label>
+                            <select class="js-example-basic-single" name="base_product_id" id="productDetails" style="width: 100%"></select>
                         </div>
                         <div class="well well-sm" id="attr-con"
                              style="<?= $this->input->post('attributes') || $product_options ? '' : 'display:none;'; ?>">
@@ -1003,6 +1007,49 @@ if (!empty($variants)) {
             }
         });
     });
+</script>
+
+<script>
+    $( document ).ready(function() {
+
+        productDet();
+
+    });
+</script>
+
+<!--for getting Product details-->
+<script>
+    function productDet() {
+        //url: "<?= admin_url('products/getSubCategories') ?>/"
+        //var baseUrl= "<?php echo base_url();?>";
+        $.ajax({
+            method:"POST",
+            url:"<?= admin_url('products/getAllProducts') ?>",
+            data: {  },
+            xhrFields: {
+                withCredentials: true
+            },
+            async: false,
+            crossDomain: true,
+            dataType: "json",
+
+            success: function(data) {
+                //console.log(data);
+                if(data.error===false){
+                    $('#productDetails').append(data.options);
+                    $('.js-example-basic-single').select2({
+                        placeholder: "Select One",
+                        allowClear: true,
+                        minimumInputLength: 2,
+                    });
+                }
+            },
+            error: function(fail)
+            {
+                console.log("fail");
+            },
+        });
+    }
 </script>
 
 <div class="modal" id="aModal" tabindex="-1" role="dialog" aria-labelledby="aModalLabel" aria-hidden="true">

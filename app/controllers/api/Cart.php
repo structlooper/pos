@@ -23,11 +23,10 @@ class Cart extends REST_Controller
 	   //$user_id = '3';
 	   if(!is_null($user_id)){
 	    $product_id = $_POST['product_id'];
-	    $variant_id = $_POST['variant_id'];
 	    $qty = $_POST['qty'];
 	    if($qty > 0 and $qty != '' and is_numeric($qty)){
-	        if(is_null($variant_id) or $variant_id == '' or $variant_id == 'null'){
-	           // product variant not selected
+	        
+	           
 	           $check_product_added = $this->Cart_model->check_product_cart($user_id,$product_id);
 	           if($check_product_added['status'] == 1){
 	               $this->response(['status'=> true,'msg' => 'Product Count increased','data' => []]);
@@ -38,20 +37,7 @@ class Cart extends REST_Controller
 	               $this->response(['status' => true,'msg' => 'product added in cart','data' => []]);
 	           }
 	           //print_r($check_product_added['status']);exit;
-	        }else{
-	           // product variant is selected
-	           
-	           $check_product_added = $this->Cart_model->check_product_variant_cart($user_id,$product_id,$variant_id);
-	           
-	           if($check_product_added['status'] == 1){
-	               
-	               $this->response(['status'=> true,'msg' => 'Product variant Count increased','data' => []]);
-	           }else{
-	           
-	               $result = $this->Cart_model->add_product_variant_cart($user_id,$product_id,$variant_id,$qty);
-	               $this->response(['status' => true,'msg' => 'product Variant added in cart','data' => []]);
-	           }
-	        }
+	       
 	    }else{
 	        $this->response(['status' => false,'msg' => 'please enter a valid quantity','data' => []]);
 	        

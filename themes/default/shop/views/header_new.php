@@ -1,297 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?><!DOCTYPE html>
+<html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title><?= $page_title; ?></title>
-
-	
-	<link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="<?= $assets; ?>asset/css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="<?= $assets; ?>asset/css/slick.css" />
-	<link type="text/css" rel="stylesheet" href="<?= $assets; ?>asset/css/slick-theme.css" />
-	<link type="text/css" rel="stylesheet" href="<?= $assets; ?>asset/css/nouislider.min.css" />
-	<link rel="stylesheet" href="<?= $assets; ?>asset/css/font-awesome.min.css">
-	<link type="text/css" rel="stylesheet" href="<?= $assets; ?>asset/css/style.css" />
-
-	 <meta property="og:url" content="<?= isset($product) && !empty($product) ? site_url('product/' . $product->slug) : site_url(); ?>" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">if (parent.frames.length !== 0) { top.location = '<?= site_url(); ?>'; }</script>
+    <title><?= 'The Best One - '.$page_title; ?></title>
+    <meta name="description" content="<?= $page_desc; ?>">
+    <meta property="og:url" content="<?= isset($product) && !empty($product) ? site_url('product/' . $product->slug) : site_url(); ?>" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?= $page_title; ?>" />
     <meta property="og:description" content="<?= $page_desc; ?>" />
     <meta property="og:image" content="<?= isset($product) && !empty($product) ? base_url('assets/uploads/' . $product->image) : base_url('assets/uploads/logos/' . $shop_settings->logo); ?>" />
-
+    <link rel="icon" type="image/png" sizes="850x466" href="<?= $assets; ?>images/thebestone_logo.png?h=41d1ef837b351d735cb64b21d985f737">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo:400,500,600,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700,800">
+    <link rel="stylesheet" href="<?= $assets; ?>css/Flaticon.css?">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.9/typicons.min.css">
+    <link rel="stylesheet" href="<?= $assets; ?>fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="<?= $assets; ?>css/custom.css">
+    <link rel="stylesheet" href="<?= $assets; ?>css/nav-light.css">
+    <link rel="stylesheet" href="<?= $assets; ?>css/navigation.css">
+    <link rel="stylesheet" href="<?= $assets; ?>css/responsive.css">
+    <link rel="stylesheet" href="<?= $assets; ?>css/slick-theme.css">
+    <link rel="stylesheet" href="<?= $assets; ?>css/slick.css">
+    <link rel="shortcut icon" href="<?= $assets; ?>images/icon.png">
 </head>
-
 <body>
-		<header>
-		<div id="header">
-			<div class="container">
-				<div class="pull-left">
-				
-					<div class="header-logo">
-						<a class="logo" href="index.php">
-							<img src="<?= $assets; ?>asset/images/logo.png" alt="">
-						</a>
-					</div>
-					
-					
-					
-					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Enter your keyword">
-							
-							<button class="search-btn"><i class="fa fa-search"></i></button>
-						</form>
-					</div>
-				
-					<!-- /Search -->
-				</div>
-				<div class="pull-right">
-					<ul class="header-btns">
-						<!-- Account -->
-						<li class="header-account dropdown default-dropdown">
-							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
-								<div class="header-btns-icon">
-									<i class="fa fa-user-o"></i>
-								</div>
-								<strong class="text-white">My Account <i class="fa fa-caret-down"></i></strong>
-							</div>
-							<a href="#" style="color: #fff;">Login</a> / <a href="#" style="color: #fff;">Signup</a>
-							<ul class="custom-menu">
-								<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="#"><i class="fa fa-unlock-alt"></i> Logout</a></li>
-								
-							</ul>
-						</li>
+<!-- Start: Navigation -->
+    <nav class="navbar navbar-expand-md sticky-top navigation">
+        <div class="container-fluid"><a class="navbar-brand" href="<?= base_url(); ?>"><img alt="<?= $shop_settings->shop_name; ?>" src="<?= $assets; ?>images/thebestone_logo.png"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#nav-top"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="nav-top">
+            
+                <?= shop_form_open('products', 'id="product-search-form"'); ?>
+                    <div class="form-inline">
+                        <div class="nav-form">
+                            <input class="form-control" type="text" placeholder="Search for products">
+                            <button class="btn search-btn" type="submit"><i class="material-icons">search</i></button>
+                        </div>
+                    </div>
+                <?= form_close();?>
+            
+                
+                <ul class="nav navbar-nav ml-auto">
+                <?php
+                                if ($loggedIn) {
+                                    
+                                    if (!$shop_settings->hide_price) {?>
+                                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link px-0" data-toggle="dropdown" aria-expanded="false" href="#"><?= $loggedInUser->first_name?><i class="icon-arrow-down ml-2"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <div class="logged-user">
+                                                <img> <p class="mb-0"><?= $loggedInUser->email?></p> </div>
+                                            <a class="dropdown-item text-left" href="<?= shop_url('orders'); ?>"><i class="icon-notebook mr-2"></i>My Orders<p class="mb-0">View past orders / Report an issue</p></a>
+                                            <a class="dropdown-item text-left" href="<?= shop_url('address');?>"><i class="icon-location-pin mr-2"></i>My Addresses</a>
+                                            <a class="dropdown-item text-left" href="<?= shop_url('faq');?>"><i class="icon-question mr-2"></i>FAQs</a>
+                                            <a class="dropdown-item text-left" href="<?= shop_url('offers');?>"><i class="icon-magic-wand mr-2"></i>Offers</a>
+                                            <a class="dropdown-item text-left" href="<?= site_url('logout');?>"><i class="icon-user mr-2"></i><?= lang('logout'); ?></a>
+                                            </div>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items"></span><i class="typcn typcn-shopping-cart mr-2"></i><?= lang('my_cart');?></a></li>
+                                    <?php
+                                } } else {
+                                    ?>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link p-0" data-toggle="dropdown" aria-expanded="false" href="#">My Account<span><?= lang('login'); ?><i class="icon-arrow-down ml-2"></i></span></a>
+                        <div class="dropdown-menu dropdown-menu-right"><button class="btn btn-account-login" type="button"><?= lang('login'); ?></button><a class="dropdown-item text-left" href="#"><i class="icon-question mr-2"></i>FAQs</a><a class="dropdown-item text-left" href="#"><i class="icon-magic-wand mr-2"></i>Offers</a></div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><i class="typcn typcn-shopping-cart mr-2"></i><?= lang('my_cart');?></a></li>
+                                <?php } ?>
+                </ul>
+        </div>
+        </div>
+    </nav>
 
-						
-						<li class="header-cart dropdown default-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-								<div class="header-btns-icon">
-									<i class="fa fa-shopping-cart"></i>
-									<span class="qty">0</span>
-								</div>
-								<strong class="text-uppercase">My Cart:</strong>
-								<br>
-								<span style="color: orange;">Rs 00.00</span>
-							</a>
-							<div class="custom-menu">
-								<div id="shopping-cart">
-									<div class="shopping-cart-list">
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="images/p1.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">Rs 75.00 <span class="qty"></span></h3>
-												<h2 class="product-name"><a href="#">product 1</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="images/p2.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">Rs 60.00 <span class="qty"></span></h3>
-												<h2 class="product-name"><a href="#">product 2</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="images/p3.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">Rs 90.00 <span class="qty"></span></h3>
-												<h2 class="product-name"><a href="#">product 3</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-									</div>
-									<!--total-->
-										
-									<div class="shopping-cart-btns">
-										<button class="main-btn">View Cart</button>
-										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-					<li class="nav-toggle">
-							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
-		</div>
-		
-	</header>
-	<div id="navigation">
-		
-		<div class="container">
-			<div id="responsive-nav">
-				
-				<div class="category-nav show-on-click">
-					<span class="category-header">All Product<i class="fa fa-bars"></i></span>
-					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Product<i class="fa fa-angle-right" style="margin-left: 10px; float: right;"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-										
-									</div>
-									
-								</div>
-								
-							</div>
-						</li>
-						<li><a href="#">Product</a></li>
-						<li class="dropdown side-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Product<i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-										<hr>
-										
-									</div>
-									
-									
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Product</a></li>
-						<li><a href="#">Product</a></li>
-						<li><a href="#">Product</a></li>
-						<li><a href="#">Product</a></li>
-						<li><a href="#">Product</a></li>
-						<li><a href="#">Product</a></li>
-
-						</ul>
-				</div>
-				<!-- /category nav -->
-
-				<!-- menu nav -->
-				<div class="menu-nav">
-					<span class="menu-header">Menu<i class="fa fa-bars"></i></span>
-					<ul class="menu-list">
-						<li><a href="index.php">Home</a></li>
-						<li><a href="product.phpd">Product</a></li>
-						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Category <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-									</div>
-								</div>
-								
-							</div>
-						</li>
-						<li class="dropdown mega-dropdown full-width"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Brands<i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-3">
-										
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										
-										
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-											<li><a href="#">item</a></li>
-										</ul>
-									</div>
-									
-								</div>
-							</div>
-						</li>
-						<li><a href="veg.php">Shopping</a></li>
-						<li><a href="#">Checkout</a></li>
-					</ul>
-				</div>
-				<!-- menu nav -->
-			</div>
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /NAVIGATION -->
+    <div class="modal fade modal-login" role="dialog" tabindex="-1" id="modal-login">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-head mb-0">Phone Number Verification</h5>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-center my-3 font-weight-bold">Enter your phone number to<br>Login/Sign up<br></p>
+                    <form class="login-form">
+                        <div class="login-input"><input class="form-control input-number" type="tel" maxlength="10"></div>
+                        <button class="btn btn-primary btn-block my-3 btn-login" id ="btn-login" type="button" disabled>Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade cart-empty-modal" role="dialog" tabindex="-1" id="cart-empty-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content cart-modal-content">
+                <div class="modal-header cart-head">
+                    <h5 class="modal-title"><?= lang('my_cart');?></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body empty-cart">
+                    <div class="empty-cart"><img src="https://grofers.com/images/cart/empty-cart_2x-da3645a.png" alt="empty" width="160px">
+                        <h5 class="mt-5 mb-0 font-weight-bold"><?= lang('empty_cart');?><br></h5>
+                        <p class="mb-0 mt-1">Your favourite items are just a click away<br></p>
+                    </div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-block btn-cart" type="button">Start Shopping</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade cart-modal" role="dialog" tabindex="-1" id="cart-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content cart-modal-content">
+                <div class="modal-header cart-head">
+                    <h5 class="modal-title">My Cart</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body p-0">
+                    <div class="cart-store-details">
+                        <div>
+                            <div class="float-left"><span>Sub Total</span></div>
+                            <div class="float-right"><span>₹149<br></span></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <div class="float-left"><span>Delivery Charges<i class="la la-question-circle ml-2" data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom" title="Shop ₹450 more to get free delivery"></i></span></div>
+                            <div class="float-right delivery-rate"><span>+ ₹39<br></span></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="cart-items">
+                        <div class="cart-items-product cart-card">
+                            <div class="cart-card-img"><img class="img-fluid" src="https://cdn.grofers.com/app/images/products/full_screen/pro_389672.jpg"></div>
+                            <div class="cart-product-details"><span class="cart-product-name">Mother's Choice Unpolished Green Moong Dal (Chilka)</span><span class="cart-product-unit">1 kg</span>
+                                <div class="cart-product-items">
+                                    <div class="add-cart-model"><button class="btn add-cart-btn btn-desc" type="button">-</button><span class="mx-3">1</span><button class="btn add-cart-btn btn-inc" type="button">+</button></div><span class="new-price">₹149<br></span><span class="total-value">₹149<br></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="cart-promo-info">Promo code can be applied on payment page<br></p><a class="btn btn-block btn-cart btn-checkout" role="button" href="../checkout.html"><span>Proceed to Checkout</span><span class="total">₹149<i class="la la-angle-right"></i><br></span></a></div>
+            </div>
+        </div>
+    </div>

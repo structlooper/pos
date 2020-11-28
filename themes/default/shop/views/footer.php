@@ -13,185 +13,200 @@
 </div>
 <?php
 } ?>
-
-<section class="footer">
-    <div class="container padding-bottom-md">
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <div class="title-footer"><span><?= lang('about_us'); ?></span></div>
-                <p>
-                    <?= $shop_settings->description; ?> <a href="<?= site_url('page/' . $shop_settings->about_link); ?>"><?= lang('read_more'); ?></a>
-                </p>
-                <p>
-                    <i class="fa fa-phone"></i> <span class="margin-left-md"><?= $shop_settings->phone; ?></span>
-                    <i class="fa fa-envelope margin-left-xl"></i> <span class="margin-left-md"><?= $shop_settings->email; ?></span>
-                </p>
-                <ul class="list-inline">
-                    <li><a href="<?= site_url('page/' . $shop_settings->privacy_link); ?>"><?= lang('privacy_policy'); ?></a></li>
-                    <li><a href="<?= site_url('page/' . $shop_settings->terms_link); ?>"><?= lang('terms_conditions'); ?></a></li>
-                    <li><a href="<?= site_url('page/' . $shop_settings->contact_link); ?>"><?= lang('contact_us'); ?></a></li>
-                </ul>
-            </div>
-
-            <div class="clearfix visible-sm-block"></div>
-            <div class="col-md-3 col-sm-6">
-                <div class="title-footer"><span><?= lang('payment_methods'); ?></span></div>
-                <p><?= $shop_settings->payment_text; ?></p>
-                <img class="img-responsive" src="<?= $assets; ?>/images/payment-methods.png" alt="Payment Methods">
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="title-footer"><span><?= lang('follow_us'); ?></span></div>
-                <p><?= $shop_settings->follow_text; ?></p>
-                <ul class="follow-us">
-                    <?php if (!empty($shop_settings->facebook)) {
-        ?>
-                    <li><a target="_blank" href="<?= $shop_settings->facebook; ?>"><i class="fa fa-facebook"></i></a></li>
-                    <?php
-    } if (!empty($shop_settings->twitter)) {
-        ?>
-                    <li><a target="_blank" href="<?= $shop_settings->twitter; ?>"><i class="fa fa-twitter"></i></a></li>
-                    <?php
-    } if (!empty($shop_settings->google_plus)) {
-        ?>
-                    <li><a target="_blank" href="<?= $shop_settings->google_plus; ?>"><i class="fa fa-google-plus"></i></a></li>
-                    <?php
-    } if (!empty($shop_settings->instagram)) {
-        ?>
-                    <li><a target="_blank" href="<?= $shop_settings->instagram; ?>"><i class="fa fa-instagram"></i></a></li>
-                    <?php
-    } ?>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-    <div class="footer-bottom">
+<!-- Start: Footer -->
+<div class="footer">
         <div class="container">
-            <div class="copyright line-height-lg">
-                &copy; <?= date('Y'); ?> <?= $shop_settings->shop_name; ?>. <?= lang('all_rights_reserved'); ?>
+            <div class="quality-marks">
+                <div class="row">
+                    <div class="col">
+                        <div class="quality-icon best-prices"></div>
+                        <div class="d-table-cell quality-description">
+                            <div class="quality-marks-name"><span>Best Prices &amp; Offers<br></span></div>
+                            <div>
+                                <p class="mb-0">Cheaper prices than your local supermarket, great&nbsp;<a href="https://grofers.com/grand-orange-bag-days">c</a>ashback offers&nbsp;to top it off.<br></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="quality-icon genuine-products"></div>
+                        <div class="d-table-cell quality-description">
+                            <div class="quality-marks-name"><span>Wide Assortment<br></span></div>
+                            <div>
+                                <p class="mb-0">Choose from 5000+ products across food, personal care, household &amp; other categories.<br></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="quality-icon easy-returns"></div>
+                        <div class="d-table-cell quality-description">
+                            <div class="quality-marks-name"><span>Easy Returns<br></span></div>
+                            <div>
+                                <p class="mb-0">Not satisfied with a product? Return it at the doorstep &amp; get a refund within hours.<br></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <ul class="list-inline pull-right line-height-md">
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-blue" data-color="blue"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-blue-grey" data-color="blue-grey"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-brown" data-color="brown"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-cyan" data-color="cyan"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-green" data-color="green"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-grey" data-color="grey"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-purple" data-color="purple"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-orange" data-color="orange"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-pink" data-color="pink"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-red" data-color="red"><i class="fa fa-square"></i></a>
-                </li>
-                <li class="padding-x-no text-size-lg">
-                    <a href="#" class="theme-color text-teal" data-color="teal"><i class="fa fa-square"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
+            <div class="mt-5 pt-3 border-top">
+                <div class="row">
+                    <div class="col">
+                        <div class="cat-links">
+                            <h6 class="font-weight-bold">Categories</h6>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Grocery &amp; Staples</a></li>
+                                        <li><a href="#">Rice</a></li>
+                                        <li><a href="#">Moong Dal</a></li>
+                                        <li><a href="#">Detergent Powders</a></li>
+                                        <li><a href="#">Noodles &amp; Pasta</a></li>
+                                        <li><a href="#">Vegetables</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Tea</a></li>
+                                        <li><a href="#">Salt &amp; Sugar</a></li>
+                                        <li><a href="#">Ghee</a></li>
+                                        <li><a href="#">Soap</a></li>
+                                        <li><a href="#">Cooking Oil</a></li>
+                                        <li><a href="#">Baby Diapers</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Atta</a></li>
+                                        <li><a href="#">Toor Dal</a></li>
+                                        <li><a href="#">Almonds</a></li>
+                                        <li><a href="#">Biscuits &amp; Cookies</a></li>
+                                        <li><a href="#">Fruits</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="cat-links border-right-0">
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="font-weight-bold">Useful Links</h6>
+                                    <ul class="list-unstyled">
+                                        <li><a href="<?= site_url('page/' . $shop_settings->about_link); ?>">About Us</a></li>
+                                        <li><a href="<?= site_url('page/' . $shop_settings->offer_link); ?>">Offers</a></li>
+                                        <li><a href="<?= shop_url('privacy-policy'); ?>">Privacy Policy</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="<?= site_url('page/' . $shop_settings->tnc_link); ?>">Terms &amp; Conditions</a></li>
+                                        <li><a href="#">Careers</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <h6 class="font-weight-bold">Download App</h6>
+                                        <div class="download-links"><a href="#"><img src="https://grofers.com/images/home/google-play_1x-6d4f8e0.png"></a><a href="#"><img src="https://grofers.com/images/home/app-store_1x-8362160.png"></a></div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <h6 class="font-weight-bold">Social Connect</h6>
+                                        <ul class="list-inline social-list mb-0">
+                                        <?php if (!empty($shop_settings->facebook)) { ?>
+                                            <li class="list-inline-item"><a target="_blank" href="<?= $shop_settings->facebook; ?>"><i class="fab fa-facebook"></i></a>
+                                        <?php } if (!empty($shop_settings->twitter)) { ?>
+                                            <a target="_blank" href="<?= $shop_settings->twitter; ?>"><i class="fab fa-twitter"></i></a>
+                                        <?php } if (!empty($shop_settings->linkedin)) { ?>
+                                            <a target="_blank" href="<?= $shop_settings->linkedin; ?>"><i class="fab fa-linkedin-in"></i></a>
+                                        <?php } if (!empty($shop_settings->instagram)) { ?>
+                                            <a target="_blank" href="<?= $shop_settings->instagram; ?>"><i class="fab fa-instagram"></i></a></li>
+                                        <?php } ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="brands-list border-top">
+                        <h6 class="font-weight-bold">Brands</h6>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="#">Amul</a></li>
+                            <li class="list-inline-item"><a href="#">Axe</a></li>
+                            <li class="list-inline-item"><a href="#">Bambino</a></li>
+                            <li class="list-inline-item"><a href="#">Best Value</a></li>
+                            <li class="list-inline-item"><a href="#">Bingo</a></li>
+                            <li class="list-inline-item"><a href="#">Bisleri</a></li>
+                            <li class="list-inline-item"><a href="#">Boost</a></li>
+                            <li class="list-inline-item"><a href="#">Bournvita</a></li>
+                            <li class="list-inline-item"><a href="#">Britannia</a></li>
+                            <li class="list-inline-item"><a href="#">Cadbury</a></li>
+                            <li class="list-inline-item"><a href="#">Cheetos</a></li>
+                            <li class="list-inline-item"><a href="#">Cinthol</a></li>
+                            <li class="list-inline-item"><a href="#">Closeup</a></li>
+                            <li class="list-inline-item"><a href="#">Coca-Cola</a></li>
+                            <li class="list-inline-item"><a href="#">Dabour</a></li>
+                            <li class="list-inline-item"><a href="#">Danone</a></li>
+                            <li class="list-inline-item"><a href="#">Del Monte</a></li>
+                            <li class="list-inline-item"><a href="#">Dettol</a></li>
+                            <li class="list-inline-item"><a href="#">Durex</a></li>
+                            <li class="list-inline-item"><a href="#">English Oven</a></li>
+                            <li class="list-inline-item"><a href="#">Everest</a></li>
+                            <li class="list-inline-item"><a href="#">Garnier</a></li>
+                            <li class="list-inline-item"><a href="#">Gillette</a></li>
+                            <li class="list-inline-item"><a href="#">Glucon-D</a></li>
+                            <li class="list-inline-item"><a href="#">Gowardhan</a></li>
+                            <li class="list-inline-item"><a href="#">Hajmola</a></li>
+                            <li class="list-inline-item"><a href="#">Haldiram's</a></li>
+                            <li class="list-inline-item"><a href="#">Head &amp; Shoulders</a></li>
+                            <li class="list-inline-item"><a href="#">Himalaya</a></li>
+                            <li class="list-inline-item"><a href="#">L'Oreal</a></li>
+                            <li class="list-inline-item"><a href="#">Lay's</a></li>
+                            <li class="list-inline-item"><a href="#">Maggi</a></li>
+                            <li class="list-inline-item"><a href="#">Minute Maid</a></li>
+                            <li class="list-inline-item"><a href="#">Mother Diary</a></li>
+                            <li class="list-inline-item"><a href="#">Nestle</a></li>
+                            <li class="list-inline-item"><a href="#">Nutella</a></li>
+                            <li class="list-inline-item"><a href="#">Oral-B</a></li>
+                            <li class="list-inline-item"><a href="#">Oreo</a></li>
+                            <li class="list-inline-item"><a href="#">Pantene</a></li>
+                            <li class="list-inline-item"><a href="#">Paper Boat</a></li>
+                            <li class="list-inline-item"><a href="#">Parle</a></li>
+                            <li class="list-inline-item"><a href="#">Patanjali</a></li>
+                            <li class="list-inline-item"><a href="#">Pepsi</a></li>
+                            <li class="list-inline-item"><a href="#">Princeware</a></li>
+                            <li class="list-inline-item"><a href="#">Red Bull</a></li>
+                            <li class="list-inline-item"><a href="#">Saffola</a></li>
+                            <li class="list-inline-item"><a href="#">Smith &amp; Jones</a></li>
+                            <li class="list-inline-item"><a href="#">Stayfree</a></li>
+                            <li class="list-inline-item"><a href="#">Sunsilk</a></li>
+                            <li class="list-inline-item"><a href="#">Tata Tea</a></li>
+                            <li class="list-inline-item"><a href="#">Unibic</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="payment-methods">
+                        <div class="row">
+                            <div class="col">
+                                <h6 class="font-weight-bold">Payment Options</h6><img src="https://grofers.com/images/payment/mobikwik-6d9eed3.png"><img src="https://grofers.com/images/payment/paytm-1cc911c.png"><img src="https://grofers.com/images/payment/visa-42f212a.png">
+                                <img
+                                    src="https://grofers.com/images/payment/mastercard-fafd4ad.png"><img src="https://grofers.com/images/payment/maestro-be32af5.png"><img src="https://grofers.com/images/payment/rupay-77f4f26.png"><img src="https://grofers.com/images/payment/bhim-upi-3c1ef19.png"><span>Net Banking</span><span>Cash On Delivery</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">© The Best One, Copyrights 2020. All Rights Reserved | Made with ❤ by Infirment Technologies Pvt. Ltd</p>
         </div>
     </div>
-</section>
+    <!-- End: Footer -->
 
-<a href="#" class="back-to-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false">
-    <i class="fa fa-angle-double-up"></i>
-</a>
-</section>
-<?php if (!get_cookie('shop_use_cookie') && get_cookie('shop_use_cookie') != 'accepted' && !empty($shop_settings->cookie_message)) {
-        ?>
-<div class="cookie-warning">
-    <div class="bounceInLeft alert alert-info">
-        <!-- <a href="<?= site_url('main/cookie/accepted'); ?>" class="close">&times;</a> -->
-        <a href="<?= site_url('main/cookie/accepted'); ?>" class="btn btn-sm btn-primary" style="float: right;"><?= lang('i_accept'); ?></a>
-        <p>
-            <?= $shop_settings->cookie_message; ?>
-            <?php if (!empty($shop_settings->cookie_link)) {
-            ?>
-            <a href="<?= site_url('page/' . $shop_settings->cookie_link); ?>"><?= lang('read_more'); ?></a>
-            <?php
-        } ?>
-        </p>
-    </div>
-</div>
-<?php
-    } ?>
-<script src="<?= $assets; ?>js/libs.min.js"></script>
-<script src="<?= $assets; ?>js/scripts.min.js"></script>
-<script type="text/javascript">
-    var m = '<?= $m; ?>', v = '<?= $v; ?>', products = {}, filters = <?= isset($filters) && !empty($filters) ? json_encode($filters) : '{}'; ?>, shop_color, shop_grid, sorting;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="<?= $assets; ?>js/bs-init.js"></script>
+<script src="<?= $assets; ?>js/slick.min.js"></script>
+<script src="<?= $assets; ?>js/custom.js"></script>
 
-    var cart = <?= isset($cart) && !empty($cart) ? json_encode($cart) : '{}' ?>;
-    var site = {base_url: '<?= base_url(); ?>', site_url: '<?= site_url('/'); ?>', shop_url: '<?= shop_url(); ?>', csrf_token: '<?= $this->security->get_csrf_token_name() ?>', csrf_token_value: '<?= $this->security->get_csrf_hash() ?>', settings: {display_symbol: '<?= $Settings->display_symbol; ?>', symbol: '<?= $Settings->symbol; ?>', decimals: <?= $Settings->decimals; ?>, thousands_sep: '<?= $Settings->thousands_sep; ?>', decimals_sep: '<?= $Settings->decimals_sep; ?>', order_tax_rate: false, products_page: <?= $shop_settings->products_page ? 1 : 0; ?>}, shop_settings: {private: <?= $shop_settings->private ? 1 : 0; ?>, hide_price: <?= $shop_settings->hide_price ? 1 : 0; ?>}}
-
-    var lang = {};
-    lang.page_info = '<?= lang('page_info'); ?>';
-    lang.cart_empty = '<?= lang('empty_cart'); ?>';
-    lang.item = '<?= lang('item'); ?>';
-    lang.items = '<?= lang('items'); ?>';
-    lang.unique = '<?= lang('unique'); ?>';
-    lang.total_items = '<?= lang('total_items'); ?>';
-    lang.total_unique_items = '<?= lang('total_unique_items'); ?>';
-    lang.tax = '<?= lang('tax'); ?>';
-    lang.shipping = '<?= lang('shipping'); ?>';
-    lang.total_w_o_tax = '<?= lang('total_w_o_tax'); ?>';
-    lang.product_tax = '<?= lang('product_tax'); ?>';
-    lang.order_tax = '<?= lang('order_tax'); ?>';
-    lang.total = '<?= lang('total'); ?>';
-    lang.grand_total = '<?= lang('grand_total'); ?>';
-    lang.reset_pw = '<?= lang('forgot_password?'); ?>';
-    lang.type_email = '<?= lang('type_email_to_reset'); ?>';
-    lang.submit = '<?= lang('submit'); ?>';
-    lang.error = '<?= lang('error'); ?>';
-    lang.add_address = '<?= lang('add_address'); ?>';
-    lang.update_address = '<?= lang('update_address'); ?>';
-    lang.fill_form = '<?= lang('fill_form'); ?>';
-    lang.already_have_max_addresses = '<?= lang('already_have_max_addresses'); ?>';
-    lang.send_email_title = '<?= lang('send_email_title'); ?>';
-    lang.message_sent = '<?= lang('message_sent'); ?>';
-    lang.add_to_cart = '<?= lang('add_to_cart'); ?>';
-    lang.out_of_stock = '<?= lang('out_of_stock'); ?>';
-    lang.x_product = '<?= lang('x_product'); ?>';
-    lang.r_u_sure = '<?= lang('r_u_sure'); ?>';
-    lang.x_reverted_back = "<?= lang('x_reverted_back'); ?>";
-    lang.delete = '<?= lang('delete'); ?>';
-    lang.line_1 = '<?= lang('line1'); ?>';
-    lang.line_2 = '<?= lang('line2'); ?>';
-    lang.city = '<?= lang('city'); ?>';
-    lang.state = '<?= lang('state'); ?>';
-    lang.postal_code = '<?= lang('postal_code'); ?>';
-    lang.country = '<?= lang('country'); ?>';
-    lang.phone = '<?= lang('phone'); ?>';
-    lang.is_required = '<?= lang('is_required'); ?>';
-    lang.okay = '<?= lang('okay'); ?>';
-    lang.cancel = '<?= lang('cancel'); ?>';
-    lang.email_is_invalid = '<?= lang('email_is_invalid'); ?>';
-    lang.name = '<?= lang('name'); ?>';
-    lang.full_name = '<?= lang('full_name'); ?>';
-    lang.email = '<?= lang('email'); ?>';
-    lang.subject = '<?= lang('subject'); ?>';
-    lang.message = '<?= lang('message'); ?>';
-    lang.required_invalid = '<?= lang('required_invalid'); ?>';
-
-    update_mini_cart(cart);
-</script>
 
 <?php if ($m == 'shop' && $v == 'product') {
         ?>
@@ -237,11 +252,5 @@ $(document).ready(function() {
 <?php
     } ?>
 </script>
-<script type="text/javascript" src="<?= base_url('assets/custom/shop.js') ?>"></script>
-<!-- <script>
-    if(!get('shop_grid')) {
-        store('shop_grid', '.three-col');
-    }
-</script> -->
 </body>
 </html>

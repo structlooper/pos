@@ -84,6 +84,7 @@ class Products extends MY_Controller
                 'promo_price'       => $this->sma->formatDecimal($this->input->post('promo_price')),
                 'start_date'        => $this->input->post('start_date') ? $this->sma->fsd($this->input->post('start_date')) : null,
                 'end_date'          => $this->input->post('end_date') ? $this->sma->fsd($this->input->post('end_date')) : null,
+                'base_product_id' => $this->input->post('base_product_id'),
                 'supplier1_part_no' => $this->input->post('supplier_part_no'),
                 'supplier2_part_no' => $this->input->post('supplier_2_part_no'),
                 'supplier3_part_no' => $this->input->post('supplier_3_part_no'),
@@ -97,6 +98,7 @@ class Products extends MY_Controller
                 'hide'              => $this->input->post('hide') ? $this->input->post('hide') : 0,
                 'second_name'       => $this->input->post('second_name'),
             ];
+            // print_r($data);exit;
             $warehouse_qty      = null;
             $product_attributes = null;
             $this->load->library('upload');
@@ -2437,5 +2439,24 @@ class Products extends MY_Controller
         $this->data['warehouse']         = $this->site->getWarehouseByID($stock_count->warehouse_id);
         $this->data['adjustment']        = $this->products_model->getAdjustmentByCountID($id);
         $this->load->view($this->theme . 'products/view_count', $this->data);
+    }
+
+    function getAllProducts(){
+
+        $this->sma->checkPermissions();
+        $data=$this->products_model->getAllProductsDet();
+
+        $options='<option></option>';
+        if(sizeof($data)){
+            for($a=0;$a<sizeof($data);$a++){
+                $options=$options.'<option value="'.$data[$a]['id'].'">'.$data[$a]['name'].'</option>';
+            }
+        }
+
+        $output=array(
+            'error'=>false,
+            'options'=>$options,
+        );
+        echo json_encode($output);
     }
 }

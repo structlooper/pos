@@ -72,6 +72,16 @@ class Product extends REST_Controller
         $product_images = $this->Product_model->get_product_images($product_id);
         $this->response(['status' => true,'msg' => 'Product Images','data' => $product_images['images']]);
     }
-  
+    
+    public function ajax_product_get(){
+        $result = $this->Product_model->get_product_details();
+        if(sizeof($result) > 0){
+            $this->response(['status' => true,'msg' => 'products','data' => $result]);
+        }else{
+            $this->response(['status' => false, 'msg' => 'products not found','data' => []]);
+        }
+        // print_r(sizeof($result));exit;
+        
+    }
   
 }

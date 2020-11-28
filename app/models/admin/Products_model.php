@@ -1114,4 +1114,23 @@ class Products_model extends CI_Model
         }
         return false;
     }
+
+    function getAllProductsDet(){
+
+        $this->db->select('*');
+        $this->db->from('products');
+        $products=$this->db->get()->result_array();
+
+        return $products;
+
+
+        /*$q = $this->db->get('products');
+        if ($q->num_rows() > 0) {
+            foreach (($q->result()) as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;*/
+    }
 }

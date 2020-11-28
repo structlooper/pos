@@ -362,6 +362,29 @@ $(document).ready(function () {
             },
         },
     });
+    
+    $('#product').select2({
+        minimumInputLength: 1,
+        ajax: {
+            url: 'https://tbosmartmart.com/pos/api/product/ajax_product',
+            dataType: 'json',
+            quietMillis: 15,
+            data: function (term, page) {
+                return {
+                    term: term,
+                    limit: 10,
+                };
+            },
+            results: function (data, page) {
+                if (data.results != null) {
+                    return { results: data.results };
+                } else {
+                    return { results: [{ id: '', text: 'No Match Found' }] };
+                }
+            },
+        },
+    });
+    
     $('.input-tip').tooltip({
         placement: 'top',
         html: true,
