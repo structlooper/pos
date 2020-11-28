@@ -151,6 +151,7 @@ class Cart_model extends CI_Model
                   sma_products.id AS product_id,
                   sma_products.code,
                   sma_products.name ,
+                  sma_user_cart_products.qty ,
                   sma_units.name AS product_unit,
                   sma_products.cost ,
                   sma_products.price ,
