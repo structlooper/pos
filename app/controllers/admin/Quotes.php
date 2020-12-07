@@ -667,6 +667,7 @@ class Quotes extends MY_Controller
 
     public function index($warehouse_id = null)
     {
+        
         $this->sma->checkPermissions();
 
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');

@@ -43,4 +43,11 @@ class Category_model extends CI_Model
             );
         }
     }
+    
+    public function get_razorpay_details(){
+        $this->db->select('razorpay_key_id,razorpay_key_secrate');
+        $this->db->from('sma_settings');
+        $settings = $this->db->get()->result_array()[0];
+        return ['status' => true,'msg' => 'razorpay data', 'data' => $settings];
+    }
 }

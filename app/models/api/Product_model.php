@@ -140,5 +140,81 @@ class Product_model extends CI_Model
          return $products;
          
     }
+    public function get_product_by_brand(){
+        $brand_id = $_POST['brand_id'];
+        $this->db->select('
+        sma_products.id AS product_id,
+          sma_products.code,
+          sma_products.name ,
+          sma_units.name AS product_unit,
+          sma_products.cost ,
+          sma_products.price ,
+          sma_products.alert_quantity ,
+          sma_products.image ,
+          sma_products.tax_rate ,
+          sma_products.track_quantity ,
+          sma_products.details ,
+          sma_products.barcode_symbology ,
+          sma_products.product_details ,
+          sma_products.type ,
+          sma_products.slug ,
+          sma_products.category_id ,
+          sma_products.subcategory_id ,
+          sma_products.featured ,
+          sma_products.weight ,
+          sma_products.views ,
+          sma_products.second_name ,
+          sma_products.hide ,
+          sma_products.hide_pos ,
+          sma_products.brand 
+          
+        ');
+        $this->db->from('sma_products');
+        $this->db->join('sma_units','sma_products.unit = sma_units.id');
+        $this->db->where('sma_products.brand',$brand_id);
+        $products=$this->db->get()->result_array();
+        
+        return ['status' => true, 'msg' => 'products by brand' , 'data' => $products];
+    }
+    public function get_product_search(){
+        $search_query = $_POST['search_query'];
+        $this->db->select('
+        sma_products.id AS product_id,
+          sma_products.code,
+          sma_products.name ,
+          sma_units.name AS product_unit,
+          sma_products.cost ,
+          sma_products.price ,
+          sma_products.alert_quantity ,
+          sma_products.image ,
+          sma_products.tax_rate ,
+          sma_products.track_quantity ,
+          sma_products.details ,
+          sma_products.barcode_symbology ,
+          sma_products.product_details ,
+          sma_products.type ,
+          sma_products.slug ,
+          sma_products.category_id ,
+          sma_products.subcategory_id ,
+          sma_products.featured ,
+          sma_products.weight ,
+          sma_products.views ,
+          sma_products.second_name ,
+          sma_products.hide ,
+          sma_products.hide_pos ,
+          sma_products.brand 
+          
+        ');
+        $this->db->from('sma_products');
+        $this->db->join('sma_units','sma_products.unit = sma_units.id');
+        $this->db->like('sma_products.name', $search_query);
+        $this->db->or_like('sma_products.code', $search_query);
+        $this->db->or_like('sma_products.barcode_symbology', $search_query);
+        
+        $products=$this->db->get()->result_array();
+        
+        return ['status' => true, 'msg' => 'products by search' , 'data' => $products];
+        
+    }
     
 }

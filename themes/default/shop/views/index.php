@@ -5,38 +5,35 @@
                 <div class="sub-header_right">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item"><a href="#">Home</a></li>
-                        <li class="list-inline-item more-category" id="categories-dropdown"><a href="/">Categories<i class="icon-arrow-down ml-2"></i></a>
-                            <ul class="list-unstyled list-more-category hide" id="categories-sublist">
+                        <?php if ($isPromo) {
+                                    ?>
+                            <li class="list-inline-item <?= $m == 'shop' && $v == 'products' && $this->input->get('promo') == 'yes' ? 'active' : ''; ?>"><a href="<?= shop_url('products?promo=yes'); ?>"><?= lang('promotions'); ?></a></li>
                             <?php
+                                } ?>
+                        <li class="list-inline-item more-category" id="categories-dropdown"><a href="javascript:void(0)">Categories<i class="icon-arrow-down ml-2"></i></a>
+                            <ul class="list-unstyled list-more-category hide text-left" id="categories-sublist">
+                            <?php
+                            foreach ($categories as $pc) {
+                        ?>
+                                <li><a href="<?= site_url('category/' . $pc->slug) ?>"><?= $pc->name; ?></a></li>
+                            <?php }?>
+                            </ul>
+                        </li>
+                        <li class="list-inline-item more-category" id="brands-dropdown"><a href="javascript:void(0)">Brands<i class="icon-arrow-down ml-2"></i></a>
+                        <ul class="list-unstyled list-more-category hide text-left" id="brands-sublist">
+                        <?php
                             $r = 0;
-                            foreach (array_chunk($categories, 1) as $cats) {
+                            foreach (array_chunk($brands, 1) as $bd) {
                         ?>
                         <?php
-                            foreach ($cats as $ctg) {
+                            foreach ($bd as $bs) {
                         ?>
-                                <li><a href="<?= $ctg->id; ?>"><?= $ctg->name; ?></a></li>
+                                <li><a href="<?= site_url('brands/' . $bs->id) ?>"><?= $bs->name; ?></a></li>
                             <?php }?>
-                            <?php $r++;}?>
+                            <?php $r++; }?>
                             </ul>
                         </li>
-                        <li class="list-inline-item" id="brands-dropdown"><a href="/">Brands<i class="icon-arrow-down ml-2"></i></a>
-                        <ul class="list-unstyled list-more-category hide" id="brands-sublist">
-                                <li><a href="#">Biscuits, Snacks &amp; Chocolates</a></li>
-                                <li><a href="#">Beverages</a></li>
-                                <li><a href="#">Breakfast &amp; Diary</a></li>
-                                <li><a href="#">Best Value</a></li>
-                                <li><a href="#">Noodles, Sauces &amp; Instant Food</a></li>
-                                <li><a href="#">Home Furnishing and Decor</a></li>
-                                <li><a href="#">Fresh &amp; Frozen Food</a></li>
-                                <li><a href="#">Lowest Price</a></li>
-                                <li><a href="#">Pet Care</a></li>
-                                <li><a href="#">Baby Care</a></li>
-                                <li><a href="#">Home Improvement and Accessories</a></li>
-                                <li><a href="#">Fashion and Lifestyle</a></li>
-                                <li><a href="#">Home Appliances</a></li>
-                            </ul>
-                        </li>
-                        <li class="list-inline-item"><a href="#">Products</a></li>
+                        <li class="list-inline-item <?= $m == 'shop' && $v == 'products' && $this->input->get('promo') != 'yes' ? 'active' : ''; ?>"><a href="<?= shop_url('products'); ?>">Products</a></li>
                         <li class="list-inline-item"><a href="#">Checkout</a></li>
                         
                     </ul>
@@ -57,15 +54,15 @@
                         <?php
                             foreach ($cats as $ctg) {
                         ?>
-                        <a href="<?= shop_url('products/').$ctg->id; ?>">
+                        <a href="<?= site_url('category/' . $ctg->slug) ?>">
                         <div class="store-categories--product">
                         
                             <div class="product-image">
-                                <?php if($ctg->$image != ''){?>
-                                    <img src="<?= base_url('assets/uploads/' . $ctg->image);?>" alt="">
-                                <?php } else{?>
-                                    <img src="https://image.pngaaa.com/721/1915721-middle.png" alt="<?= $ctg->name; ?>">
-                                <?php }?>
+                                <?php if(!empty($ctg->image)):?>
+                                    <img src="<?php echo base_url('assets/uploads/' . $ctg->image);?>" alt="<?= $ctg->name; ?>">
+                                <?php else:?>
+                                    <img src="<?php echo base_url('assets/uploads/icecream.jpg');?>" alt="<?= $ctg->name; ?>">
+                                <?php endif?>
                             </div>
                             <div class="product-title">
                                 <h6><?= $ctg->name; ?><br></h6>
@@ -87,7 +84,7 @@
             <div class="col">
                 <div class="products-top-list mt-0">
                     <div class="products-top-listbar">
-                        <h5 class="mb-0 head"><?= lang('fruits-veggies')?></h5><a class="btn btn-more" href="<?php base_url();?>">See all</a></div>
+                        <h5 class="mb-0 head"><?= lang('fruits-veggies')?></h5><a class="btn btn-more <?= $m == 'shop' && $v == 'products' && $this->input->get('promo') != 'yes' ? 'active' : ''; ?>" href="<?= shop_url('products'); ?>">See all</a></div>
                         <?php
                             $r = 0;
                             foreach (array_chunk($featured_products, 4) as $fps) {
@@ -100,7 +97,7 @@
                             <div class="col-6 col-lg-3 px-2">
                                 
                                 <div class="card product-card">
-                                <a href="<?= $fp->id; ?>" style="text-decoration:none">
+                                <a href="<?= site_url('product/' . $fp->slug); ?>" style="text-decoration:none">
                                     <div class="card-body p-3">
                                     <?php
                                         if ($fp->promotion) {

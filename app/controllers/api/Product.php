@@ -83,5 +83,14 @@ class Product extends REST_Controller
         // print_r(sizeof($result));exit;
         
     }
+    public function product_brand_post(){
+        $result = $this->Product_model->get_product_by_brand();
+        $this->response($result);
+        
+    }
+    public function search_post(){
+        $result = $this->Product_model->get_product_search();
+        $this->response($result);
+    }
   
 }

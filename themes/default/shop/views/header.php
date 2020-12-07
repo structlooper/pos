@@ -129,11 +129,11 @@
                         </div>
                     </div>
                     <div class="cart-items">
-                        <div class="cart-items-product cart-card">
+                        <div class="cart-items-product cart-card" id="cart-table">
                             <div class="cart-card-img"><img class="img-fluid" src="https://cdn.grofers.com/app/images/products/full_screen/pro_389672.jpg"></div>
-                            <div class="cart-product-details"><span class="cart-product-name">Mother's Choice Unpolished Green Moong Dal (Chilka)</span><span class="cart-product-unit">1 kg</span>
+                            <div class="cart-product-details"><span class="cart-product-name"><?= lang('product'); ?></span><span class="cart-product-unit">1 kg</span>
                                 <div class="cart-product-items">
-                                    <div class="add-cart-model"><button class="btn add-cart-btn btn-desc" type="button">-</button><span class="mx-3">1</span><button class="btn add-cart-btn btn-inc" type="button">+</button></div><span class="new-price">₹149<br></span><span class="total-value">₹149<br></span></div>
+                                    <div class="add-cart-model"><button class="btn add-cart-btn" id="btn-desc" type="button">-</button><span id="qty-val"><input type="text" class="form-control qty-value" value="1"></span><button class="btn add-cart-btn" id="btn-inc" type="button">+</button></div><span class="new-price"><?= lang('price'); ?><br></span><span class="total-value"><?= lang('subtotal'); ?><br></span></div>
                             </div>
                         </div>
                     </div>

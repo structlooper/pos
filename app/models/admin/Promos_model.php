@@ -59,8 +59,8 @@ class Promos_model extends CI_Model
     {
         $today = date('Y-m-d');
         $this->db
-        ->group_start()->where('start_date <=', $today)->or_where('start_date IS NULL')->group_end()
-        ->group_start()->where('end_date >=', $today)->or_where('end_date IS NULL')->group_end();
+            ->group_start()->where('start_date <=', $today)->or_where('start_date IS NULL')->group_end()
+            ->group_start()->where('end_date >=', $today)->or_where('end_date IS NULL')->group_end();
         $q = $this->db->get_where('promos', ['product2buy' => $pId]);
         if ($q->num_rows() > 0) {
             foreach (($q->result()) as $row) {

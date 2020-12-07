@@ -154,7 +154,7 @@ $ps = ['0' => lang('disable'), '1' => lang('enable')];
                                     <label class="control-label" for="email"><?= lang('default_email'); ?></label>
 
                                     <?= form_input('email', $Settings->default_email, 'class="form-control tip" required="required" id="email"'); ?>
-                            </div>
+                            </div>  
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -953,6 +953,28 @@ $ps = ['0' => lang('disable'), '1' => lang('enable')];
                                 </div>
                             </div>
                         </div>
+                    </fieldset><fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Razor pay Credentials</legend>
+                        <div class="col-md-4">
+                            <div class="form-group ">
+                                <label class="control-label" for="razorpay_key_id">Razorpay key id</label>
+
+                                <div class="controls"> <?php
+                                    echo form_input('razorpay_key_id', $Settings->razorpay_key_id, 'class="form-control tip" id="razorpay_key_id"  style="width:100%;"');
+                                    ?>
+                                </div>
+                            </div>
+                        </div><div class="col-md-4">
+                            <div class="form-group ">
+                                <label class="control-label" for="razorpay_key_secrate">Razorpay key secrate</label>
+
+                                <div class="controls"> <?php
+                                    echo form_input('razorpay_key_secrate', $Settings->razorpay_key_secrate, 'class="form-control tip" id="razorpay_key_secrate"  style="width:100%;"');
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </fieldset>
 
                     <fieldset class="scheduler-border">

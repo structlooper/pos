@@ -113,4 +113,22 @@ class Cart extends REST_Controller
        }
  
 	}
+	
+	public function checkout_post(){
+	    $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+	        $data['payment_type'] = $_POST['payment_type'];
+	        $data['payment_status'] = $_POST['payment_status'] ?? 'pending';
+	        $data['promocode'] = $_POST['promocode'];
+	        $data['user_id'] = $user_id;
+	        $data['note'] = $_POST['note'];
+	        $data['address_id'] = $_POST['address_id'];
+	        $result = $this->Cart_model->checkout_order($data);
+	        $this->response(['status' => $result['status'] , 'msg' => $result['msg'] , 'data' => $result['data']]);
+
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+       }
+	}
 }

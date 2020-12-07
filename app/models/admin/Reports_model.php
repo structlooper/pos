@@ -89,7 +89,7 @@ class Reports_model extends CI_Model
 
         if ($warehouse_id) {
             $this->db->join('sales', 'sales.id=costing.sale_id')
-            ->where('sales.warehouse_id', $warehouse_id);
+                ->where('sales.warehouse_id', $warehouse_id);
         }
 
         $q = $this->db->get('costing');
@@ -324,7 +324,7 @@ class Reports_model extends CI_Model
         $sdate = $date . ' 00:00:00';
         $edate = $date . ' 23:59:59';
         $this->db->select('SUM( COALESCE( grand_total, 0 ) ) AS total', false)
-        ->where('sale_status', 'returned');
+            ->where('sale_status', 'returned');
         if ($date) {
             $this->db->where('date >=', $sdate)->where('date <=', $edate);
         } elseif ($month) {

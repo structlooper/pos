@@ -1,360 +1,217 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<section class="page-contents">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
 
+<!-- Start: Store Navigation -->
+<div class="sub-header" id="site-nav">
+        <div class="sub-header__wrapper">
+            <div class="wrapper">
+                <div class="sub-header_left"><a href="<?= site_url()?>"><span><br><i class="fas fa-store mr-2"></i>Super Store - Gurgaon Surya Vihar ES2<br></span></a></div>
+                <div class="sub-header_right">
+                    <ul class="list-inline mb-0">
+                        <?php
+                            $r = 0;
+                            foreach (array_chunk($categories, 1) as $cats) {
+                        ?>
+                        <?php
+                            if($r <= 4){
+                            foreach ($cats as $ctg) {
+                        ?>
+                                <li class="list-inline-item"><a href="<?= site_url('category/' . $ctg->slug) ?>"><?= $ctg->name; ?></a></li>
+                            <?php }}?>
+                            <?php $r++; }?>
+                            
+                        <li class="list-inline-item more-category"><a href="#">More<i class="icon-arrow-down ml-2"></i></a>
+                            <ul class="list-unstyled list-more-category hide text-left">
+                                    <?php
+                                    $r = 0;
+                                    foreach (array_chunk($categories, 1) as $cats) {
+                                ?>
+                                <?php
+                                    if($r > 4){
+                                    foreach ($cats as $ctg) {
+                                ?>
+                                <li><a href="<?= $ctg->slug; ?>"><?= $ctg->name; ?></a></li>
+                                <?php }}?>
+                            <?php $r++; }?>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Store Navigation -->
+<div class="wrapper wrapper-product">
+        <div class="container">
+            <div class="product-detail">
                 <div class="row">
-                    <div class="col-sm-9 col-md-10">
-
-                        <div class="panel panel-default margin-top-lg">
-                            <div class="panel-heading text-bold">
-                                <i class="fa fa-list-alt margin-right-sm"></i> <?= $product->name . ' (' . $product->code . ')'; ?>
-                                <a href="<?= shop_url('products'); ?>" class="pull-right"><i class="fa fa-share"></i> <?= lang('products'); ?></a>
+                    <div class="col-lg-6">
+                        <div class="product-image-slider">
+                            <div class="img-wrapper"><img class="img-fluid" src="<?= base_url() ?>assets/uploads/<?= $product->image ?>"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div>
+                            <div class="offer-tag offer-tag-inner">
+                            <?php
+                                if (!$featured_products->promotion) {
+                                ?>
+                                <span class="badge badge-success">Promo</span>
+                                <?php
+                                    } 
+                                ?>
                             </div>
-                            <div class="panel-body mprint">
-
-                                <div class="row">
-                                    <div class="col-sm-5">
-
-                                        <div class="photo-slider">
-                                            <div class="carousel slide article-slide" id="photo-carousel">
-
-                                                <div class="carousel-inner cont-slider">
-                                                    <div class="item active">
-                                                        <a href="#" data-toggle="modal" data-target="#lightbox">
-                                                            <img src="<?= base_url() ?>assets/uploads/<?= $product->image ?>" alt="<?= $product->name ?>" class="img-responsive img-thumbnail"/>
-                                                        </a>
-                                                    </div>
-                                                    <?php
-                                                    if (!empty($images)) {
-                                                        foreach ($images as $ph) {
-                                                            echo '<div class="item"><a href="#" data-toggle="modal" data-target="#lightbox"><img class="img-responsive img-thumbnail" src="' . base_url('assets/uploads/' . $ph->photo) . '" alt="' . $ph->photo . '" /></a></div>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </div>
-
-                                                <ol class="carousel-indicators">
-                                                    <li class="active" data-slide-to="0" data-target="#photo-carousel">
-                                                        <img class="img-thumbnail" alt="" src="<?= base_url() ?>assets/uploads/thumbs/<?= $product->image ?>">
-                                                    </li>
-                                                    <?php
-                                                    $r = 1;
-                                                    if (!empty($images)) {
-                                                        foreach ($images as $ph) {
-                                                            echo '<li class="" data-slide-to="' . $r . '" data-target="#photo-carousel"><img class="img-thumbnail" alt="" src="' . base_url('assets/uploads/thumbs/' . $ph->photo) . '"></li>';
-                                                            $r++;
-                                                        }
-                                                    }
-                                                    ?>
-
-                                                </ol>
-                                            </div>
-                                            <div class="clearfix"></div>
+                            <h5 class="product-name"><?= $product->name; ?><?php if (!empty($product->second_name)) { ' '.$product->second_name; }?><br></h5>
+                            <div class="product-rating">
+                                <div class="rating-score"><span>4.2</span></div>
+                                <div class="rating-stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                            </div>
+                            <div class="brand-more">
+                                <p>More by&nbsp;<?= $brand ? '<a href="' . site_url('brand/' . $brand->slug) . '" class="line-height-lg">' . $brand->name . '</a>' : ''; ?><i class="la la-angle-right ml-1"></i></a></p>
+                            </div>
+                            
+                            <h5 class="<?php if($product->promotion){ echo'product-mrp';}else{echo 'product-price';}?> mb-0">Product MRP: <?php if (!$shop_settings->hide_price) { ?>
+                            <span class="ml-2 <?php if ($product->promotion) {echo 'product-price-old';}else{echo 'product-price-new';}?>"><?= '₹'.$this->sma->convertMoney(isset($product->special_price) ? $product->special_price : $product->price); ?></span>
+                            <?php } ?></h5>
+                            <?php if ($product->promotion) {?>
+                            <h5 class="product-price mb-0">Selling Price:<span class="ml-2 product-price-new"><?php echo '₹'.$this->sma->convertMoney($product->promo_price);?></span></h5><?php }?>
+                                <span class="product-tax-disclaimar">(Inclusive of all taxes)<br></span>
+                            <div class="location-tooltip">
+                                <div class="tooltip-inner-head"><span class="font-weight-bold price-tooltip">Prices shown are for Gurugram.&nbsp;<span class="font-weight-normal">Where are you?</span></span><span class="close-tooltip"><i class="la la-close"></i></span></div>
+                                <form class="location-detect"
+                                    method="post">
+                                    <div class="form-group">
+                                        <div class="input-group"><input class="form-control" type="text" placeholder="Type your City (e.g Chennai, Pune)">
+                                            <div class="input-group-append"><button class="btn btn-detect" type="button"><i class="typcn typcn-location-arrow-outline mr-1"></i>Detect</button></div>
                                         </div>
-
-                                        <?php if (!$shop_settings->hide_price) {
+                                    </div>
+                                </form>
+                            </div>
+                            <?php if (!$shop_settings->hide_price) {
                                                         ?>
                                         <?php if (($product->type != 'standard' || $warehouse->quantity > 0) || $Settings->overselling) {
                                                             ?>
-                                        <?= form_open('cart/add/' . $product->id, 'class="validate"'); ?>
-                                        <div class="form-group">
-                                            <?php
-                                            if ($variants) {
-                                                foreach ($variants as $variant) {
-                                                    $opts[$variant->id] = $variant->name . ($variant->price > 0 ? ' (+' . $this->sma->convertMoney($variant->price, true, false) . ')' : ($variant->price == 0 ? '' : ' (+' . $this->sma->convertMoney($variant->price, true, false) . ')'));
-                                                }
-                                                echo form_dropdown('option', $opts, '', 'class="form-control selectpicker mobile-device" required="required"');
-                                            } ?>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon pointer btn-minus"><span class="fa fa-minus"></span></span>
-                                                <input type="text" name="quantity" class="form-control text-center quantity-input" value="1" required="required">
-                                                <span class="input-group-addon pointer btn-plus"><span class="fa fa-plus"></span></span>
-                                            </div>
-                                        </div>
-                                        <!-- <input type="hidden" name="quantity" class="form-control text-center" value="1"> -->
-
-                                        <div class="form-group">
-                                            <div class="btn-group" role="group" aria-label="...">
-                                                <button class="btn btn-info btn-lg add-to-wishlist" data-id="<?= $product->id; ?>"><i class="fa fa-heart-o"></i></button>
-                                                <button type="submit" class="btn btn-theme btn-lg"><i class="fa fa-shopping-cart padding-right-md"></i> <?= lang('add_to_cart'); ?></button>
-                                            </div>
-                                        </div>
-                                        <?= form_close(); ?>
-                                        <?php
-                                                        } else {
-                                                            echo '<div class="well well-sm"><strong>' . lang('item_out_of_stock') . '</strong></div>';
-                                                        } ?>
-                                        <?php
-                                                    } ?>
-                                    </div>
-
-                                    <div class="col-sm-7">
-                                        <div class="clearfix"></div>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-striped dfTable table-right-left">
-                                                <tbody>
-                                                    <tr>
-                                                        <td width="50%"><?= lang('name'); ?></td>
-                                                        <td width="50%"><?= $product->name; ?></td>
-                                                    </tr>
-                                                    <?php if (!empty($product->second_name)) {
-                                                        ?>
-                                                    <tr>
-                                                        <td width="50%"><?= lang('secondary_name'); ?></td>
-                                                        <td width="50%"><?= $product->second_name; ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    } ?>
-                                                    <tr>
-                                                        <td><?= lang('code'); ?></td>
-                                                        <td><?= $product->code; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><?= lang('type'); ?></td>
-                                                        <td><?= lang($product->type); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><?= lang('brand'); ?></td>
-                                                        <td><?= $brand ? '<a href="' . site_url('brand/' . $brand->slug) . '" class="line-height-lg">' . $brand->name . '</a>' : ''; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><?= lang('category'); ?></td>
-                                                        <td><?= '<a href="' . site_url('category/' . $category->slug) . '" class="line-height-lg">' . $category->name . '</a>'; ?></td>
-                                                    </tr>
-                                                    <?php if ($product->subcategory_id) {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?= lang('subcategory'); ?></td>
-                                                        <td><?= '<a href="' . site_url('category/' . $category->slug . '/' . $subcategory->slug) . '" class="line-height-lg">' . $subcategory->name . '</a>'; ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    } ?>
-
-                                                    <?php if (!$shop_settings->hide_price) {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?= lang('price'); ?></td>
-                                                        <td><?= $this->sma->convertMoney(isset($product->special_price) ? $product->special_price : $product->price); ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    } ?>
-
-                                                    <?php
-                                                    if ($product->promotion) {
-                                                        echo '<tr><td>' . lang('promotion') . '</td><td><strong>' . $this->sma->convertMoney($product->promo_price) . '</strong><br>' . ($product->start_date && $product->start_date != '0000-00-00' ? lang('start_date') . ': <strong>' . $this->sma->hrsd($product->start_date) . '</strong><br>' : '') . ($product->end_date && $product->end_date != '0000-00-00' ? lang('end_date') . ': <strong>' . $this->sma->hrsd($product->end_date) . '</strong>' : '') . '</td></tr>';
-                                                    }
-                                                    ?>
-
-                                                    <?php if ($product->tax_rate) {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?= lang('tax_rate'); ?></td>
-                                                        <td><?= $tax_rate->name; ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><?= lang('tax_method'); ?></td>
-                                                        <td><?= $product->tax_method == 0 ? lang('inclusive') : lang('exclusive'); ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    } ?>
-
-                                                    <tr>
-                                                        <td><?= lang('unit'); ?></td>
-                                                        <td><?= $unit ? $unit->name . ' (' . $unit->code . ')' : ''; ?></td>
-                                                    </tr>
-                                                    <?php if (!empty($warehouse) && $product->type == 'standard') {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?= lang('in_stock'); ?></td>
-                                                        <td><?= $warehouse->quantity > 0 ? lang('yes') : lang('no'); ?></td>
-                                                        <!-- <td><?= $this->sma->formatQuantity($warehouse->quantity); ?></td> -->
-                                                    </tr>
-                                                    <?php
-                                                    } ?>
-
-                                                    <?php if ($variants) {
-                                                        ?>
-                                                    <tr>
-                                                        <td><?= lang('product_variants'); ?></td>
-                                                        <td><?php foreach ($variants as $variant) {
-                                                            echo '<span class="label label-primary">' . $variant->name . '</span> ';
-                                                        } ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    } ?>
-
-                                                    <?php if (!empty($options)) {
-                                                        foreach ($options as $option) {
-                                                            if ($option->wh_qty != 0) {
-                                                                echo '<tr><td colspan="2" class="bg-primary">' . $option->name . '</td></tr>';
-                                                                // echo '<tr><td>' . lang('in_stock') . ': ' . $this->sma->formatQuantity($option->wh_qty) . '</td>';
-                                                                if (!$shop_settings->hide_price) {
-                                                                    echo '<tr><td>' . lang('in_stock') . ': ' . ($option->wh_qty ? lang('yes') : lang('no')) . '</td>';
-                                                                    echo '<td>' . lang('price') . ': ' . $this->sma->convertMoney((isset($product->special_price) ? $product->special_price : $product->price) + $option->price) . '</td>';
-                                                                    echo '</tr>';
-                                                                } else {
-                                                                    echo '<tr><td>' . lang('in_stock') . '</td><td>' . ($option->wh_qty ? lang('yes') : lang('no')) . '</td></tr>';
-                                                                }
-                                                            }
-                                                        }
-                                                    } ?>
-
-                                                    <?php if ($product->cf1 || $product->cf2 || $product->cf3 || $product->cf4 || $product->cf5 || $product->cf6) {
-                                                        if ($product->cf1) {
-                                                            echo '<tr><td>' . lang('pcf1') . '</td><td>' . $product->cf1 . '</td></tr>';
-                                                        }
-                                                        if ($product->cf2) {
-                                                            echo '<tr><td>' . lang('pcf2') . '</td><td>' . $product->cf2 . '</td></tr>';
-                                                        }
-                                                        if ($product->cf3) {
-                                                            echo '<tr><td>' . lang('pcf3') . '</td><td>' . $product->cf3 . '</td></tr>';
-                                                        }
-                                                        if ($product->cf4) {
-                                                            echo '<tr><td>' . lang('pcf4') . '</td><td>' . $product->cf4 . '</td></tr>';
-                                                        }
-                                                        if ($product->cf5) {
-                                                            echo '<tr><td>' . lang('pcf5') . '</td><td>' . $product->cf5 . '</td></tr>';
-                                                        }
-                                                        if ($product->cf6) {
-                                                            echo '<tr><td>' . lang('pcf6') . '</td><td>' . $product->cf6 . '</td></tr>';
-                                                        }
-                                                    } ?>
-
-
-                                                </tbody>
-                                            </table>
-                                            <?php if ($product->type == 'combo') {
-                                                        ?>
-                                            <strong><?= lang('combo_items') ?></strong>
-                                            <div class="table-responsive">
-                                                <table
-                                                class="table table-bordered table-striped table-condensed dfTable two-columns">
-                                                <thead>
-                                                    <tr>
-                                                        <th><?= lang('product_name') ?></th>
-                                                        <th><?= lang('quantity') ?></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php foreach ($combo_items as $combo_item) {
-                                                            echo '<tr><td>' . $combo_item->name . ' (' . $combo_item->code . ') </td><td>' . $this->sma->formatQuantity($combo_item->qty) . '</td></tr>';
-                                                        } ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <?php
-                                                    } ?>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-
-                                <div class="col-xs-12">
-
-                                    <?= $product->details ? '<div class="panel panel-info"><div class="panel-heading">' . lang('product_details_for_invoice') . '</div><div class="panel-body">' . $product->details . '</div></div>' : ''; ?>
-                                    <?= $product->product_details ? '<div class="panel panel-default"><div class="panel-heading">' . lang('product_details') . '</div><div class="panel-body">' . $product->product_details . '</div></div>' : ''; ?>
-
-                                </div>
+                            <div class="product-variants-list"><label>Available in:</label>
+                                <div class="variant-button-group"><button class="btn variant-selected" type="button">1 <?= $unit->name; ?></button><button class="btn" type="button">500 <?= $unit->name ?></button></div>
                             </div>
-
-                            <?php include 'share.php'; ?>
+                            <div class="product-add-cart"><button class="btn btn-cart" type="button">Add to Cart</button></div>
+                            <?php } else {
+                                echo '<h6 class="mt-3">' . lang('item_out_of_stock') . '</h6>';
+                            } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-sm-3 col-md-2">
-                    <?php include 'sidebar2.php'; ?>
+                <div class="row">
+                    <div class="col">
+                        <div class="product-details-main">
+                            <h6 class="product-details-header">Product Details</h6>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Key Features</span></div>
+                                <div class="product-attr-desc"><span>Premium quality grains<br></span><span>Naturally healthy and tasty<br></span><span>Rich in protein and dietary fibre<br></span><span>Popularly used in making salads, curries and sprouts<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Unit</span></div>
+                                <div class="product-attr-desc"><span><?= $unit->name; ?><br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Color</span></div>
+                                <div class="product-attr-desc"><span>Green<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Shelf Life</span></div>
+                                <div class="product-attr-desc"><span>6 months<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Manufacturer Details</span></div>
+                                <div class="product-attr-desc"><span>Udit Fresh Foods Pvt. Ltd, C-465, DSIDC Narela Industrial Area, Delhi-110040, India Fssai Lic No.: 10013011001235 , J. P. Broadline Distribution Co. Pvt. Ltd, PLOT NO-A-255, TTC INDUSTRIAL, AREA,MIDC AREA ,MAHAPE-400705, Navi Mumbai Municipal Corporation (Thane Zone-2) (Maharashtra) - 400705, Fssai Lic No. : 11518015000256,PUNIT PROTEINS PVT LTD, SANGMA ROAD PADKA,DIST VADODARA, Pincode : 391440, Fssai Lic No. :10713024000357MAYURANK FOODS , H.No-115F/116F)S.M.BOSE/ ROAD,PANIHATI,OPP,DUCKBACK FACTORY,P.O.AGARPARA,KOLKATA-700109,WARD-09, PANIHATI MUNICIPALITY, North Twenty Four Parganas(West Bengal) -700109, Fssai Lic No. 12819013000386 |VIAND FOODS, -NO:4-122/1,TURKYAMJAL,HAYATHNAGAR(MDL), R.R DIST, FSSAI Lic No. 13617010000319 | Ramalingeshwara food Processors, #18-4-42/3/3 TO 4,Shamsheergunj,Hyderabad, Telangana-500053, FSSAI Lic No. 13614015000670 |"GPA FOODS PVT LTD2262-2265, HSIIDC INDUSTRIAL AREA,FOOD PARK,RAI,Sonepath131029 ;fssai no-10814020000067""GPA FOODS PVT LTD/"TIRUPATI FOODS INDUSTRIES PVT LTD 409, FOOD PARK HSIIDC, RAI Sonepath 131029, FSSAI No-10814020000034<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Marketed By</span></div>
+                                <div class="product-attr-desc"><span>Hands On Trades Pvt. Ltd.<br>19, RPS, Sheikh Sarai 1<br>New Delhi - 110 017<br>10017011003999<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Country of Origin<br></span></div>
+                                <div class="product-attr-desc"><span>India<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Seller<br></span></div>
+                                <div class="product-attr-desc"><span>90Minutes Retail Pvt Ltd (https://bit.ly/2QuoDoe)<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Description<br></span></div>
+                                <div class="product-attr-desc"><span>With the Grofers Mother's Choice Chilka/Split Green Moong Dal, you will be living and eating healthy. One of the easiest foods to digest, Chilka/Split Moong Dal is an excellent substitute in diets and weight loss plans. A powerhouse of proteins, Chilka is an important part of the vegetarian diet. Rich in iron and lowers the blood pressure. Moong dal is great for improving blood circulation in the body. Immense care has been taken to source premium-quality grains for this product.<br></span></div>
+                            </div>
+                            <div class="product-attributes">
+                                <div class="product-attr-name"><span>Disclaimer<br></span></div>
+                                <div class="product-attr-desc"><span>Every effort is made to maintain accuracy of all information. However, actual product packaging and materials may contain more and/or different information. It is recommended not to solely rely on the information presented.<br></span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="container">
-    <div class="featured-products">
-    <div class="row">
-        <?php
+    <?php
         if (!empty($other_products)) {
             ?>
-            <div class="col-xs-12">
-                <h3 class="margin-top-no text-size-lg">
-                    <?= lang('other_products'); ?>
-                </h3>
-            </div>
-            <div class="row">
-            <div class="col-xs-12">
-                <?php
-                foreach ($other_products as $fp) {
-                    ?>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="product" style="z-index: 1;">
-                            <div class="details" style="transition: all 100ms ease-out 0s;">
-                                <?php
-                                if ($fp->promotion) {
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="products-top-list mt-0 products-top-list-inner">
+                    <div class="products-top-listbar">
+                        <h5 class="mb-0 head">More like this</h5>
+                    </div>
+                    <div class="products-top-inner">
+                        <div class="row">
+                        <?php
+                            $r = 0;
+                            foreach (array_chunk($other_products, 1) as $fps) {
+                        ?>
+                        <?php
+                            foreach ($fps as $fp) {
+                        ?>
+                            <div class="col-6 col-lg-3 px-2">
+                                <div class="card product-card">
+                                    <div class="card-body p-3">
+                                    <a href="<?= site_url('product/' . $fp->slug); ?>">
+                                    <?php
+                                        if ($fp->promotion) {
                                     ?>
                                     <span class="badge badge-right theme"><?= lang('promo'); ?></span>
                                     <?php
-                                } ?>
-                                <img src="<?= base_url('assets/uploads/' . $fp->image); ?>" alt="">
-                                <?php if (!$shop_settings->hide_price) {
-                                    ?>
-                                <div class="image_overlay"></div>
-                                <div class="btn add-to-cart" data-id="<?= $fp->id; ?>"><i class="fa fa-shopping-cart"></i> <?= lang('add_to_cart'); ?></div>
-                                <?php
-                                } ?>
-                                <div class="stats-container">
-                                    <?php if (!$shop_settings->hide_price) {
-                                    ?>
-                                    <span class="product_price">
+                                    } ?>
+                                        <div class="products-top-inner-img">
+                                            <?php if(!empty($ctg->image)):?>
+                                                <img src="<?php echo base_url('assets/uploads/' . $fp->image);?>" class="img-fluid" alt="<?= $fp->name; ?>">
+                                            <?php else:?>
+                                                <img src="<?php echo base_url('assets/uploads/icecream.jpg');?>" class="img-fluid" alt="<?= $fp->name; ?>">
+                                            <?php endif?>
+                                        </div>
+                                        <?php if (!$shop_settings->hide_price) { ?>
+                                        <div class="products-top-price">
                                         <?php
                                         if ($fp->promotion) {
-                                            echo '<del class="text-red">' . $this->sma->convertMoney(isset($fp->special_price) && !empty($fp->special_price) ? $fp->special_price : $fp->price) . '</del><br>';
-                                            echo $this->sma->convertMoney($fp->promo_price);
+                                            echo '<h5 class="mb-0 mt-2">₹' .$this->sma->convertMoney($fp->promo_price). '<br></h5>';
+                                            echo '<p class="text-muted mb-0 mt-2"><span style="text-decoration: line-through;">₹'.$this->sma->convertMoney(isset($fp->special_price) && !empty($fp->special_price) ? $fp->special_price : $fp->price).'</span><br></p>';
                                         } else {
-                                            echo $this->sma->convertMoney(isset($fp->special_price) && !empty($fp->special_price) ? $fp->special_price : $fp->price);
+                                            echo '<h5 class="mb-0 mt-2">₹'.$this->sma->convertMoney(isset($fp->special_price) && !empty($fp->special_price) ? $fp->special_price : $fp->price).'<br></h5>';
                                         } ?>
-                                    </span>
-                                    <?php
-                                } ?>
-                                    <span class="product_name">
-                                        <a href="<?= site_url('product/' . $fp->slug); ?>"><?= $fp->name; ?></a>
-                                    </span>
-                                    <a href="<?= site_url('category/' . $fp->category_slug); ?>" class="link"><?= $fp->category_name; ?></a>
-                                    <?php
-                                    if ($fp->brand_name) {
-                                        ?>
-                                        <span class="link">-</span>
-                                        <a href="<?= site_url('brand/' . $fp->brand_slug); ?>" class="link"><?= $fp->brand_name; ?></a>
-                                        <?php
-                                    } ?>
+                                        </div>
+                                        <div class="products-top-list-inner">
+                                            <p class="product-name"><?= $fp->name; ?><br></p>
+                                        </div>
+                                    </a>
+                                        <div class="btn-group cart-button-group" role="group"><button class="btn btn-add-left" type="button">ADD</button><button class="btn btn-add-right" type="button">+</button></div>
+                                    </div>
+                                    <?php } ?>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
+                            <?php } ?>
+                            <?php $r++;}?>
                         </div>
                     </div>
-                    <?php
-                } ?>
-            </div>
-        </div>
-            <?php
-        }
-        ?>
-    </div>
-    </div>
-</div>
-</section>
-
-<div id="lightbox" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-middle">
-        <div class="modal-content">
-            <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
-            <div class="modal-body">
-                <img src="" alt="" />
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <?php } ?>

@@ -49,20 +49,28 @@ $('.product-image-slider').slick({
     dots: true
   });
 
-$('#categories-dropdown').on('click',function(e){
-  e.preventDefault();
-  $('#categories-sublist').toggleClass('hide');
-});
+// $('#categories-dropdown').on('click',function(e){
+//   e.preventDefault();
+//   $('#categories-sublist').toggleClass('hide');
+// });
 
-$('#brands-dropdown').on('click',function(e){
-  e.preventDefault();
-  $('#brands-sublist').toggleClass('hide');
-});
+// $('#brands-dropdown').on('click',function(e){
+//   e.preventDefault();
+//   $('#brands-sublist').toggleClass('hide');
+// });
 
 $('.close-tooltip').on('click',function(){
     $('.location-tooltip').css('display','none');
 });
 
+$('#btn-inc').on('click',function(){
+  var e = $(this).parent().find("input");
+  e.val(parseInt(e.val())+1);
+})
+$('#btn-desc').on('click',function(){
+  var e=$(this).parent().find("input");
+  parseInt(e.val())>1&&e.val(parseInt(e.val())-1);
+})
 
 $(window).ready(function(){
   var prevScrollpos = window.pageYOffset;
@@ -76,6 +84,5 @@ $(window).ready(function(){
     prevScrollpos = currentScrollPos;
   }
 })
-
 
 })(jQuery);

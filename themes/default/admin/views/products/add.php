@@ -263,12 +263,12 @@ if (!empty($variants)) {
 
                         <div id="attrs"></div>
 
-                        <!--<div class="form-group">-->
-                        <!--    <input type="checkbox" class="checkbox" name="attributes"-->
-                        <!--           id="attributes" <?= $this->input->post('attributes') || $product_options ? 'checked="checked"' : ''; ?>><label-->
-                        <!--        for="attributes"-->
-                        <!--        class="padding05"><?= lang('product_has_attributes'); ?></label> <?= lang('eg_sizes_colors'); ?>-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <input type="checkbox" class="checkbox" name="attributes"
+                                   id="attributes" <?= $this->input->post('attributes') || $product_options ? 'checked="checked"' : ''; ?>><label
+                                for="attributes"
+                                class="padding05"><?= lang('product_has_attributes'); ?></label> <?= lang('eg_sizes_colors'); ?>
+                        </div>
                         <div class="form-group">
                             <label for="productDetails">Products</label>
                             <select class="js-example-basic-single" name="base_product_id" id="productDetails" style="width: 100%"></select>

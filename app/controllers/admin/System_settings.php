@@ -410,6 +410,9 @@ class system_settings extends MY_Controller
                 'address'        => $this->input->post('address'),
                 'price_group_id' => $this->input->post('price_group'),
                 'map'            => $map,
+                'latitude' => $this->input->post('latitude'),
+                'longitude' => $this->input->post('longitude'),
+                'area' => $this->input->post('area'),
             ];
         } elseif ($this->input->post('add_warehouse')) {
             $this->session->set_flashdata('error', validation_errors());
@@ -1442,6 +1445,9 @@ class system_settings extends MY_Controller
                 'email'          => $this->input->post('email'),
                 'address'        => $this->input->post('address'),
                 'price_group_id' => $this->input->post('price_group'),
+                'latitude' => $this->input->post('latitude'),
+                'longitude' => $this->input->post('longitude'),
+                'area' => $this->input->post('area'),
             ];
 
             if ($_FILES['userfile']['size'] > 0) {
@@ -2188,6 +2194,8 @@ class system_settings extends MY_Controller
                 'weight_start'         => $this->input->post('weight_start'),
                 'weight_chars'         => $this->input->post('weight_chars'),
                 'weight_divide_by'     => $this->input->post('weight_divide_by'),
+                'razorpay_key_id'     => $this->input->post('razorpay_key_id'),
+                'razorpay_key_secrate'     => $this->input->post('razorpay_key_secrate'),
             ];
             if ($this->input->post('smtp_pass')) {
                 $data['smtp_pass'] = $this->input->post('smtp_pass');

@@ -84,7 +84,6 @@ class Products extends MY_Controller
                 'promo_price'       => $this->sma->formatDecimal($this->input->post('promo_price')),
                 'start_date'        => $this->input->post('start_date') ? $this->sma->fsd($this->input->post('start_date')) : null,
                 'end_date'          => $this->input->post('end_date') ? $this->sma->fsd($this->input->post('end_date')) : null,
-                'base_product_id' => $this->input->post('base_product_id'),
                 'supplier1_part_no' => $this->input->post('supplier_part_no'),
                 'supplier2_part_no' => $this->input->post('supplier_2_part_no'),
                 'supplier3_part_no' => $this->input->post('supplier_3_part_no'),
@@ -98,7 +97,6 @@ class Products extends MY_Controller
                 'hide'              => $this->input->post('hide') ? $this->input->post('hide') : 0,
                 'second_name'       => $this->input->post('second_name'),
             ];
-            // print_r($data);exit;
             $warehouse_qty      = null;
             $product_attributes = null;
             $this->load->library('upload');

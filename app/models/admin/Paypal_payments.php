@@ -119,7 +119,6 @@ class Paypal_payments extends CI_Model
             'l_ebayitemorderid' => ''     // eBay order ID for the item.
         );
         array_push($OrderItems, $Item);
-
         $Item2 = array(
             'l_name' => 'Test Widget 2', // Item Name.  127 char max.
             'l_desc' => 'This is a test widget description.', // Item description.  127 char max.
@@ -158,7 +157,7 @@ class Paypal_payments extends CI_Model
         if (!$this->paypal_pro->APICallSuccessful($PayPalResult['ACK'])) {
             $errors = ['error' => true, 'message' => $PayPalResult['ERRORS']];
             return $errors;
-        //$this->load->view('paypal_error', $errors);
+            //$this->load->view('paypal_error', $errors);
         } else {
             return $PayPalResult;
         }
@@ -173,7 +172,7 @@ class Paypal_payments extends CI_Model
         if (!$this->paypal_pro->APICallSuccessful($PayPalResult['ACK'])) {
             $errors = ['error' => true, 'message' => $PayPalResult['ERRORS']];
             return $errors;
-        //$this->load->view('paypal_error', $errors);
+            //$this->load->view('paypal_error', $errors);
         } else {
             $data = ['PayPalResult' => $PayPalResult];
             return ['amount' => $data['PayPalResult']['BALANCERESULTS'], 'time' => $this->sma->hrld($data['PayPalResult']['TIMESTAMP'])];

@@ -86,6 +86,88 @@ class User extends REST_Controller
 
 		$this->response($decodedToken);  
 	}
+	
+	public function address_add_post(){
+	    $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->user_add_address($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    }
+	}
+	public function get_address_post(){
+	    $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->get_user_address($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    }
+	}
+	
+	public function update_address_post(){
+	   $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->update_user_address($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    } 
+	}
+	public function delete_address_post(){
+	   $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->delete_user_address($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    } 
+	}
+    public function orders_post(){
+       $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->get_user_orders($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    }   
+    }
+    public function profile_post(){
+         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->get_user_profile_details($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    }   
+    }
+    public function profile_update_post(){
+         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->update_user_profile_details($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    }   
+    }
+    public function past_order_products_post(){
+         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+	    $user_id = $decodedToken['data']->user_id;
+	    if(!is_null($user_id)){
+    	    $result = $this->User_modal->get_user_past_orders_products($user_id);
+    	    $this->response($result);
+	    }else{
+           $this->response(['status' => false,'msg' => 'not a valid user', 'data' => []]);
+	    }   
+    }
 
 
  

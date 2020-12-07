@@ -614,7 +614,7 @@ class Products_model extends CI_Model
     public function getProductWithCategory($id)
     {
         $this->db->select($this->db->dbprefix('products') . '.*, ' . $this->db->dbprefix('categories') . '.name as category')
-        ->join('categories', 'categories.id=products.category_id', 'left');
+            ->join('categories', 'categories.id=products.category_id', 'left');
         $q = $this->db->get_where('products', ['products.id' => $id], 1);
         if ($q->num_rows() > 0) {
             return $q->row();
@@ -706,10 +706,10 @@ class Products_model extends CI_Model
     public function getStockCountProducts($warehouse_id, $type, $categories = null, $brands = null)
     {
         $this->db->select("{$this->db->dbprefix('products')}.id as id, {$this->db->dbprefix('products')}.code as code, {$this->db->dbprefix('products')}.name as name, {$this->db->dbprefix('warehouses_products')}.quantity as quantity")
-        ->join('warehouses_products', 'warehouses_products.product_id=products.id', 'left')
-        ->where('warehouses_products.warehouse_id', $warehouse_id)
-        ->where('products.type', 'standard')
-        ->order_by('products.code', 'asc');
+            ->join('warehouses_products', 'warehouses_products.product_id=products.id', 'left')
+            ->where('warehouses_products.warehouse_id', $warehouse_id)
+            ->where('products.type', 'standard')
+            ->order_by('products.code', 'asc');
         if ($categories) {
             $r = 1;
             $this->db->group_start();
@@ -772,7 +772,7 @@ class Products_model extends CI_Model
     public function getSubCategories($parent_id)
     {
         $this->db->select('id as id, name as text')
-        ->where('parent_id', $parent_id)->order_by('name');
+            ->where('parent_id', $parent_id)->order_by('name');
         $q = $this->db->get('categories');
         if ($q->num_rows() > 0) {
             foreach (($q->result()) as $row) {

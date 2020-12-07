@@ -477,6 +477,27 @@
                                 </ul>
                             </li>
 
+                            <li class="mm_banner">
+                                <a class="dropmenu" href="#">
+                                    <i class="fa fa-cogs"></i>
+                                    <span class="text"> Banners </span>
+                                    <span class="chevron closed"></span>
+                                </a>
+                                <ul>
+                                    <li id="banner_index">
+                                        <a class="submenu" href="<?= admin_url('banners/primary'); ?>">
+                                            <i class="fa fa-cogs"></i>
+                                            <span class="text"> Primary Banners</span>
+                                        </a>
+                                    </li>
+                                    <li id="banner_add">
+                                        <a class="submenu" href="<?= admin_url('banners/secondary'); ?>">
+                                            <i class="fa fa-cogs"></i>
+                                            <span class="text"> Secondary Banners</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="mm_quotes">
                                 <a class="dropmenu" href="#">
                                     <i class="fa fa-heart-o"></i>
@@ -1080,6 +1101,29 @@
                             <?php
                             } ?>
 
+                            
+                            <!--<li class="mm_banner">-->
+                            <!--    <a class="dropmenu" href="#">-->
+                            <!--        <i class="fa fa-heart-o"></i>-->
+                            <!--        <span class="text"> Banners </span>-->
+                            <!--        <span class="chevron closed"></span>-->
+                            <!--    </a>-->
+                            <!--    <ul>-->
+                            <!--        <li id="sales_index">-->
+                            <!--            <a class="submenu" href="<?= admin_url('quotes'); ?>">-->
+                            <!--                <i class="fa fa-heart-o"></i><span class="text"> <?= lang('list_banner'); ?></span>-->
+                            <!--            </a>-->
+                            <!--        </li>-->
+                                    
+                            <!--        <li id="sales_add">-->
+                            <!--            <a class="submenu" href="<?= admin_url('quotes/add'); ?>">-->
+                            <!--                <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_quote'); ?></span>-->
+                            <!--            </a>-->
+                            <!--        </li>-->
+                               
+                            <!--    </ul>-->
+                            <!--</li>-->
+                          
                             <?php if ($GP['quotes-index'] || $GP['quotes-add']) {
                                 ?>
                             <li class="mm_quotes">

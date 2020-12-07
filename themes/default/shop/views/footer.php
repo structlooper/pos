@@ -55,31 +55,47 @@
                             <div class="row">
                                 <div class="col">
                                     <ul class="list-unstyled">
-                                        <li><a href="#">Grocery &amp; Staples</a></li>
-                                        <li><a href="#">Rice</a></li>
-                                        <li><a href="#">Moong Dal</a></li>
-                                        <li><a href="#">Detergent Powders</a></li>
-                                        <li><a href="#">Noodles &amp; Pasta</a></li>
-                                        <li><a href="#">Vegetables</a></li>
+                                    <?php
+                            $r = 0;
+                            foreach (array_chunk($categories, 1) as $cats) {
+                        ?>
+                        <?php
+                            if($r <= 5){
+                            foreach ($cats as $ctg) {
+                        ?>
+                                <li><a href="<?= $ctg->id; ?>"><?= $ctg->name; ?></a></li>
+                            <?php }}?>
+                            <?php $r++; }?>
                                     </ul>
                                 </div>
                                 <div class="col">
                                     <ul class="list-unstyled">
-                                        <li><a href="#">Tea</a></li>
-                                        <li><a href="#">Salt &amp; Sugar</a></li>
-                                        <li><a href="#">Ghee</a></li>
-                                        <li><a href="#">Soap</a></li>
-                                        <li><a href="#">Cooking Oil</a></li>
-                                        <li><a href="#">Baby Diapers</a></li>
+                                    <?php
+                            $r = 0;
+                            foreach (array_chunk($categories, 1) as $cats) {
+                        ?>
+                        <?php
+                            if($r > 5 && $r < 12){
+                            foreach ($cats as $ctg) {
+                        ?>
+                                <li><a href="<?= $ctg->id; ?>"><?= $ctg->name; ?></a></li>
+                            <?php }}?>
+                            <?php $r++; }?>
                                     </ul>
                                 </div>
                                 <div class="col">
                                     <ul class="list-unstyled">
-                                        <li><a href="#">Atta</a></li>
-                                        <li><a href="#">Toor Dal</a></li>
-                                        <li><a href="#">Almonds</a></li>
-                                        <li><a href="#">Biscuits &amp; Cookies</a></li>
-                                        <li><a href="#">Fruits</a></li>
+                                    <?php
+                            $r = 0;
+                            foreach (array_chunk($categories, 1) as $cats) {
+                        ?>
+                        <?php
+                            if($r > 12){
+                            foreach ($cats as $ctg) {
+                        ?>
+                                <li><a href="<?= $ctg->id; ?>"><?= $ctg->name; ?></a></li>
+                            <?php }}?>
+                            <?php $r++; }?>
                                     </ul>
                                 </div>
                             </div>
@@ -129,57 +145,17 @@
                     <div class="brands-list border-top">
                         <h6 class="font-weight-bold">Brands</h6>
                         <ul class="list-inline">
-                            <li class="list-inline-item"><a href="#">Amul</a></li>
-                            <li class="list-inline-item"><a href="#">Axe</a></li>
-                            <li class="list-inline-item"><a href="#">Bambino</a></li>
-                            <li class="list-inline-item"><a href="#">Best Value</a></li>
-                            <li class="list-inline-item"><a href="#">Bingo</a></li>
-                            <li class="list-inline-item"><a href="#">Bisleri</a></li>
-                            <li class="list-inline-item"><a href="#">Boost</a></li>
-                            <li class="list-inline-item"><a href="#">Bournvita</a></li>
-                            <li class="list-inline-item"><a href="#">Britannia</a></li>
-                            <li class="list-inline-item"><a href="#">Cadbury</a></li>
-                            <li class="list-inline-item"><a href="#">Cheetos</a></li>
-                            <li class="list-inline-item"><a href="#">Cinthol</a></li>
-                            <li class="list-inline-item"><a href="#">Closeup</a></li>
-                            <li class="list-inline-item"><a href="#">Coca-Cola</a></li>
-                            <li class="list-inline-item"><a href="#">Dabour</a></li>
-                            <li class="list-inline-item"><a href="#">Danone</a></li>
-                            <li class="list-inline-item"><a href="#">Del Monte</a></li>
-                            <li class="list-inline-item"><a href="#">Dettol</a></li>
-                            <li class="list-inline-item"><a href="#">Durex</a></li>
-                            <li class="list-inline-item"><a href="#">English Oven</a></li>
-                            <li class="list-inline-item"><a href="#">Everest</a></li>
-                            <li class="list-inline-item"><a href="#">Garnier</a></li>
-                            <li class="list-inline-item"><a href="#">Gillette</a></li>
-                            <li class="list-inline-item"><a href="#">Glucon-D</a></li>
-                            <li class="list-inline-item"><a href="#">Gowardhan</a></li>
-                            <li class="list-inline-item"><a href="#">Hajmola</a></li>
-                            <li class="list-inline-item"><a href="#">Haldiram's</a></li>
-                            <li class="list-inline-item"><a href="#">Head &amp; Shoulders</a></li>
-                            <li class="list-inline-item"><a href="#">Himalaya</a></li>
-                            <li class="list-inline-item"><a href="#">L'Oreal</a></li>
-                            <li class="list-inline-item"><a href="#">Lay's</a></li>
-                            <li class="list-inline-item"><a href="#">Maggi</a></li>
-                            <li class="list-inline-item"><a href="#">Minute Maid</a></li>
-                            <li class="list-inline-item"><a href="#">Mother Diary</a></li>
-                            <li class="list-inline-item"><a href="#">Nestle</a></li>
-                            <li class="list-inline-item"><a href="#">Nutella</a></li>
-                            <li class="list-inline-item"><a href="#">Oral-B</a></li>
-                            <li class="list-inline-item"><a href="#">Oreo</a></li>
-                            <li class="list-inline-item"><a href="#">Pantene</a></li>
-                            <li class="list-inline-item"><a href="#">Paper Boat</a></li>
-                            <li class="list-inline-item"><a href="#">Parle</a></li>
-                            <li class="list-inline-item"><a href="#">Patanjali</a></li>
-                            <li class="list-inline-item"><a href="#">Pepsi</a></li>
-                            <li class="list-inline-item"><a href="#">Princeware</a></li>
-                            <li class="list-inline-item"><a href="#">Red Bull</a></li>
-                            <li class="list-inline-item"><a href="#">Saffola</a></li>
-                            <li class="list-inline-item"><a href="#">Smith &amp; Jones</a></li>
-                            <li class="list-inline-item"><a href="#">Stayfree</a></li>
-                            <li class="list-inline-item"><a href="#">Sunsilk</a></li>
-                            <li class="list-inline-item"><a href="#">Tata Tea</a></li>
-                            <li class="list-inline-item"><a href="#">Unibic</a></li>
+                        <?php
+                            $r = 0;
+                            foreach (array_chunk($brands, 1) as $bd) {
+                        ?>
+                        <?php
+                            foreach ($bd as $bs) {
+                        ?>
+                                <li class="list-inline-item"><a href="<?= $bs->name; ?>"><?= $bs->name; ?></a></li>
+                            <?php }?>
+                            <?php $r++; }?>
+                            
                         </ul>
                     </div>
                 </div>
@@ -206,7 +182,67 @@
 <script src="<?= $assets; ?>js/bs-init.js"></script>
 <script src="<?= $assets; ?>js/slick.min.js"></script>
 <script src="<?= $assets; ?>js/custom.js"></script>
+<script src="<?= $assets; ?>js/libs.min.js"></script>
+<script src="<?= $assets; ?>js/scripts.min.js"></script>
 
+
+<script type="text/javascript">
+    var m = '<?= $m; ?>', v = '<?= $v; ?>', products = {}, filters = <?= isset($filters) && !empty($filters) ? json_encode($filters) : '{}'; ?>, shop_color, shop_grid, sorting;
+
+    var cart = <?= isset($cart) && !empty($cart) ? json_encode($cart) : '{}' ?>;
+    var site = {base_url: '<?= base_url(); ?>', site_url: '<?= site_url('/'); ?>', shop_url: '<?= shop_url(); ?>', csrf_token: '<?= $this->security->get_csrf_token_name() ?>', csrf_token_value: '<?= $this->security->get_csrf_hash() ?>', settings: {display_symbol: '<?= $Settings->display_symbol; ?>', symbol: '<?= $Settings->symbol; ?>', decimals: <?= $Settings->decimals; ?>, thousands_sep: '<?= $Settings->thousands_sep; ?>', decimals_sep: '<?= $Settings->decimals_sep; ?>', order_tax_rate: false, products_page: <?= $shop_settings->products_page ? 1 : 0; ?>}, shop_settings: {private: <?= $shop_settings->private ? 1 : 0; ?>, hide_price: <?= $shop_settings->hide_price ? 1 : 0; ?>}}
+
+    var lang = {};
+    lang.page_info = '<?= lang('page_info'); ?>';
+    lang.cart_empty = '<?= lang('empty_cart'); ?>';
+    lang.item = '<?= lang('item'); ?>';
+    lang.items = '<?= lang('items'); ?>';
+    lang.unique = '<?= lang('unique'); ?>';
+    lang.total_items = '<?= lang('total_items'); ?>';
+    lang.total_unique_items = '<?= lang('total_unique_items'); ?>';
+    lang.tax = '<?= lang('tax'); ?>';
+    lang.shipping = '<?= lang('shipping'); ?>';
+    lang.total_w_o_tax = '<?= lang('total_w_o_tax'); ?>';
+    lang.product_tax = '<?= lang('product_tax'); ?>';
+    lang.order_tax = '<?= lang('order_tax'); ?>';
+    lang.total = '<?= lang('total'); ?>';
+    lang.grand_total = '<?= lang('grand_total'); ?>';
+    lang.reset_pw = '<?= lang('forgot_password?'); ?>';
+    lang.type_email = '<?= lang('type_email_to_reset'); ?>';
+    lang.submit = '<?= lang('submit'); ?>';
+    lang.error = '<?= lang('error'); ?>';
+    lang.add_address = '<?= lang('add_address'); ?>';
+    lang.update_address = '<?= lang('update_address'); ?>';
+    lang.fill_form = '<?= lang('fill_form'); ?>';
+    lang.already_have_max_addresses = '<?= lang('already_have_max_addresses'); ?>';
+    lang.send_email_title = '<?= lang('send_email_title'); ?>';
+    lang.message_sent = '<?= lang('message_sent'); ?>';
+    lang.add_to_cart = '<?= lang('add_to_cart'); ?>';
+    lang.out_of_stock = '<?= lang('out_of_stock'); ?>';
+    lang.x_product = '<?= lang('x_product'); ?>';
+    lang.r_u_sure = '<?= lang('r_u_sure'); ?>';
+    lang.x_reverted_back = "<?= lang('x_reverted_back'); ?>";
+    lang.delete = '<?= lang('delete'); ?>';
+    lang.line_1 = '<?= lang('line1'); ?>';
+    lang.line_2 = '<?= lang('line2'); ?>';
+    lang.city = '<?= lang('city'); ?>';
+    lang.state = '<?= lang('state'); ?>';
+    lang.postal_code = '<?= lang('postal_code'); ?>';
+    lang.country = '<?= lang('country'); ?>';
+    lang.phone = '<?= lang('phone'); ?>';
+    lang.is_required = '<?= lang('is_required'); ?>';
+    lang.okay = '<?= lang('okay'); ?>';
+    lang.cancel = '<?= lang('cancel'); ?>';
+    lang.email_is_invalid = '<?= lang('email_is_invalid'); ?>';
+    lang.name = '<?= lang('name'); ?>';
+    lang.full_name = '<?= lang('full_name'); ?>';
+    lang.email = '<?= lang('email'); ?>';
+    lang.subject = '<?= lang('subject'); ?>';
+    lang.message = '<?= lang('message'); ?>';
+    lang.required_invalid = '<?= lang('required_invalid'); ?>';
+
+    update_mini_cart(cart);
+</script>
 
 <?php if ($m == 'shop' && $v == 'product') {
         ?>
@@ -251,6 +287,13 @@ $(document).ready(function() {
 });
 <?php
     } ?>
+</script>
+<script type="text/javascript" src="<?= base_url('assets/custom/shop.js') ?>"></script>
+<!-- <script>
+    if(!get('shop_grid')) {
+        store('shop_grid', '.three-col');
+    }
+</script> -->
 </script>
 </body>
 </html>

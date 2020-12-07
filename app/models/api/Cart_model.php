@@ -175,7 +175,7 @@ class Cart_model extends CI_Model
                   FROM sma_user_cart_products  INNER JOIN sma_products ON sma_user_cart_products.product_id = sma_products.id 
                   INNER JOIN sma_units ON sma_products.unit=sma_units.id 
                   WHERE sma_user_cart_products.cart_id = '$cart->cart_id';
-                  ")->result()[0]; 
+                  ")->result(); 
           $data['items'] = count($products);
           
           $data['products'] = $products; 
@@ -320,5 +320,114 @@ class Cart_model extends CI_Model
     //       }
            
     // }
+    
+    public function checkout_order($data){
+        	       // print_r($data);exit;
+        	       
+        	    $this->db->select("*");
+                $this->db->from("sma_user_cart");
+                $this->db->where('user_id',$data["user_id"]);
+                $this->db->where('cart_status','ADDED');
+                $cart_data = $this->db->get()->result_array()[0];
+                
+                $this->db->select("sma_products.id AS product_id,
+                  sma_products.code,
+                  sma_products.name ,
+                  sma_user_cart_products.qty ,
+                  sma_units.name AS product_unit,
+                  sma_products.cost ,
+                  sma_products.price ,
+                  sma_products.alert_quantity ,
+                  sma_products.image ,
+                  sma_products.tax_rate ,
+                  sma_products.track_quantity ,
+                  sma_products.details ,
+                  sma_products.barcode_symbology ,
+                  sma_products.product_details ,
+                  sma_products.type ,
+                  sma_products.slug ,
+                  sma_products.category_id ,
+                  sma_products.subcategory_id ,
+                  sma_products.featured ,
+                  sma_products.weight ,
+                  sma_products.views ,
+                  sma_products.second_name ,
+                  sma_products.hide ,
+                  sma_products.hide_pos ");
+                $this->db->from("sma_user_cart_products");
+                $this->db->join('sma_products', 'sma_products.id = sma_user_cart_products.product_id');
+                $this->db->join('sma_units', 'sma_units.id = sma_products.unit');
+                $this->db->where('sma_user_cart_products.cart_id',$cart_data['cart_id']);
+                $cart_products = $this->db->get()->result_array();
+                if(sizeof($cart_data) == 0 or sizeof($cart_products) == 0){ return ['status' => false, 'msg' => 'cart is blank' ,'data' => []];}
+                
+                
+                $sales_data['date'] = date('Y-m-d H:i:s');        
+                $sales_data['reference_no'] = 'SALE/APPLICATION'.str_replace('-', '/', date('Y-m-d'));        
+                $sales_data['customer_id'] = $data['user_id'];        
+                $sales_data['customer'] = 'Application-user';        
+                // $sales_data['biller_id'] = 3;        
+                // $sales_data['biller'] = 'Test Biller';        
+                $sales_data['note'] = $data['note'];   
+                $price = 0.00;
+                $product_tax = 0.00;
+                foreach($cart_products as $p){
+                    $price += doubleval($p['price']) * intval($p['qty']);
+                    $product_tax += doubleval($p['tax_rate']) * intval($p['qty']) ?? 0;
+                }
+                
+                $sales_data['total'] = $price;
+                $sales_data['product_discount'] = 0.00;
+                $sales_data['product_tax'] = $product_tax;
+                $sales_data['total_tax'] = $product_tax;
+                $sales_data['grand_total'] = $price + $product_tax;
+                $sales_data['sale_status'] = 'ORDERED';
+                $sales_data['payment_status'] = strtoupper($data['payment_status']);
+                $sales_data['total_items'] = count($cart_products);
+                if($sales_data['payment_status'] == 'PENDING'){ $sales_data['paid'] = 0.00; }else{ $sales_data['paid'] = $sales_data['grand_total']; };
+                $sales_data['api'] = 1;
+                $sales_data['address_id'] = $data['address_id'];
+                $sales_data['payment_method'] = $data['payment_type'];
+                
+                $this->db->insert('sma_sales',$sales_data);
+                $sale_id = $this->db->insert_id();
+                // $sale_id = 19;
+                if(is_null($sale_id)){return ['status' => false,'msg' => 'order not saved' , 'data' => []];}
+                foreach($cart_products as $c_p){
+                    $sma_sale_items['sale_id'] = $sale_id;
+                    $sma_sale_items['product_id'] = $c_p['product_id'];
+                    $sma_sale_items['product_code'] = $c_p['code'];
+                    $sma_sale_items['product_name'] = $c_p['name'];
+                    $sma_sale_items['product_type'] = $c_p['type'];
+                    $sma_sale_items['product_type'] = $c_p['type'];
+                    $sma_sale_items['net_unit_price'] = $c_p['cost'];
+                    $sma_sale_items['unit_price'] = $c_p['cost'];
+                    $sma_sale_items['quantity'] = $c_p['qty'];
+                    $sma_sale_items['item_tax'] = $c_p['tax_rate'];
+                    $sma_sale_items['tax'] = $c_p['tax_rate'];
+                    $sma_sale_items['subtotal'] = $c_p['price'];
+                    $sma_sale_items['real_unit_price'] = $c_p['price'];
+                    $sma_sale_items['product_unit_code'] = $c_p['code'];
+                    $sma_sale_items['unit_quantity'] = $c_p['qty'];
+                    
+                    $this->db->insert('sma_sale_items',$sma_sale_items);
+                    
+                }
+                $this->db->where('cart_id',$cart_data['cart_id']);
+                $this->db->update('sma_user_cart',['cart_status' => 'COMPLETED']);
+                // return $query->result_array();
+                $this->db->select('*');
+                $this->db->from('sma_sales');
+                $this->db->where('id',$sale_id);
+                $order = $this->db->get()->result_array()[0];
+                
+                $this->db->select('*');
+                $this->db->from('sma_sale_items');
+                $this->db->where('sale_id',$sale_id);
+                $order_products = $this->db->get()->result_array();
+                
+                $order['order_products'] = $order_products;
+            return ['status' => true,'msg' => 'order details' , 'data' => $order];
+    }
 
 }
