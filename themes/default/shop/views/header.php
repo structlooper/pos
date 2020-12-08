@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.9/typicons.min.css">
     <link rel="stylesheet" href="<?= $assets; ?>fonts/fontawesome5-overrides.min.css">
+    <link href="<?= $assets; ?>css/libs.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/custom/shop.css') ?>" rel="stylesheet"/>
     <link rel="stylesheet" href="<?= $assets; ?>css/custom.css">
     <link rel="stylesheet" href="<?= $assets; ?>css/nav-light.css">
     <link rel="stylesheet" href="<?= $assets; ?>css/navigation.css">
@@ -35,14 +37,14 @@
 </head>
 <body>
 <!-- Start: Navigation -->
-    <nav class="navbar navbar-expand-md sticky-top navigation">
+    <nav class="navbar navbar-expand-md sticky-top navigation nav-web">
         <div class="container-fluid"><a class="navbar-brand" href="<?= base_url(); ?>"><img alt="<?= $shop_settings->shop_name; ?>" src="<?= $assets; ?>images/thebestone_logo.png"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#nav-top"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="nav-top">
             
                 <?= shop_form_open('products', 'id="product-search-form"'); ?>
                     <div class="form-inline">
                         <div class="nav-form">
-                            <input class="form-control" type="text" placeholder="Search for products">
+                            <input class="form-control" type="text" placeholder="Search for products" name="query" id="product-search">
                             <button class="btn search-btn" type="submit"><i class="material-icons">search</i></button>
                         </div>
                     </div>
@@ -65,17 +67,36 @@
                                             <a class="dropdown-item text-left" href="<?= site_url('logout');?>"><i class="icon-user mr-2"></i><?= lang('logout'); ?></a>
                                             </div>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items"></span><i class="typcn typcn-shopping-cart mr-2"></i><?= lang('my_cart');?></a></li>
+                                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items-count"></span><i class="typcn typcn-shopping-cart mr-2"></i><span class="cart-total-items"></span></a></li>
                                     <?php
                                 } } else {
                                     ?>
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link p-0" data-toggle="dropdown" aria-expanded="false" href="#">My Account<span><?= lang('login'); ?><i class="icon-arrow-down ml-2"></i></span></a>
                         <div class="dropdown-menu dropdown-menu-right"><button class="btn btn-account-login" type="button"><?= lang('login'); ?></button><a class="dropdown-item text-left" href="#"><i class="icon-question mr-2"></i>FAQs</a><a class="dropdown-item text-left" href="#"><i class="icon-magic-wand mr-2"></i>Offers</a></div>
                     </li>
-                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><i class="typcn typcn-shopping-cart mr-2"></i><?= lang('my_cart');?></a></li>
+                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items-count"></span><i class="typcn typcn-shopping-cart mr-2"></i><span class="cart-total-items"></span></a></li>
                                 <?php } ?>
                 </ul>
         </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-md sticky-top navigation nav-mobile">
+        <div class="container-fluid"><button class="navbar-toggler"><span class=""></span></button>
+        <a class="navbar-brand" href="<?= base_url(); ?>"><img alt="<?= $shop_settings->shop_name; ?>" src="<?= $assets; ?>images/thebestone_logo.png"></a>
+        <ul class="nav navbar-nav ml-auto">
+                
+                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items-count"></span><i class="typcn typcn-shopping-cart mr-2"></i><span class="cart-total-items"></span></a></li>
+
+                </ul>
+                <?= shop_form_open('products', 'id="product-search-form"'); ?>
+                    <div class="form-inline search-mobile">
+                        <div class="nav-form">
+                            <input class="form-control" type="text" placeholder="Search for products" name="query" id="product-search">
+                            <button class="btn search-btn" type="submit"><i class="material-icons">search</i></button>
+                        </div>
+                    </div>
+                <?= form_close();?>
         </div>
     </nav>
 
@@ -86,11 +107,22 @@
                     <h5 class="modal-head mb-0">Phone Number Verification</h5>
                 </div>
                 <div class="modal-footer">
+                    <div class="get-number" id="phone-wrapper">
                     <p class="text-center my-3 font-weight-bold">Enter your phone number to<br>Login/Sign up<br></p>
-                    <form class="login-form">
-                        <div class="login-input"><input class="form-control input-number" type="tel" maxlength="10"></div>
-                        <button class="btn btn-primary btn-block my-3 btn-login" id ="btn-login" type="button" disabled>Next</button>
+                    <form class="login-form" id="modal-login-inner">
+                        <div class="login-input"><input class="form-control input-number" type="tel" maxlength="10" id="phone" name="phone" autocomplete="off" autofocus></div>
+                        <button class="btn btn-primary btn-block my-3 btn-login" type="button" id="btn-next">Next</button>
                     </form>
+                    </div>
+                    <div class="post-number" id="otp-wrapper">
+                    <p class="text-center my-3 font-weight-bold">Enter OTP recieved on your number<br></p>
+                    <form class="otp-form" id="modal-otp-inner">
+                        <div class="otp-input">
+                            <input class="form-control input-number" type="tel" maxlength="4" id="otp" name="otp" placeholder="OTP">
+                        </div>
+                        <button class="btn btn-primary btn-block my-3 btn-login" type="button" id="btn-login">Login</button>
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,7 +151,7 @@
                     <div class="cart-store-details">
                         <div>
                             <div class="float-left"><span>Sub Total</span></div>
-                            <div class="float-right"><span>₹149<br></span></div>
+                            <div class="float-right"><span class="subtotal">₹149<br></span></div>
                             <div class="clearfix"></div>
                         </div>
                         <div>
@@ -128,18 +160,12 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="cart-items">
-                        <div class="cart-items-product cart-card" id="cart-table">
-                            <div class="cart-card-img"><img class="img-fluid" src="https://cdn.grofers.com/app/images/products/full_screen/pro_389672.jpg"></div>
-                            <div class="cart-product-details"><span class="cart-product-name"><?= lang('product'); ?></span><span class="cart-product-unit">1 kg</span>
-                                <div class="cart-product-items">
-                                    <div class="add-cart-model"><button class="btn add-cart-btn" id="btn-desc" type="button">-</button><span id="qty-val"><input type="text" class="form-control qty-value" value="1"></span><button class="btn add-cart-btn" id="btn-inc" type="button">+</button></div><span class="new-price"><?= lang('price'); ?><br></span><span class="total-value"><?= lang('subtotal'); ?><br></span></div>
-                            </div>
-                        </div>
+                    <div class="cart-items" id="cart-contents">
+                        <div class="table-cart" id="cart-items"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <p class="cart-promo-info">Promo code can be applied on payment page<br></p><a class="btn btn-block btn-cart btn-checkout" role="button" href="../checkout.html"><span>Proceed to Checkout</span><span class="total">₹149<i class="la la-angle-right"></i><br></span></a></div>
+                    <p class="cart-promo-info">Promo code can be applied on payment page<br></p><a class="btn btn-block btn-cart btn-checkout" role="button" href="<?= site_url('cart/checkout'); ?>"><span>Proceed to Checkout</span><span class="total">₹126<i class="la la-angle-right"></i><br></span></a></div>
             </div>
         </div>
     </div>

@@ -27,6 +27,7 @@ class Product extends REST_Controller
                 }else{
                     $products = $this->Product_model->get_product_by_subcategory($category_id,$sub_category_id);
                 }
+
             foreach($products['products'] as  $prod){
                             
                 $product_variants = $this->Product_model->get_product_varients($prod->product_id);
@@ -38,6 +39,7 @@ class Product extends REST_Controller
                 $new['cost'] = $prod->cost;
                 $new['price'] = $prod->price;
                 $new['alert_quantity'] = $prod->alert_quantity;
+                $new['quantity'] = $prod->quantity ? $prod->quantity : "0.00";
                 $new['image'] = $prod->image;
                 $new['tax_rate'] = $prod->tax_rate;
                 $new['track_quantity'] = $prod->track_quantity;
@@ -80,8 +82,7 @@ class Product extends REST_Controller
         }else{
             $this->response(['status' => false, 'msg' => 'products not found','data' => []]);
         }
-        // print_r(sizeof($result));exit;
-        
+
     }
     public function product_brand_post(){
         $result = $this->Product_model->get_product_by_brand();

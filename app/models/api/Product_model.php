@@ -17,6 +17,7 @@ class Product_model extends CI_Model
           sma_products.cost ,
           sma_products.price ,
           sma_products.alert_quantity ,
+          sma_products.quantity ,
           sma_products.image ,
           sma_products.tax_rate ,
           sma_products.track_quantity ,
@@ -56,6 +57,7 @@ class Product_model extends CI_Model
           sma_products.cost ,
           sma_products.price ,
           sma_products.alert_quantity ,
+          sma_products.quantity ,
           sma_products.image ,
           sma_products.tax_rate ,
           sma_products.track_quantity ,
@@ -105,6 +107,7 @@ class Product_model extends CI_Model
           sma_products.cost ,
           sma_products.price ,
           sma_products.alert_quantity ,
+          sma_products.quantity ,
           sma_products.image ,
           sma_products.tax_rate ,
           sma_products.track_quantity ,
@@ -186,6 +189,7 @@ class Product_model extends CI_Model
           sma_products.cost ,
           sma_products.price ,
           sma_products.alert_quantity ,
+          sma_products.quantity ,
           sma_products.image ,
           sma_products.tax_rate ,
           sma_products.track_quantity ,
@@ -212,8 +216,74 @@ class Product_model extends CI_Model
         $this->db->or_like('sma_products.barcode_symbology', $search_query);
         
         $products=$this->db->get()->result_array();
+        if(sizeof($products)>0){
+            foreach($products as $prod){
+                $this->db->select('
+                sma_products.id AS product_id,
+                  sma_products.code,
+                  sma_products.name ,
+                  sma_units.name AS product_unit,
+                  sma_products.cost ,
+                  sma_products.price ,
+                  sma_products.alert_quantity ,
+                  sma_products.quantity ,
+                  sma_products.image ,
+                  sma_products.tax_rate ,
+                  sma_products.track_quantity ,
+                  sma_products.details ,
+                  sma_products.barcode_symbology ,
+                  sma_products.product_details ,
+                  sma_products.type ,
+                  sma_products.slug ,
+                  sma_products.category_id ,
+                  sma_products.subcategory_id ,
+                  sma_products.featured ,
+                  sma_products.weight ,
+                  sma_products.views ,
+                  sma_products.second_name ,
+                  sma_products.hide ,
+                  sma_products.hide_pos ,
+                  sma_products.brand 
+                ');
+                $this->db->from('sma_products');
+                $this->db->join('sma_units','sma_products.unit = sma_units.id');
+                $this->db->where('base_product_id',$prod['product_id']);
+                $product_vari = $this->db->get()->result_array()[0];
+                $new['product_id'] = $prod['product_id'];
+                $new['code'] = $prod['code'];
+                $new['name'] = $prod['name'];
+                $new['product_unit'] = $prod['product_unit'];
+                $new['cost'] = $prod['cost'];
+                $new['price'] = $prod['price'];
+                $new['alert_quantity'] = $prod['alert_quantity'];
+                $new['quantity'] = $prod['quantity'];
+                $new['image'] = $prod['image'];
+                $new['tax_rate'] = $prod['tax_rate'];
+                $new['track_quantity'] = $prod['track_quantity'];
+                $new['details'] = $prod['details'];
+                $new['barcode_symbology'] = $prod['barcode_symbology'];
+                $new['product_details'] = $prod['product_details'];
+                $new['type'] = $prod['type'];
+                $new['slug'] = $prod['slug'];
+                $new['category_id'] = $prod['category_id'];
+                $new['subcategory_id'] = $prod['subcategory_id'];
+                $new['featured'] = $prod['featured'];
+                $new['weight'] = $prod['weight'];
+                $new['views'] = $prod['views'];
+                $new['second_name'] = $prod['second_name'];
+                $new['hide'] = $prod['hide'];
+                $new['hide_pos'] = $prod['hide_pos'];
+                $new['brand'] = $prod['brand'];
+                if(sizeof($product_vari)>0){
+                    $new['product_variants'] = $product_vari;
+                }else{
+                    $new['product_variants'] = [];
+                }
+                $final_result[] = $new;
+            }
+        }
         
-        return ['status' => true, 'msg' => 'products by search' , 'data' => $products];
+        return ['status' => true, 'msg' => 'products by search' , 'data' => $final_result];
         
     }
     

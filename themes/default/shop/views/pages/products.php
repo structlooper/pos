@@ -13,12 +13,12 @@
                             foreach (array_chunk($categories, 1) as $cats) {
                         ?>
                         <?php
-                            if($r <= 5){
+                            if($r <= 4){
                             foreach ($cats as $ctg) {
                         ?>
                                 <li class="list-inline-item"><a href="<?= site_url('category/' . $ctg->slug) ?>"><?= $ctg->name; ?></a></li>
                             <?php }}?>
-                            <?php $r++; } if($r > 5){ ?>
+                            <?php $r++; } if($r > 4){ ?>
                         <li class="list-inline-item more-category"><a href="#">More<i class="icon-arrow-down ml-2"></i></a>
                             <ul class="list-unstyled list-more-category hide text-left">
                                     <?php
@@ -26,7 +26,7 @@
                                     foreach (array_chunk($categories, 1) as $cats) {
                                 ?>
                                 <?php
-                                    if($r > 5){
+                                    if($r > 4){
                                     foreach ($cats as $ctg) {
                                 ?>
                                 <li><a href="<?= $ctg->slug; ?>"><?= $ctg->name; ?></a></li>
@@ -47,8 +47,9 @@
         <div class="product-navigation">
             <div class="row">
                 <div class="col-xl-3">
-                    <div class="side-nav border-right">
+                    <div class="side-nav border-right d-none d-lg-block">
                         <h6 class="font-weight-bold my-5"><a class="text-decoration-none" href="#">Grocery &amp; Staples</a></h6>
+                        
                         <ul class="nav category-list">
                             <li class="nav-item category-list-item">
                                 <a class="nav-link nav-detail p-0" href="#">
@@ -160,21 +161,64 @@
                                 </a>
                             </li>
                         </ul>
+                        <div class="container mt-5">
+                        <h6 class="title text-bold text-left"><span><?= lang('price_range'); ?></span></h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" name="min-price" id="min-price" value="" placeholder="Min" class="form-control price-sort"></input>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="max-price" id="max-price" value="" placeholder="Max" class="form-control price-sort"></input>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="section-right">
+                    <div id="loading">
+                            <div class="wave">
+                                <div class="rect rect1"></div>
+                                <div class="rect rect2"></div>
+                                <div class="rect rect3"></div>
+                                <div class="rect rect4"></div>
+                                <div class="rect rect5"></div>
+                            </div>
+                        </div>
                         <div class="category-navs">
-                            <div class="img-widget-box"><img class="img-fluid" src="https://grofers.com/images/banners/banner-edlp-e3d1bbb.jpg"><a class="banner-help" href="#"><img data-toggle="tooltip" data-bs-tooltip="" data-placement="right" class="img-widget-info-icon" src="https://grofers.com/images/info-icon-e12305e.png" title="Terms &amp; Conditions"></a></div>
+                            <div class="img-widget-box">
+                                <img class="img-fluid img-web d-lg-block d-none" src="https://grofers.com/images/banners/banner-edlp-e3d1bbb.jpg">
+                                <img class="img-fluid img-mobile d-lg-none" src="https://grofers.com/images/banners/banner-edlp-mobile-3dc493b.png">
+                            <a class="banner-help" href="#"><img data-toggle="tooltip" data-bs-tooltip="" data-placement="top" class="img-widget-info-icon" src="https://grofers.com/images/info-icon-e12305e.png" title="Terms &amp; Conditions"></a></div>
                             <ol
                                 class="breadcrumb breadcrumb-navs">
-                                <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
+                                <li class="breadcrumb-item"><a href="<?= site_url()?>"><span>Home</span></a></li>
                                 <li class="breadcrumb-item"><a href="#"><span>Grocery &amp; Staples</span></a></li>
                                 <li class="breadcrumb-item"><a href="#"><span>Pulses</span></a></li>
                                 </ol>
+                                <div id="grid-selector">
+                            <div id="grid-menu" class="hidden-xs hidden-sm">
+                                
+                                
+                            </div>
+                            
+                            
+                        </div>
                                 <p class="category-navs__current">Pulses</p>
-                                <div class="product-filter">
-                                    <div><label class="dropdown__title-label mb-0">Sort by</label><select class="custom-select dropdown__menu"><option value="" selected="">Relevance</option><option value="">Price (Low to High)</option><option value="">Price (High to Low)</option><option value="">Discount (High to Low)</option><option value="">Name (A - Z)</option></select></div>
+                                <div class="product-filter" id="grid-sort">
+                                    <div class="sort">
+                                        <label class="dropdown__title-label mb-0">Sort by</label>
+                                            <select class="custom-select dropdown__menu selectpicker" name="sorting" id="sorting">
+                                                <option value="name-asc"><?= lang('name_asc'); ?></option>
+                                                <option value="name-desc"><?= lang('name_desc'); ?></option>
+                                                <option value="price-asc"><?= lang('price_asc'); ?></option>
+                                                <option value="price-desc"><?= lang('price_desc'); ?></option>
+                                                <option value="id-desc"><?= lang('id_desc'); ?></option>
+                                                <option value="id-asc"><?= lang('id_asc'); ?></option>
+                                                <option value="views-desc"><?= lang('views_desc'); ?></option>
+                                                <option value="views-asc"><?= lang('views_asc'); ?></option>
+                                            </select>
+                                    </div>
                                 </div>
                         </div>
                     </div>
@@ -186,9 +230,19 @@
                                         <div id="results" class="grid"></div>
                                     </div>
                                 </div>
+                                <div class="row">
+                            <div class="col-md-6">
+                                <span class="page-info line-height-xl hidden-xs hidden-sm"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="pagination" class="pagination-right"></div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
+
+                    
                 </div>
             </div>
         </div>

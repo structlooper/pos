@@ -163,62 +163,101 @@ class User_modal extends CI_Model
                 if(sizeof($orders) == 0){
                     return [ 'status' => false,'msg' => 'no orders found' , 'data' => []];
                 }
-                foreach( $orders as $order){
+                foreach( $orders as $order) {
                     $this->db->select('*');
                     $this->db->from('sma_sale_items');
-                    $this->db->where('sale_id',$order['id']);
+                    $this->db->where('sale_id', $order['id']);
                     $order_products = $this->db->get()->result_array();
-                 $new['id'] = $order['id'];   
-                 $new['date'] = $order['date'];   
-                 $new['reference_no'] = $order['reference_no'];   
-                 $new['customer_id'] = $order['customer_id'];   
-                 $new['customer'] = $order['customer'];   
-                 $new['biller_id'] = $order['biller_id'];   
-                 $new['biller'] = $order['biller'];   
-                 $new['warehouse_id'] = $order['warehouse_id'];   
-                 $new['note'] = $order['note'];   
-                 $new['staff_note'] = $order['staff_note'];   
-                 $new['total'] = $order['total'];   
-                 $new['product_discount'] = $order['product_discount'];   
-                 $new['order_discount_id'] = $order['order_discount_id'];   
-                 $new['total_discount'] = $order['total_discount'];   
-                 $new['order_discount'] = $order['order_discount'];   
-                 $new['product_tax'] = $order['product_tax'];   
-                 $new['order_tax_id'] = $order['order_tax_id'];   
-                 $new['order_tax'] = $order['order_tax'];   
-                 $new['total_tax'] = $order['total_tax'];   
-                 $new['shipping'] = $order['shipping'];   
-                 $new['grand_total'] = $order['grand_total'];   
-                 $new['sale_status'] = $order['sale_status'];   
-                 $new['payment_status'] = $order['payment_status'];   
-                 $new['payment_term'] = $order['payment_term'];   
-                 $new['due_date'] = $order['due_date'];   
-                 $new['created_by'] = $order['created_by'];   
-                 $new['updated_by'] = $order['updated_by'];   
-                 $new['updated_at'] = $order['updated_at'];   
-                 $new['total_items'] = $order['total_items'];   
-                 $new['pos'] = $order['pos'];   
-                 $new['paid'] = $order['paid'];   
-                 $new['return_id'] = $order['return_id'];   
-                 $new['surcharge'] = $order['surcharge'];   
-                 $new['attachment'] = $order['attachment'];   
-                 $new['return_sale_ref'] = $order['return_sale_ref'];   
-                 $new['sale_id'] = $order['sale_id'];   
-                 $new['return_sale_total'] = $order['return_sale_total'];   
-                 $new['rounding'] = $order['rounding'];   
-                 $new['suspend_note'] = $order['suspend_note'];   
-                 $new['api'] = $order['api'];   
-                 $new['shop'] = $order['shop'];   
-                 $new['address_id'] = $order['address_id'];   
-                 $new['reserve_id'] = $order['reserve_id'];   
-                 $new['hash'] = $order['hash'];   
-                 $new['manual_payment'] = $order['manual_payment'];   
-                 $new['cgst'] = $order['cgst'];   
-                 $new['sgst'] = $order['sgst'];   
-                 $new['igst'] = $order['igst'];   
-                 $new['payment_method'] = $order['payment_method'];   
-                 $new['order_products'] = $order_products;   
-                $b_new[] = $new;
+
+                    foreach($order_products as $ord_prd){
+                        $this->db->select('image');
+                        $this->db->from('sma_products');
+                        $this->db->where('id',$ord_prd['product_id']);
+                        $product_image = $this->db->get()->result_array()[0];
+                        $foo['id'] = $ord_prd['id'];
+                        $foo['sale_id'] = $ord_prd['sale_id'];
+                        $foo['product_id'] = $ord_prd['product_id'];
+                        $foo['product_code'] = $ord_prd['product_code'];
+                        $foo['product_name'] = $ord_prd['product_name'];
+                        $foo['product_type'] = $ord_prd['product_type'];
+                        $foo['option_id'] = $ord_prd['option_id'];
+                        $foo['net_unit_price'] = $ord_prd['net_unit_price'];
+                        $foo['unit_price'] = $ord_prd['unit_price'];
+                        $foo['quantity'] = $ord_prd['quantity'];
+                        $foo['warehouse_id'] = $ord_prd['warehouse_id'];
+                        $foo['item_tax'] = $ord_prd['item_tax'];
+                        $foo['tax_rate_id'] = $ord_prd['tax_rate_id'];
+                        $foo['tax'] = $ord_prd['tax'];
+                        $foo['discount'] = $ord_prd['discount'];
+                        $foo['item_discount'] = $ord_prd['item_discount'];
+                        $foo['subtotal'] = $ord_prd['subtotal'];
+                        $foo['serial_no'] = $ord_prd['serial_no'];
+                        $foo['real_unit_price'] = $ord_prd['real_unit_price'];
+                        $foo['sale_item_id'] = $ord_prd['sale_item_id'];
+                        $foo['product_unit_id'] = $ord_prd['product_unit_id'];
+                        $foo['product_unit_code'] = $ord_prd['product_unit_code'];
+                        $foo['unit_quantity'] = $ord_prd['unit_quantity'];
+                        $foo['comment'] = $ord_prd['comment'];
+                        $foo['gst'] = $ord_prd['gst'];
+                        $foo['cgst'] = $ord_prd['cgst'];
+                        $foo['sgst'] = $ord_prd['sgst'];
+                        $foo['igst'] = $ord_prd['igst'];
+                        if(sizeof($product_image) == 0) {$foo['image'] = null; }else{ $foo['image'] = $product_image['image']; }
+                        $foo1[] = $foo;
+                    }
+
+
+                    $new['id'] = $order['id'];
+                    $new['date'] = $order['date'];
+                    $new['reference_no'] = $order['reference_no'];
+                    $new['customer_id'] = $order['customer_id'];
+                    $new['customer'] = $order['customer'];
+                    $new['biller_id'] = $order['biller_id'];
+                    $new['biller'] = $order['biller'];
+                    $new['warehouse_id'] = $order['warehouse_id'];
+                    $new['note'] = $order['note'];
+                    $new['staff_note'] = $order['staff_note'];
+                    $new['total'] = $order['total'];
+                    $new['product_discount'] = $order['product_discount'];
+                    $new['order_discount_id'] = $order['order_discount_id'];
+                    $new['total_discount'] = $order['total_discount'];
+                    $new['order_discount'] = $order['order_discount'];
+                    $new['product_tax'] = $order['product_tax'];
+                    $new['order_tax_id'] = $order['order_tax_id'];
+                    $new['order_tax'] = $order['order_tax'];
+                    $new['total_tax'] = $order['total_tax'];
+                    $new['shipping'] = $order['shipping'];
+                    $new['grand_total'] = $order['grand_total'];
+                    $new['sale_status'] = $order['sale_status'];
+                    $new['payment_status'] = $order['payment_status'];
+                    $new['payment_term'] = $order['payment_term'];
+                    $new['due_date'] = $order['due_date'];
+                    $new['created_by'] = $order['created_by'];
+                    $new['updated_by'] = $order['updated_by'];
+                    $new['updated_at'] = $order['updated_at'];
+                    $new['total_items'] = $order['total_items'];
+                    $new['pos'] = $order['pos'];
+                    $new['paid'] = $order['paid'];
+                    $new['return_id'] = $order['return_id'];
+                    $new['surcharge'] = $order['surcharge'];
+                    $new['attachment'] = $order['attachment'];
+                    $new['return_sale_ref'] = $order['return_sale_ref'];
+                    $new['sale_id'] = $order['sale_id'];
+                    $new['return_sale_total'] = $order['return_sale_total'];
+                    $new['rounding'] = $order['rounding'];
+                    $new['suspend_note'] = $order['suspend_note'];
+                    $new['api'] = $order['api'];
+                    $new['shop'] = $order['shop'];
+                    $new['address_id'] = $order['address_id'];
+                    $new['reserve_id'] = $order['reserve_id'];
+                    $new['hash'] = $order['hash'];
+                    $new['manual_payment'] = $order['manual_payment'];
+                    $new['cgst'] = $order['cgst'];
+                    $new['sgst'] = $order['sgst'];
+                    $new['igst'] = $order['igst'];
+                    $new['payment_method'] = $order['payment_method'];
+                    $new['order_products'] = $foo1;
+                    $b_new[] = $new;
                 }
                 $final_orders = $b_new;
                 return ['status' => true, 'msg' => 'user orders', 'data' => array_reverse($final_orders)];
@@ -231,15 +270,16 @@ class User_modal extends CI_Model
        return [ 'status' => true, 'msg' => 'user details' , 'data' => $user_details];
    }
    public function update_user_profile_details($user_id){
+
         $data['username'] = $_POST['username'];
         $data['email'] = $_POST['email'];
         $data['first_name'] = $_POST['first_name'];
         $data['last_name'] = $_POST['last_name'];
         $data['gender'] = $_POST['gender'];
-        if($data['username'] = '' or $data['email'] = '' or $data['first_name'] = '' or $data['gender'] = ''){
-            return [ 'status' => false,'msg' => 'Please fill all required details','data' => []];
-        }
-        $this->db->where('id',$user_id);
+       if($data['username'] == '' or $data['email'] == '' or $data['first_name'] == '' or $data['gender'] == ''){
+           return [ 'status' => false,'msg' => 'Please fill all required details','data' => []];
+       }
+       $this->db->where('id',$user_id);
         $this->db->update('sma_users',$data);
         $result = $this->get_user_profile_details($user_id);
         return ['status' => true,'msg'=>'user profile updated successfully' ,'data'=> $result['data']];

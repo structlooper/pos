@@ -29,6 +29,15 @@ $('.category-list-item .nav-detail').click(function() {
     slidesToScroll: 6,
     speed: 300,
     arrows: true,
+    responsive: [
+      {
+        breakpoint: 1008,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1
+        }
+      }
+    ]
   });
 
 $('.store-categories-inner').slick({
@@ -85,4 +94,79 @@ $(window).ready(function(){
   }
 })
 
+$('a[href*="#"]')
+  .not('[href="#"]')
+  .not('[href="#0"]')
+  .click(function(event) {
+    if (
+      location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+      && 
+      location.hostname == this.hostname
+    ) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        event.preventDefault();
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 1000, function() {
+          var $target = $(target);
+          $target.focus();
+          if ($target.is(":focus")) {
+            return false;
+          } else {
+            $target.attr('tabindex','-1');
+            $target.focus();
+          };
+        });
+      }
+    }
+  });
+  
+jQuery.validator.addMethod('answercheck', function(value, element) {
+			return this.optional(element) || /^\bcat\b$/.test(value)
+		}, "type the correct answer -_-");
+		// validate Login
+		$(function() {
+			$('#modal-login-inner').validate({
+				rules: {
+					phone: {
+						required: true,
+						minlength: 10
+					}
+				},
+				messages: {
+					phone: {
+						required: "Phone number is required",
+						minlength: "A valid phone number has 10 digits in it!"
+					}
+				},
+				submitHandler: function(form) {
+					$(form).ajaxSubmit({
+						type: "POST",
+						data: $(form).serialize(),
+						url: "https://tbosmartmart.com/pos/",
+						success: function() {
+							$('#btn-login').attr('disabled','false');
+							alert('True');
+						},
+						error: function() {
+							
+						}
+					});
+				}
+			});
+		});
+		
+		
+		$('#btn-next').on('click',function(){
+		    var number = document.getElementById("phone").value;
+            if (number.length > 9){
+                $('#phone-wrapper').css('display','none');
+		        $('#otp-wrapper').css('display','flex');
+            }
+            
+		});
+		
+		
 })(jQuery);

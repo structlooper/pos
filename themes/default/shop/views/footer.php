@@ -18,7 +18,7 @@
         <div class="container">
             <div class="quality-marks">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12 col-lg-4">
                         <div class="quality-icon best-prices"></div>
                         <div class="d-table-cell quality-description">
                             <div class="quality-marks-name"><span>Best Prices &amp; Offers<br></span></div>
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-lg-4 mt-3 mt-lg-0">
                         <div class="quality-icon genuine-products"></div>
                         <div class="d-table-cell quality-description">
                             <div class="quality-marks-name"><span>Wide Assortment<br></span></div>
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-lg-4 mt-3 mt-lg-0">
                         <div class="quality-icon easy-returns"></div>
                         <div class="d-table-cell quality-description">
                             <div class="quality-marks-name"><span>Easy Returns<br></span></div>
@@ -49,11 +49,11 @@
             </div>
             <div class="mt-5 pt-3 border-top">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12 col-lg-6">
                         <div class="cat-links">
                             <h6 class="font-weight-bold">Categories</h6>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-12 col-lg-4">
                                     <ul class="list-unstyled">
                                     <?php
                             $r = 0;
@@ -68,7 +68,7 @@
                             <?php $r++; }?>
                                     </ul>
                                 </div>
-                                <div class="col">
+                                <div class="col-12 col-lg-4">
                                     <ul class="list-unstyled">
                                     <?php
                             $r = 0;
@@ -83,7 +83,7 @@
                             <?php $r++; }?>
                                     </ul>
                                 </div>
-                                <div class="col">
+                                <div class="col-12 col-lg-4">
                                     <ul class="list-unstyled">
                                     <?php
                             $r = 0;
@@ -101,10 +101,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-lg-6">
                         <div class="cat-links border-right-0">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-12 col-lg-6">
                                     <h6 class="font-weight-bold">Useful Links</h6>
                                     <ul class="list-unstyled">
                                         <li><a href="<?= site_url('page/' . $shop_settings->about_link); ?>">About Us</a></li>
@@ -115,7 +115,7 @@
                                         <li><a href="#">Careers</a></li>
                                     </ul>
                                 </div>
-                                <div class="col">
+                                <div class="col-12 col-lg-6">
                                     <div>
                                         <h6 class="font-weight-bold">Download App</h6>
                                         <div class="download-links"><a href="#"><img src="https://grofers.com/images/home/google-play_1x-6d4f8e0.png"></a><a href="#"><img src="https://grofers.com/images/home/app-store_1x-8362160.png"></a></div>
@@ -164,23 +164,26 @@
                 <div class="col">
                     <div class="payment-methods">
                         <div class="row">
-                            <div class="col">
-                                <h6 class="font-weight-bold">Payment Options</h6><img src="https://grofers.com/images/payment/mobikwik-6d9eed3.png"><img src="https://grofers.com/images/payment/paytm-1cc911c.png"><img src="https://grofers.com/images/payment/visa-42f212a.png">
+                            <div class="col text-center text-lg-left">
+                                <h6 class="font-weight-bold text-left">Payment Options</h6><img src="https://grofers.com/images/payment/mobikwik-6d9eed3.png"><img src="https://grofers.com/images/payment/paytm-1cc911c.png"><img src="https://grofers.com/images/payment/visa-42f212a.png">
                                 <img
                                     src="https://grofers.com/images/payment/mastercard-fafd4ad.png"><img src="https://grofers.com/images/payment/maestro-be32af5.png"><img src="https://grofers.com/images/payment/rupay-77f4f26.png"><img src="https://grofers.com/images/payment/bhim-upi-3c1ef19.png"><span>Net Banking</span><span>Cash On Delivery</span></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <p class="copyright">© The Best One, Copyrights 2020. All Rights Reserved | Made with ❤ by Infirment Technologies Pvt. Ltd</p>
+            <p class="copyright text-center text-lg-left">© The Best One, Copyrights 2020. All Rights Reserved | Made with ❤ by Infirment Technologies Pvt. Ltd</p>
         </div>
     </div>
     <!-- End: Footer -->
+    <!-- <a href="#" class="back-to-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false"><i class="fa fa-angle-double-up"></i></a> -->
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="<?= $assets; ?>js/bs-init.js"></script>
 <script src="<?= $assets; ?>js/slick.min.js"></script>
+<script src="<?= $assets; ?>js/validate.min.js"></script>
 <script src="<?= $assets; ?>js/custom.js"></script>
 <script src="<?= $assets; ?>js/libs.min.js"></script>
 <script src="<?= $assets; ?>js/scripts.min.js"></script>
@@ -294,6 +297,6 @@ $(document).ready(function() {
         store('shop_grid', '.three-col');
     }
 </script> -->
-</script>
+    
 </body>
 </html>

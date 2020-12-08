@@ -50,4 +50,11 @@ class Category_model extends CI_Model
         $settings = $this->db->get()->result_array()[0];
         return ['status' => true,'msg' => 'razorpay data', 'data' => $settings];
     }
+    public function get_category_details_by_id(){
+        $this->db->select('*');
+        $this->db->from('sma_categories');
+        $this->db->where('id',$_POST['category_id']);
+        $category_details = $this->db->get()->result_array()[0];
+        return ['status' => true,'msg' => 'category details' , 'data' => $category_details];
+    }
 }

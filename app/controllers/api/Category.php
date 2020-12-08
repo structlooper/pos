@@ -36,6 +36,10 @@ class Category extends REST_Controller
           $this->response($response);
 
     }
+    public function index_post(){
+	    $result = $this->Category_model->get_category_details_by_id();
+	    $this->response($result);
+    }
   
   
 }
