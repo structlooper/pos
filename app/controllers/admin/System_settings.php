@@ -104,6 +104,7 @@ class system_settings extends MY_Controller
                 'slug'        => $this->input->post('slug'),
                 'description' => $this->input->post('description'),
                 'parent_id'   => $this->input->post('parent'),
+                'title'   => $this->input->post('title'),
             ];
 
             if ($_FILES['userfile']['size'] > 0) {
@@ -124,6 +125,55 @@ class system_settings extends MY_Controller
                 }
                 $photo         = $this->upload->file_name;
                 $data['image'] = $photo;
+                $this->load->library('image_lib');
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $this->upload_path . $photo;
+                $config['new_image']      = $this->thumbs_path . $photo;
+                $config['maintain_ratio'] = true;
+                $config['width']          = $this->Settings->twidth;
+                $config['height']         = $this->Settings->theight;
+                $this->image_lib->clear();
+                $this->image_lib->initialize($config);
+                if (!$this->image_lib->resize()) {
+                    echo $this->image_lib->display_errors();
+                }
+                if ($this->Settings->watermark) {
+                    $this->image_lib->clear();
+                    $wm['source_image']     = $this->upload_path . $photo;
+                    $wm['wm_text']          = 'Copyright ' . date('Y') . ' - ' . $this->Settings->site_name;
+                    $wm['wm_type']          = 'text';
+                    $wm['wm_font_path']     = 'system/fonts/texb.ttf';
+                    $wm['quality']          = '100';
+                    $wm['wm_font_size']     = '16';
+                    $wm['wm_font_color']    = '999999';
+                    $wm['wm_shadow_color']  = 'CCCCCC';
+                    $wm['wm_vrt_alignment'] = 'top';
+                    $wm['wm_hor_alignment'] = 'left';
+                    $wm['wm_padding']       = '10';
+                    $this->image_lib->initialize($wm);
+                    $this->image_lib->watermark();
+                }
+                $this->image_lib->clear();
+                $config = null;
+            }
+            if ($_FILES['userfile_2']['size'] > 0) {
+                $this->load->library('upload');
+                $config['upload_path']   = $this->upload_path;
+                $config['allowed_types'] = $this->image_types;
+                $config['max_size']      = $this->allowed_file_size;
+                $config['max_width']     = $this->Settings->iwidth;
+                $config['max_height']    = $this->Settings->iheight;
+                $config['overwrite']     = false;
+                $config['encrypt_name']  = true;
+                $config['max_filename']  = 25;
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload()) {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', $error);
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
+                $photo         = $this->upload->file_name;
+                $data['image_2'] = $photo;
                 $this->load->library('image_lib');
                 $config['image_library']  = 'gd2';
                 $config['source_image']   = $this->upload_path . $photo;

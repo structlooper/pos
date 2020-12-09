@@ -106,24 +106,22 @@ class Banners extends MY_Controller
     public function add_primary_banner(){
         $result=$this->banners_model->save_banner_new_banners();
         if($result['status'] == 1){
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('message', $result['msg']);
                     redirect(admin_url("banners/primary"));
-
         }else{
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('error', $result['msg']);
                     redirect(admin_url("banners/add"));
-
         }
         
     }
     public function update_primary_banner($id){
         $result=$this->banners_model->update_banner_details($id);
         if($result['status'] == 1){
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('message', $result['msg']);
                     redirect(admin_url("banners/primary"));
 
         }else{
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('error', $result['msg']);
                     redirect(admin_url("banners/primary_edit/".$id));
 
         } 
@@ -131,11 +129,11 @@ class Banners extends MY_Controller
     public function primary_delete($id){
         $result=$this->banners_model->delete_banner_details($id);
         if($result['status'] == 1){
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('message', $result['msg']);
                     redirect(admin_url("banners/primary"));
 
         }else{
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('error', $result['msg']);
                     redirect(admin_url("banners/primary"));
 
         } 
@@ -195,11 +193,11 @@ class Banners extends MY_Controller
     public function add_secondary_banner(){
       $result=$this->banners_model->save_secondary_banner();
         if($result['status'] == 1){
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('message', $result['msg']);
                     redirect(admin_url("banners/secondary"));
 
         }else{
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('error', $result['msg']);
                     redirect(admin_url("banners/secondary_add"));
 
         }  
@@ -231,11 +229,11 @@ class Banners extends MY_Controller
     public function update_secondary_banner($id){
          $result=$this->banners_model->update_secondary_banner_details($id);
         if($result['status'] == 1){
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('message', $result['msg']);
                     redirect(admin_url("banners/secondary"));
 
         }else{
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('error', $result['msg']);
                     redirect(admin_url("banners/secondary_edit/".$id));
 
         } 
@@ -243,13 +241,12 @@ class Banners extends MY_Controller
     public function seconadry_delete($id){
          $result=$this->banners_model->delete_secondary_banner_details($id);
         if($result['status'] == 1){
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('message', $result['msg']);
                     redirect(admin_url("banners/secondary"));
 
         }else{
-            $this->session->flashdata($result['msg']);
+            $this->session->set_flashdata('error', $result['msg']);
                     redirect(admin_url("banners/secondary"));
-
         } 
     }
 }

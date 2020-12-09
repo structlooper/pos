@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="<?= $assets; ?>css/slick-theme.css">
     <link rel="stylesheet" href="<?= $assets; ?>css/slick.css">
     <link rel="shortcut icon" href="<?= $assets; ?>images/icon.png">
+    
 </head>
 <body>
 <!-- Start: Navigation -->
@@ -41,10 +42,10 @@
         <div class="container-fluid"><a class="navbar-brand" href="<?= base_url(); ?>"><img alt="<?= $shop_settings->shop_name; ?>" src="<?= $assets; ?>images/thebestone_logo.png"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#nav-top"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="nav-top">
             
-                <?= shop_form_open('products', 'id="product-search-form"'); ?>
+                <?= shop_form_open('products', 'id="product-search-form-web"'); ?>
                     <div class="form-inline">
                         <div class="nav-form">
-                            <input class="form-control" type="text" placeholder="Search for products" name="query" id="product-search">
+                            <input class="form-control" type="text" placeholder="Search for products" name="query" id="product-search-web">
                             <button class="btn search-btn" type="submit"><i class="material-icons">search</i></button>
                         </div>
                     </div>
@@ -60,7 +61,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <div class="logged-user">
                                                 <img> <p class="mb-0"><?= $loggedInUser->email?></p> </div>
-                                            <a class="dropdown-item text-left" href="<?= shop_url('orders'); ?>"><i class="icon-notebook mr-2"></i>My Orders<p class="mb-0">View past orders / Report an issue</p></a>
+                                            <a class="dropdown-item text-left" href="<?= shop_url('view_order'); ?>"><i class="icon-notebook mr-2"></i>My Orders<p class="mb-0">View past orders / Report an issue</p></a>
                                             <a class="dropdown-item text-left" href="<?= shop_url('address');?>"><i class="icon-location-pin mr-2"></i>My Addresses</a>
                                             <a class="dropdown-item text-left" href="<?= shop_url('faq');?>"><i class="icon-question mr-2"></i>FAQs</a>
                                             <a class="dropdown-item text-left" href="<?= shop_url('offers');?>"><i class="icon-magic-wand mr-2"></i>Offers</a>
@@ -82,17 +83,17 @@
     </nav>
     
     <nav class="navbar navbar-expand-md sticky-top navigation nav-mobile">
-        <div class="container-fluid"><button class="navbar-toggler"><span class=""></span></button>
+        <div class="container-fluid"><button class="navbar-toggler"><i class="icon-options-vertical" id="sidenav"></i></button>
         <a class="navbar-brand" href="<?= base_url(); ?>"><img alt="<?= $shop_settings->shop_name; ?>" src="<?= $assets; ?>images/thebestone_logo.png"></a>
         <ul class="nav navbar-nav ml-auto">
                 
                     <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items-count"></span><i class="typcn typcn-shopping-cart mr-2"></i><span class="cart-total-items"></span></a></li>
 
                 </ul>
-                <?= shop_form_open('products', 'id="product-search-form"'); ?>
+                <?= shop_form_open('products', 'id="product-search-form-mobile"'); ?>
                     <div class="form-inline search-mobile">
                         <div class="nav-form">
-                            <input class="form-control" type="text" placeholder="Search for products" name="query" id="product-search">
+                            <input class="form-control" type="text" placeholder="Search for products" name="query" id="product-search-mobile">
                             <button class="btn search-btn" type="submit"><i class="material-icons">search</i></button>
                         </div>
                     </div>
@@ -111,6 +112,7 @@
                     <p class="text-center my-3 font-weight-bold">Enter your phone number to<br>Login/Sign up<br></p>
                     <form class="login-form" id="modal-login-inner">
                         <div class="login-input"><input class="form-control input-number" type="tel" maxlength="10" id="phone" name="phone" autocomplete="off" autofocus></div>
+                        <div id="recaptcha-container"></div>
                         <button class="btn btn-primary btn-block my-3 btn-login" type="button" id="btn-next">Next</button>
                     </form>
                     </div>
@@ -127,45 +129,33 @@
             </div>
         </div>
     </div>
-    <div class="modal fade cart-empty-modal" role="dialog" tabindex="-1" id="cart-empty-modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content cart-modal-content">
-                <div class="modal-header cart-head">
-                    <h5 class="modal-title"><?= lang('my_cart');?></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body empty-cart">
-                    <div class="empty-cart"><img src="https://grofers.com/images/cart/empty-cart_2x-da3645a.png" alt="empty" width="160px">
-                        <h5 class="mt-5 mb-0 font-weight-bold"><?= lang('empty_cart');?><br></h5>
-                        <p class="mb-0 mt-1">Your favourite items are just a click away<br></p>
-                    </div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-block btn-cart" type="button">Start Shopping</button></div>
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade cart-modal" role="dialog" tabindex="-1" id="cart-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content cart-modal-content">
                 <div class="modal-header cart-head">
                     <h5 class="modal-title">My Cart</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body p-0">
+                    <div class="cart-items" id="cart-contents">
+                    <div class="modal-body p-0">
                     <div class="cart-store-details">
                         <div>
                             <div class="float-left"><span>Sub Total</span></div>
-                            <div class="float-right"><span class="subtotal">₹149<br></span></div>
+                            <div class="float-right"><span class="subtotal"><br></span></div>
                             <div class="clearfix"></div>
                         </div>
                         <div>
-                            <div class="float-left"><span>Delivery Charges<i class="la la-question-circle ml-2" data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom" title="Shop ₹450 more to get free delivery"></i></span></div>
-                            <div class="float-right delivery-rate"><span>+ ₹39<br></span></div>
+                            <div class="float-left"><span>Total Taxes<i class="la la-question-circle ml-2" data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom" title="Shop ₹450 more to get free delivery"></i></span></div>
+                            <div class="float-right delivery-rate"><span><br></span></div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="cart-items" id="cart-contents">
+                    
                         <div class="table-cart" id="cart-items"></div>
-                    </div>
+                    
                 </div>
                 <div class="modal-footer">
-                    <p class="cart-promo-info">Promo code can be applied on payment page<br></p><a class="btn btn-block btn-cart btn-checkout" role="button" href="<?= site_url('cart/checkout'); ?>"><span>Proceed to Checkout</span><span class="total">₹126<i class="la la-angle-right"></i><br></span></a></div>
+                    <p class="cart-promo-info">Promo code can be applied on payment page<br></p><a class="btn btn-block btn-cart btn-checkout" role="button" href="<?= site_url('cart'); ?>"><span>Proceed to Checkout</span><span class="total"><i class="la la-angle-right"></i><br></span></a></div>
             </div>
         </div>
+    </div>
     </div>

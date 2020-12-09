@@ -498,6 +498,28 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="mm_banner">
+                                <a class="dropmenu" href="#">
+                                    <i class="fa fa-cogs"></i>
+                                    <span class="text"> Offers </span>
+                                    <span class="chevron closed"></span>
+                                </a>
+                                <ul>
+                                    <li id="banner_add">
+                                        <a class="submenu" href="<?= admin_url('offers/add'); ?>">
+                                            <i class="fa fa-plus"></i>
+                                            <span class="text"> Add Offers</span>
+                                        </a>
+                                    </li>
+                                    <li id="banner_index">
+                                        <a class="submenu" href="<?= admin_url('offers'); ?>">
+                                            <i class="fa fa-cogs"></i>
+                                            <span class="text"> Offers</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
                             <li class="mm_quotes">
                                 <a class="dropmenu" href="#">
                                     <i class="fa fa-heart-o"></i>

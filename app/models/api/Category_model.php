@@ -10,13 +10,40 @@ class Category_model extends CI_Model
     }
     
     public function get_all_categories(){
-        $catgories = $this->db->query("SELECT * FROM sma_categories");
-        if (!is_null($catgories)) {
-            return ['Categories' => $catgories->result()];
+        $this->db->select('*');
+        $this->db->from('sma_categories');
+        $this->db->where('parent_id',NULL);
+        $this->db->or_where('parent_id',0);
+        $catgories = $this->db->get()->result_array();
+//        $catgories = $this->db->query("SELECT * FROM sma_categories WHERE parent_id IS NULL AND WHERE parent_id  0")->result();
+//        print_r($catgories);exit;
+        if (sizeof($catgories) > 0) {
+            foreach($catgories as $cat){
+                $sub_cat = $this->get_all_sub_categories($cat->id);
+                if(sizeof($sub_cat['Categories']) > 0){
+                    $name_1 = [];
+                    foreach($sub_cat['Categories'] as $sub){
+                        $name_1[] = $sub->name;
+                    }
+                    $name = $name_1;
+                }else{
+                    $name = [];
+                }
+                $new['id']=$cat['id'];
+                $new['code']=$cat['code'];
+                $new['name']=$cat['name'];
+                $new['image']=$cat['image'];
+                $new['parent_id']=$cat['arent_id'];
+                $new['slug']=$cat['slug'];
+                $new['description']=$cat['description'];
+                $new['image_2']=$cat['image_2'];
+                $new['title']=$cat['title'];
+                $new['subcategory_name']=$name;
+                $final_result[] = $new;
+            }
+            return [ 'status' => true,'msg' => 'category found','data'=>$final_result];
         } else {
-            return array(
-                'Categories' => []
-            );
+            return [ 'status' => false,'msg' => 'no category found','data'=>[]];
         }
     }
     

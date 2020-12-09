@@ -14,26 +14,8 @@ class Category extends REST_Controller
 	}
     
     public function index_get(){
-      $cat = $this->Category_model->get_all_categories();
-      if(sizeof($cat) > 0){
-      foreach($cat as $itm){
-        foreach($itm as $dat){
-          if($dat->parent_id == '0' or $dat->parent_id == null or $dat->parent_id == ''){
-              $categories[] = $dat;
-          }
-   
-        }
-      }
-      }else{
-          $categories = [];
-      }
-      $response = [
-          'status' => true,
-          'msg' => 'Catgeories',
-          'data' => $categories
-          
-          ];
-          $this->response($response);
+      $result = $this->Category_model->get_all_categories();
+      $this->response($result);
 
     }
     public function index_post(){

@@ -284,4 +284,43 @@ class User_modal extends CI_Model
         $result = $this->get_user_profile_details($user_id);
         return ['status' => true,'msg'=>'user profile updated successfully' ,'data'=> $result['data']];
    }
+   public function get_user_past_orders_products($user_id){
+        $this->db->select('id as sale_id');
+        $this->db->from('sma_sales');
+        $this->db->where('customer_id',$user_id);
+        $order_ids = $this->db->get()->result_array()[0];
+        if(sizeof($order_ids) == 0){return ['status' =>false,'msg'=>'no past orders','data'=>[]];}
+        $this->db->select('sma_products.id AS product_id,
+          sma_products.code,
+          sma_products.name ,
+          sma_units.name AS product_unit,
+          sma_products.cost ,
+          sma_products.price ,
+          sma_products.quantity ,
+          sma_products.alert_quantity ,
+          sma_products.image ,
+          sma_products.tax_rate ,
+          sma_products.track_quantity ,
+          sma_products.details ,
+          sma_products.barcode_symbology ,
+          sma_products.product_details ,
+          sma_products.type ,
+          sma_products.slug ,
+          sma_products.category_id ,
+          sma_products.subcategory_id ,
+          sma_products.featured ,
+          sma_products.weight ,
+          sma_products.views ,
+          sma_products.second_name ,
+          sma_products.hide ,
+          sma_products.hide_pos ,
+          sma_products.brand ');
+        $this->db->from('sma_sale_items');
+        $this->db->join('sma_products','sma_products.id = sma_sale_items.product_id');
+        $this->db->join('sma_units','sma_products.unit = sma_units.id');
+        $this->db->where('sma_sale_items.sale_id',$order_ids['sale_id']);
+        $past_products_ids = $this->db->get()->result_array();
+        if(sizeof($past_products_ids) == 0){return ['status' =>false,'msg'=>'no past orders','data'=>[]];}
+        return ['status'=>true,'msg'=>'user past order products','data'=>$past_products_ids];
+   }
 }

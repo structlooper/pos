@@ -152,6 +152,7 @@ class Product_model extends CI_Model
           sma_units.name AS product_unit,
           sma_products.cost ,
           sma_products.price ,
+          sma_products.quantity ,
           sma_products.alert_quantity ,
           sma_products.image ,
           sma_products.tax_rate ,

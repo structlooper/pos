@@ -297,6 +297,44 @@ $(document).ready(function() {
         store('shop_grid', '.three-col');
     }
 </script> -->
+
+
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+
+
+<script>
+//   var firebaseConfig = {
+//     apiKey: "AIzaSyCc86h8PRxDMCtdogHOYrUhO7qtB6pNfxo",
+//     authDomain: "the-best-one-22bb3.firebaseapp.com",
+//     projectId: "the-best-one-22bb3",
+//     storageBucket: "the-best-one-22bb3.appspot.com",
+//     messagingSenderId: "927758053588",
+//     appId: "1:927758053588:web:78c9f2868b9aecfb898b41",
+//     measurementId: "G-NJFZS4D3XG"
+//   };
+  
+//   firebase.initializeApp(firebaseConfig);
+  
+//   firebase.auth().languageCode = 'en';
+  
+ 
+// window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+// recaptchaVerifier.render().then(function(widgetId) {
+//   window.recaptchaWidgetId = widgetId;
+// });
+
+//  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('btn-next', {
+//   'size': 'invisible',
+//   'callback': function(response) {
+//     // reCAPTCHA solved, allow signInWithPhoneNumber.
+//     onSignInSubmit();
+//   }
+  
+// });
+
+
+</script>
     
 </body>
 </html>

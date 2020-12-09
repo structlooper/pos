@@ -30,10 +30,19 @@
                 <?= lang('description', 'description'); ?>
                 <?= form_input('description', set_value('description'), 'class="form-control tip" id="description" required="required"'); ?>
             </div>
+            <div class="form-group all">
+                <?= lang('title', 'title'); ?>
+                <?= form_input('title', set_value('title'), 'class="form-control tip" id="description" '); ?>
+            </div>
 
             <div class="form-group">
                 <?= lang('category_image', 'image') ?>
                 <input id="image" type="file" data-browse-label="<?= lang('browse'); ?>" name="userfile" data-show-upload="false" data-show-preview="false"
+                       class="form-control file">
+            </div>
+            <div class="form-group">
+                <?= lang('Category_Image 2', 'image 2') ?>
+                <input id="image" type="file" data-browse-label="<?= lang('browse'); ?>" name="userfile_2" data-show-upload="false" data-show-preview="false"
                        class="form-control file">
             </div>
             <div class="form-group">
