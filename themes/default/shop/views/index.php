@@ -35,7 +35,7 @@
                         </li>
                         <li class="list-inline-item <?= $m == 'shop' && $v == 'products' && $this->input->get('promo') != 'yes' ? 'active' : ''; ?>"><a href="<?= shop_url('products'); ?>">Products</a></li>
                         <li class="list-inline-item"><a href="#">Checkout</a></li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -56,12 +56,12 @@
                         ?>
                         <a href="<?= site_url('category/' . $ctg->slug) ?>">
                         <div class="store-categories--product">
-                        
+
                             <div class="product-image">
                                 <?php if(!empty($ctg->image)):?>
-                                    <img src="<?php echo base_url('assets/uploads/' . $ctg->image);?>" alt="<?= $ctg->name; ?>">
+                                    <img src="<?php echo base_url('assets/uploads/' . $ctg->image);?>" alt="<?= $ctg->name; ?>" width="50" height="50">
                                 <?php else:?>
-                                    <img src="<?php echo base_url('assets/uploads/icecream.jpg');?>" alt="<?= $ctg->name; ?>">
+                                    <img src="<?php echo base_url('assets/uploads/icecream.jpg');?>" alt="<?= $ctg->name; ?>" width="50" height="50">
                                 <?php endif?>
                             </div>
                             <div class="product-title">
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-12">
                 <div class="delivery-note"><img class="img-fluid" src="https://cdn.grofers.com/layout-engine/2020-10/Gif-FnV-2.gif" draggable="false"></div>
@@ -84,35 +84,35 @@
             <div class="col">
                 <div class="products-top-list mt-0">
                     <div class="products-top-listbar">
-                        <h5 class="mb-0 head"><?= lang('fruits-veggies')?></h5><a class="btn btn-more <?= $m == 'shop' && $v == 'products' && $this->input->get('promo') != 'yes' ? 'active' : ''; ?>" href="<?= shop_url('products'); ?>">See all</a></div>
+                        <h5 class="mb-0 head"><?= lang('fruits-veggies')?></h5><a class="btn btn-more --><?= $m == 'shop' && $v == 'products' && $this->input->get('promo') != 'yes' ? 'active' : ''; ?><!--" href="--><?= shop_url('products'); ?><!--">See all</a></div>
                         <?php
                             $r = 0;
                             foreach (array_chunk($featured_products, 4) as $fps) {
-                        ?>    
+                        ?>
                     <div class="products-top-inner">
                         <div class="row">
                         <?php
                             foreach ($fps as $fp) {
                         ?>
                             <div class="col-6 col-lg-3 px-2">
-                                
+
                                 <div class="card product-card">
-                                <a href="<?= site_url('product/' . $fp->slug); ?>" style="text-decoration:none">
+                                <a href="--><?= site_url('product/' . $fp->slug); ?>" style="text-decoration:none">
                                     <div class="card-body p-3">
                                     <?php
                                         if ($fp->promotion) {
                                     ?>
                                     <div class="offer-tag"><span class="badge badge-success">59% OFF</span></div>
                                     <?php
-                                        } 
+                                        }
                                     ?>
-                                        <div class="products-top-inner-img"><img class="img-fluid" src="<?= base_url('assets/uploads/' . $fp->image); ?>" alt="<?= $fp->name; ?>"></div>
+                                        <div class="products-top-inner-img"><img class="img-fluid" src="--><?= base_url('assets/uploads/' . $fp->image); ?>" alt="<?= $fp->name; ?>"></div>
                                         <div class="products-top-price mt-3">
                                         <?php
                                                             if ($fp->promotion) {
                                                                 echo '<h5 class="mb-0">'.$this->sma->convertMoney($fp->promo_price). '</h5>';
                                                                 echo '<p class="text-muted mb-0">' . $this->sma->convertMoney(isset($fp->special_price) && !empty(isset($fp->special_price)) ? $fp->special_price : $fp->price) . '<br></p>';
-                                                                
+
                                                             } else {
                                                                 echo '<h5 class="mb-0">'.$this->sma->convertMoney(isset($fp->special_price) && !empty(isset($fp->special_price)) ? $fp->special_price : $fp->price).'</h5>';
                                                             } ?>
@@ -122,10 +122,10 @@
                                             <p class="text-muted">4 units (0.75-1 kg)<br></p>
                                         </div>
                                     </a>
-                                        <div class="btn-group cart-button-group add-to-cart" role="group" data-id="<?= $fp->id; ?>"><button class="btn btn-add-left" type="button">ADD</button><button class="btn btn-add-right" type="button">+</button></div>
+                                        <div class="btn-group cart-button-group add-to-cart" role="group" data-id="--><?//= $fp->id; ?><!--"><button class="btn btn-add-left" type="button">ADD</button><button class="btn btn-add-right" type="button">+</button></div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         <?php }?>
                         </div>
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-        
+
                         </div>
                     </div>
                 </div>

@@ -168,7 +168,7 @@ class User_modal extends CI_Model
                     $this->db->from('sma_sale_items');
                     $this->db->where('sale_id', $order['id']);
                     $order_products = $this->db->get()->result_array();
-
+                    $foo1 = [];
                     foreach($order_products as $ord_prd){
                         $this->db->select('image');
                         $this->db->from('sma_products');
@@ -205,6 +205,7 @@ class User_modal extends CI_Model
                         if(sizeof($product_image) == 0) {$foo['image'] = null; }else{ $foo['image'] = $product_image['image']; }
                         $foo1[] = $foo;
                     }
+//                    print_r($foo1);exit;
 
 
                     $new['id'] = $order['id'];

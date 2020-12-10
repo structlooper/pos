@@ -2447,7 +2447,7 @@ class Products extends MY_Controller
         $options='<option></option>';
         if(sizeof($data)){
             for($a=0;$a<sizeof($data);$a++){
-                $options=$options.'<option value="'.$data[$a]['id'].'">'.$data[$a]['name'].'</option>';
+                $options=$options.'<option value="'.$data[$a]['id'].'" id="option_'.$data[$a]['id'].'" prod_name="'.$data[$a]['name'].'">'.$data[$a]['name'].'</option>';
             }
         }
 

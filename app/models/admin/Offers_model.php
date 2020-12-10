@@ -16,6 +16,9 @@ class Offers_model extends CI_Model
     public function save_new_offer(){
         $title = $_POST['offer_title'];
         $desc = $_POST['offer_desc'];
+        $offer_products = $_POST['offer_products'];
+        $offer_products = explode('_',$offer_products);
+
         $file = $_FILES['offer_image'];
         if(gettype($file) == NULL or sizeof($file) == 0 ){
             return ['status' => 0, 'msg' => 'image is not valid'];
@@ -34,6 +37,15 @@ class Offers_model extends CI_Model
                 $this->db->insert('sma_offers',$data);
                 $banner_id = $this->db->insert_id();
                 if(!is_null($banner_id)){
+                    if (sizeof($offer_products) > 1){
+                        foreach ($offer_products as $key => $prod_1){
+                            if($key == 0){
+                                continue;
+                            }else{
+                                $this->db->insert('sma_offer_products',['offer_id'=>$banner_id,'product_id'=>$prod_1]);
+                            }
+                        }
+                    }
                     return ['status' => 1 , 'msg' => 'offer saved successfully'];
                 }else{
                     return ['status' => 0, 'msg' => 'internal issue offer not saved'];
@@ -52,6 +64,22 @@ class Offers_model extends CI_Model
     }
     public function update_offer($id){
         $title = $_POST['offer_title'];
+        $offer_products = $_POST['offer_products'];
+        $offer_products = explode('_',$offer_products);
+        if (sizeof($offer_products) > 1){
+            $this->db->where('offer_id',$id);
+            $this->db->delete('sma_offer_products');
+            foreach ($offer_products as $key => $prod_1){
+                if($key == 0){
+                    continue;
+                }else{
+                    $this->db->insert('sma_offer_products',['offer_id'=>$id,'product_id'=>$prod_1]);
+
+                }
+            }
+            return ['status' => 1, 'msg' => 'Offer Product changed successfully'];
+        }
+
         $file = $_FILES["offer_image"];
         // print_r(($file['name']));exit;
         if(gettype($file['name']) == NULL or $file['name'] == "" or sizeof($file) == 0 ){
@@ -99,6 +127,14 @@ class Offers_model extends CI_Model
         }else{
             return ['status' => 0, 'msg' => 'internal error offer not deleted'];
         }
+    }
+    public function get_offer_products($id){
+        $this->db->select('*');
+        $this->db->from('sma_offer_products');
+        $this->db->join('sma_products','sma_products.id = sma_offer_products.product_id');
+        $this->db->where('sma_offer_products.offer_id',$id);
+        $offer_products = $this->db->get()->result_array();
+        return $offer_products;
     }
 
 }

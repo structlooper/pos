@@ -19,7 +19,7 @@ class Category_model extends CI_Model
 //        print_r($catgories);exit;
         if (sizeof($catgories) > 0) {
             foreach($catgories as $cat){
-                $sub_cat = $this->get_all_sub_categories($cat->id);
+                $sub_cat = $this->get_all_sub_categories($cat['id']);
                 if(sizeof($sub_cat['Categories']) > 0){
                     $name_1 = [];
                     foreach($sub_cat['Categories'] as $sub){
@@ -49,6 +49,7 @@ class Category_model extends CI_Model
     
     public function get_all_sub_categories($category_id){
         // print_r($category_id);exit;
+        $zero = 0;
         $catgories = $this->db->query("SELECT * FROM sma_categories WHERE `parent_id` = '$category_id';");
         if (!is_null($catgories)) {
             return ['Categories' => $catgories->result()];

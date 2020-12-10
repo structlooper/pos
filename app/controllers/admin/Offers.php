@@ -101,9 +101,10 @@ class Offers extends MY_Controller
             $this->data['warehouse']    = $this->session->userdata('warehouse_id') ? $this->site->getWarehouseByID($this->session->userdata('warehouse_id')) : null;
         }
         $offer = $this->offers_model->get_offer_by_id($id);
+        $offer_products = $this->offers_model->get_offer_products($id);
 
         $bc   = [['link' => base_url(), 'page' => lang('home')], ['link' => '#', 'page' => 'Offers / edit']];
-        $meta = ['page_title' => 'edit', 'bc' => $bc,'offer' => $offer  ];
+        $meta = ['page_title' => 'edit', 'bc' => $bc,'offer' => $offer ,'offer_products' => $offer_products ];
         // print_r($banners);exit;
         $this->page_construct('offers/edit', $meta, $this->data);
     }

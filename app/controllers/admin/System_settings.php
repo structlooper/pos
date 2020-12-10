@@ -1141,8 +1141,9 @@ class system_settings extends MY_Controller
                 'slug'        => $this->input->post('slug'),
                 'description' => $this->input->post('description'),
                 'parent_id'   => $this->input->post('parent'),
+                'title'   => $this->input->post('title'),
             ];
-
+//print_r($_FILES['userfile_2']);exit;
             if ($_FILES['userfile']['size'] > 0) {
                 $this->load->library('upload');
                 $config['upload_path']   = $this->upload_path;
@@ -1192,6 +1193,22 @@ class system_settings extends MY_Controller
                 $this->image_lib->clear();
                 $config = null;
             }
+            if ($_FILES['userfile_2']['size'] > 0) {
+                $tempname = $_FILES["userfile_2"]["tmp_name"];
+                $filename = rand(10,10000).$_FILES['userfile_2']['name'];
+                $folder = "assets/uploads/".$filename;
+                if (!move_uploaded_file($tempname, $folder)) {
+                    print_r('same error');exit;
+
+//                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', "error");
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
+                $photo         = $filename;
+                $data['image_2'] = $photo;
+
+            }
+
         } elseif ($this->input->post('edit_category')) {
             $this->session->set_flashdata('error', validation_errors());
             admin_redirect('system_settings/categories');

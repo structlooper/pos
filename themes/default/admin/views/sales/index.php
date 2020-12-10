@@ -222,14 +222,100 @@
             }
         });
 
-    });
 
+
+    });
+    function submit_driver_form(){
+        let driver_id = $('#delivery_boy').val();
+        let order_id = $('option:selected','#delivery_boy').attr('su');
+        if(driver_id == '' || driver_id == undefined){
+            alert('please select a driver!')
+        }else{
+            // alert(order_id)
+            //
+            // let data_this = [ 'driver_id':driver_id,'order_id':order_id ]
+            $.ajax({
+                type: "GET",
+                url: "<?= base_url('api/deliveryboy/assign_web') ?>?order_id="+order_id+"&driver_id="+driver_id,
+                success: function(result) {
+                    alert(result.msg)
+                    $('#assign_driver_model').modal('hide')
+                    if (result.status == true) {
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
+                    }
+                },
+                error: function(jqXHR) {
+                    alert('whoops server error!!');
+                    console.log(jqXHR.responseText);
+                    $('#assign_driver_model').modal('hide')
+                }
+            })
+
+        }
+    }
+function assignFunction($order_id){
+    $.ajax({
+        type: "GET",
+        url: "<?= base_url('api/deliveryboy') ?>",
+        success: function(result) {
+            if (result.data.length > 0) {
+                $.each(result.data, function (key, val) {
+                    if (key == 0) {
+                        $('#delivery_boy').html(`
+                <option value="" selected >--Select Delivery Boy--</option>
+
+                <option value="${val.id}" su="${$order_id}>${val.name} &nbsp; Vehicle Details-${val.vehicle_number}/${val.vehicle_name}/${val.vehicle_color}</option>
+                `)
+                    }
+                    $('#delivery_boy').append(`
+                <option value="${val.id}" su="${$order_id}">${val.name} &nbsp; Vehicle Details-${val.vehicle_number}/${val.vehicle_name}/${val.vehicle_color}</option>
+                `)
+                });
+            }else{
+                $('#delivery_boy').html(`
+                <option value="" >No Delivery Boy found!!</option>
+                `)
+            }
+        },
+        error: function(jqXHR) {
+            alert('whoops server error!!');
+            console.log(jqXHR.responseText);
+        }
+    })
+    $('#assign_driver_model').modal('show')
+}
 </script>
 
 <?php if ($Owner || $GP['bulk_actions']) {
             echo admin_form_open('sales/sale_actions', 'id="action-form"');
         }
 ?>
+<div class="modal" tabindex="-1" role="dialog" id="assign_driver_model">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Assign Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <div class="form-group">
+                   <B>Available Delivery Boys</B>
+                   <select class="form-control" placeholder="Select Delivery Boy" name="delivery_boy_id" id="delivery_boy">
+
+                   </select>
+               </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="submit_driver_form()">Assign</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="box">
     <div class="box-header">
         <h2 class="blue"><i
@@ -334,13 +420,13 @@
                             <th style="min-width:30px; width: 30px; text-align: center;">
                                 <input class="checkbox checkft" type="checkbox" name="check"/>
                             </th>
-                            <th></th><th></th><th></th><th></th><th></th>
+                            <th></th><th></th><th></th><th></th><th></th><th></th>
                             <th><?= lang('grand_total'); ?></th>
                             <th><?= lang('paid'); ?></th>
                             <th><?= lang('balance'); ?></th>
                             <th></th>
                             <th style="min-width:30px; width: 30px; text-align: center;"><i class="fa fa-chain"></i></th>
-                            <th></th>
+<!--                            <th></th>-->
                             <th style="width:80px; text-align:center;"><?= lang('actions'); ?></th>
                         </tr>
                         </tfoot>

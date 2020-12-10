@@ -17,7 +17,8 @@
                         ?>
                                 <li class="list-inline-item"><a href="<?= site_url('category/' . $ctg->slug) ?>"><?= $ctg->name; ?></a></li>
                             <?php }}?>
-                            <?php $r++; } if($r > 4){ ?>
+                            <?php $r++; }?>
+                            
                         <li class="list-inline-item more-category"><a href="#">More<i class="icon-arrow-down ml-2"></i></a>
                             <ul class="list-unstyled list-more-category hide text-left">
                                     <?php
@@ -30,7 +31,7 @@
                                 ?>
                                 <li><a href="<?= $ctg->slug; ?>"><?= $ctg->name; ?></a></li>
                                 <?php }}?>
-                            <?php $r++; } }?>
+                            <?php $r++; }?>
                             </ul>
                         </li>
                     </ul>
@@ -39,7 +40,6 @@
         </div>
     </div>
     <!-- End: Store Navigation -->
-    
 <div class="wrapper wrapper-product">
         <div class="container">
             <div class="product-detail">
@@ -53,7 +53,7 @@
                         <div>
                             <div class="offer-tag offer-tag-inner">
                             <?php
-                                if ($product->promotion) {
+                                if (!$featured_products->promotion) {
                                 ?>
                                 <span class="badge badge-success">Promo</span>
                                 <?php
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col">
                         <div class="product-details-main">
                             <h6 class="product-details-header">Product Details</h6>
                             <div class="product-attributes">
@@ -180,7 +180,13 @@
                                     <span class="badge badge-right theme"><?= lang('promo'); ?></span>
                                     <?php
                                     } ?>
-                                        <div class="products-top-inner-img"><img class="img-fluid" src="<?= base_url('assets/uploads/' . $fp->image); ?>"></div>
+                                        <div class="products-top-inner-img">
+                                            <?php if(!empty($ctg->image)):?>
+                                                <img src="<?php echo base_url('assets/uploads/' . $fp->image);?>" class="img-fluid" alt="<?= $fp->name; ?>">
+                                            <?php else:?>
+                                                <img src="<?php echo base_url('assets/uploads/icecream.jpg');?>" class="img-fluid" alt="<?= $fp->name; ?>">
+                                            <?php endif?>
+                                        </div>
                                         <?php if (!$shop_settings->hide_price) { ?>
                                         <div class="products-top-price">
                                         <?php
@@ -195,7 +201,7 @@
                                             <p class="product-name"><?= $fp->name; ?><br></p>
                                         </div>
                                     </a>
-                                        <div class="btn-group cart-button-group" role="group" id="add-cart"><button class="btn btn-add-left" type="button">ADD</button><button class="btn btn-add-right" type="button">+</button></div>
+                                        <div class="btn-group cart-button-group" role="group"><button class="btn btn-add-left" type="button">ADD</button><button class="btn btn-add-right" type="button">+</button></div>
                                     </div>
                                     <?php } ?>
                                 </div>

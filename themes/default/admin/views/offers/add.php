@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script>
     $(document).ready(function () {
+        productDet()
+
         oTable = $('#QUData').dataTable({
             "aaSorting": [[1, "desc"], [2, "desc"]],
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
@@ -74,9 +76,101 @@
         <?php $this->sma->unset_data('remove_quls');
         } ?>
     });
+    function productDet() {
+        //url: "<?= admin_url('products/getSubCategories') ?>/"
+        //var baseUrl= "<?php echo base_url();?>";
+        $.ajax({
+            method:"POST",
+            url:"<?= admin_url('products/getAllProducts') ?>",
+            data: {  },
+            xhrFields: {
+                withCredentials: true
+            },
+            async: false,
+            crossDomain: true,
+            dataType: "json",
 
+            success: function(data) {
+                //console.log(data);
+                if(data.error===false){
+                    $('#productDetails').append(data.options);
+                    $('.js-example-basic-single').select2({
+                        placeholder: "Select One",
+                        allowClear: true,
+                        minimumInputLength: 2,
+                    });
+                }
+            },
+            error: function(fail)
+            {
+                console.log("fail");
+            },
+        });
+    }
+    function add_new_products(){
+
+        $('#add_product_model').modal('show');
+    }
+    function add_prduct(){
+        $('#ajaxCall').hide()
+        $('#add_product_model').modal('hide');
+        $('#products_offed').hide('fast')
+        let $vaue = $('#productDetails').val();
+        let $name =  $('option:selected', '#productDetails').attr('prod_name');
+        let $old_added = $('#products_added').val()
+        $('#products_added').val($old_added+'_'+$vaue)
+        $('#value_test').html($old_added+'_'+$vaue)
+        $('#product-list-group').append(`
+                                    <li class="list-group-item row_${$vaue}"><div class="row" ><div class="col-sm-10" >${$name}</div><div class="col-sm-2 text-right"><button type="button" onclick="remove_product(${$vaue})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></div></div></li>
+
+        `)
+        $('#products_offed').show('slow')
+    }
+    function remove_product($id){
+        // $('row_'+$id).hide();
+        let $vaue = $('#value_test').html();
+        let $myarray = $vaue.split("_");
+        if(jQuery.inArray($id, $myarray)){
+            $myarray = jQuery.grep($myarray, function(value) {
+                return value != $id;
+            });
+            let newVal = ' ';
+            $.each($myarray, function (key, val) {
+                if(key == 0){
+
+                }else{
+                    newVal += '_' + val
+                }
+            });
+            $('#products_added').val(newVal)
+            $('#value_test').html(newVal)
+            $('.row_'+$id).hide()
+        }else{
+            console.log(typeof($vaue));
+        }
+    }
 </script>
+<div id="value_test" style="display: none"></div>
 
+<div class="modal" tabindex="-1" role="dialog" id="add_product_model">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Product list</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="js-example-basic-single"  id="productDetails" placeholder="Select product" style="width: 100%"></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="add_prduct()">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="box">
     <div class="box-header">
         <h2 class="blue"><i
@@ -106,6 +200,24 @@
                         <option value="AMOUNT">Amount (₹)</option>
                         <option value="PERCENT">Percentage (%)</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="productDetails">Offer Products</label>
+                            <input type="hidden" id="products_added" name="offer_products" >
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="add_new_products()">Add product</button>
+                        </div>
+                    </div>
+                    <div id="products_offed" style="display: none" >
+                        <ul class="list-group " style="margin-top:2px;  max-width: 55rem;" id="product-list-group">
+
+                        </ul>
+
+                    </div>
+
                 </div>
 
 

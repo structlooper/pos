@@ -13,7 +13,11 @@ class Offers extends REST_Controller
 
     }
     public function index_get(){
-        $result = $this->offers_model->get_all_offers();
+        $result = $this->Offers_model->get_all_offers();
+        $this->response($result);
+    }
+    public function products_post(){
+        $result = $this->Offers_model->get_offer_products();
         $this->response($result);
     }
 }
