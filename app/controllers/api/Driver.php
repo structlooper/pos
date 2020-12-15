@@ -280,7 +280,9 @@ class Driver extends REST_Controller
     public function pendingorders_post()
     {
         $decodedToken = $this->authorization_token->validateToken($_POST['Authorization']);
-	    $user_id = $decodedToken['data']->user_id;
+        $user_id = $decodedToken['data']->user_id;
+        // print_r($user_id);
+        // exit;
 	    if(!is_null($user_id)){
         $driverId=$user_id;
         $user = $this->Driver_model->check_availDriver($driverId);  
@@ -365,13 +367,13 @@ class Driver extends REST_Controller
         $this->response(['status' => false,'msg' => 'not a valid user', 'data' => null]);
      }
     }
-    public function orderStausChange_post()
+    public function orderStatusChange_post()
     {
         $decodedToken = $this->authorization_token->validateToken($_POST['Authorization']);
 	    $user_id = $decodedToken['data']->user_id;
 	    if(!is_null($user_id)){
 
-        $order_id=$_POST["order_id"];
+        $order_id=$_POST["driver_order_id"];
         $order_status=$_POST["order_status"];
         $OrderExist = $this->Driver_model->orderExist($order_id);
         if(empty($OrderExist))

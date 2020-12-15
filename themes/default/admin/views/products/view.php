@@ -95,7 +95,7 @@
                                             <td style="width:30%;"><?= lang('barcode_qrcode'); ?></td>
                                             <td style="width:70%;">
                                             <img src="<?= admin_url('misc/barcode/' . $product->code . '/' . $product->barcode_symbology . '/74/0'); ?>" alt="<?= $product->code; ?>" class="bcimg" />
-                                                <?= $this->sma->qrcode('link', urlencode(admin_url('products/view/' . $product->id)), 2); ?>
+                                                <?php // echo "$this->sma->qrcode('link', urlencode(admin_url('products/view/' . $product->id)), 2)"; ?>
                                             </td>
                                         </tr>
                                         <tr>

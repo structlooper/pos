@@ -287,5 +287,14 @@ class Product_model extends CI_Model
         return ['status' => true, 'msg' => 'products by search' , 'data' => $final_result];
         
     }
+    public function get_product_details_by_id($product_id){
+        $this->db->select('*');
+        $this->db->from('sma_products');
+        $this->db->where('id',$product_id);
+        $produc_details = $this->db->get()->result_array()[0];
+        return ['status' => true,'msg' => 'product details' , 'data' => $produc_details];
+
+
+    }
     
 }

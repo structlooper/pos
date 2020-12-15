@@ -37,6 +37,8 @@
                 var oSettings = oTable.fnSettings();
                 nRow.id = aData[0];
                 nRow.className = "product_link";
+                var $nRow = $(nRow);
+                $nRow.attr("onclick", 'functionPDetails('+aData[0]+')');
                 //if(aData[7] > aData[9]){ nRow.className = "product_link warning"; } else { nRow.className = "product_link"; }
                 return nRow;
             },
@@ -85,7 +87,13 @@
             {column_number: <?php $col++; echo $col; ?>, filter_default_label: "[<?=lang('alert_quantity');?>]", filter_type: "text", data: []},
         ], "footer");
 
+
     });
+    function functionPDetails(p_id){
+        setTimeout(function(){
+            window.location.href = "<?= admin_url('products/view/')?>"+p_id;
+        },1000);
+    }
 </script>
 <?php if ($Owner || $GP['bulk_actions']) {
                 echo admin_form_open('products/product_actions' . ($warehouse_id ? '/' . $warehouse_id : ''), 'id="action-form"');
@@ -202,7 +210,7 @@
                             <th style="min-width:65px; text-align:center;"><?= lang('actions') ?></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                         <tr>
                             <td colspan="11" class="dataTables_empty"><?= lang('loading_data_from_server'); ?></td>
                         </tr>

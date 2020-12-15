@@ -36,7 +36,8 @@ class Shop extends MY_Shop_Controller
                 $this->sma->send_json(['status' => 'error', 'message' => lang('already_have_max_addresses'), 'level' => 'error']);
             }
 
-            $data = ['line1'  => $this->input->post('line1'),
+            $data = [
+                'line1'  => $this->input->post('line1'),
                 'line2'       => $this->input->post('line2'),
                 'phone'       => $this->input->post('phone'),
                 'city'        => $this->input->post('city'),

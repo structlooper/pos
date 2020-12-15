@@ -148,9 +148,9 @@ class Driver_model extends CI_Model
         {
             foreach($assinedOrder as $orders)
             {
-               
                 
-                if($orders['status']=='ASSIGNED')
+                
+                if($orders['status']=='ASSIGNED' || $orders['status']=='ACCEPTED')
                 {
                    
                     $pendingOrder=$this->db->query("SELECT * FROM `sma_sales` WHERE `id`=' $orders[sale_id]'")->result_array();
@@ -163,6 +163,7 @@ class Driver_model extends CI_Model
                         // print_r($userAddressID);
                         // exit;
                         $userAddress=$this->db->query("SELECT * FROM `sma_user_address` WHERE `address_id`='$userAddressID'")->result_array();
+
                         $userarray['address_line_1']=$userAddress[0]['address_line_1'];
                         $userarray['address_line_2']=$userAddress[0]['address_line_2'];
                         $userarray['map_address']=$userAddress[0]['map_address'];
@@ -187,10 +188,15 @@ class Driver_model extends CI_Model
                     $productArray['image']=$orderProductsImage[0]['photo'];
                     $newarray[]=$productArray;
                    }
+                   $pendingOrder[0]['sale_status']=$orders['status'];
+                   $pendingOrder[0]['driver_order_id']=$orders['id'];
                     $pendingOrder[0]['products']=$newarray;
                     $pendingOrder[0]['user']=$updatedUserarray;
+                    
                     $sendData[]=$pendingOrder[0];
+                    
                 }
+
                 
             }
                 return $sendData;
@@ -248,6 +254,7 @@ class Driver_model extends CI_Model
                     $productArray['image']=$orderProductsImage[0]['photo'];
                     $newarray[]=$productArray;
                    }
+                   $pendingOrder[0]['driver_order_id']=$orders['id'];
                     $pendingOrder[0]['products']=$newarray;
                     $pendingOrder[0]['user']=$updatedUserarray;
                     $sendData[]=$pendingOrder[0];
@@ -271,6 +278,7 @@ class Driver_model extends CI_Model
 
         $saleid=$this->db->query("SELECT * FROM `sma_deliveries` WHERE `id`='$id'")->result();
         
+        $order_status=strtoupper($order_status);
         
         if($order_status=='ASSIGNED')
         {
@@ -282,23 +290,43 @@ class Driver_model extends CI_Model
         }
         else if($order_status=='PICKED')
         {
-            $status="OUTFORDELIVERY.";
+            $status="DELIVERING";
         }
         else if($order_status=='DELIVERED')
         {
-            $status="DELIVERED.";
+            $status="DELIVERED";
+           
+
+        }
+        else if($order_status=='CANCELLED')
+        {
+            $status="ORDERED";
         }
         else
         {
                 return false;
         }
-        $saleId=$saleid[0]->sale_id;
+        $saleIdd=$saleid[0]->sale_id;
+        // print_r($saleIdd);
+        // exit;
+    $data=$this->db->query("UPDATE `sma_sales` SET `sale_status`='$status' WHERE `id`=$saleIdd");
 
-    $data=$this->db->query("UPDATE `sma_sales` SET `sale_status`='$status' WHERE `id`=$saleId");
-
-    $data=$this->db->query("UPDATE `sma_deliveries` SET `status`='$order_status' WHERE `id`=$id &&  `received_by`=$user_id");
+    $data=$this->db->query("UPDATE `sma_deliveries` SET `status`='$order_status' WHERE `id`=$id &&  `delivered_by`=$user_id");
     if ($data=='1') {
-
+        if($order_status=='DELIVERED')
+        {
+           
+        //    print_r($saleIdd);
+        //    exit;
+        $userId=$this->db->query("SELECT `customer_id` FROM `sma_sales` WHERE `id`='$saleIdd'")->result();
+        // print_r($userId[0]->customer_id);
+        // exit;
+        $customerId=$userId[0]->customer_id;
+        // print_r($customerId);
+        // exit;
+        $UserId=$userId[0]->customer_id;
+        $data=$this->db->query("UPDATE `sma_deliveries` SET `received_by`='$customerId' WHERE `id`=$id  &&  `delivered_by`=$user_id");
+        }
         return $response='1';
     } else {
           

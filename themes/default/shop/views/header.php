@@ -32,6 +32,31 @@
     <link rel="stylesheet" href="<?= $assets; ?>css/slick-theme.css">
     <link rel="stylesheet" href="<?= $assets; ?>css/slick.css">
     <link rel="shortcut icon" href="<?= $assets; ?>images/icon.png">
+    <style>
+        #partitioned {
+            padding-left: 15px;
+            letter-spacing: 42px;
+            border: 0;
+            background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 50px 1px;
+            background-repeat: repeat-x;
+            background-position-x: 35px;
+            width: 220px;
+            min-width: 220px;
+        }
+
+        #divInner{
+            left: 0;
+            position: sticky;
+
+        }
+
+        #divOuter{
+            width: 190px;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
 <!-- Start: Navigation -->
@@ -51,13 +76,13 @@
                 
                 <ul class="nav navbar-nav ml-auto">
                 <?php
-                                if ($loggedIn) {
-                                    
-                                    if (!$shop_settings->hide_price) {?>
-                                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link px-0" data-toggle="dropdown" aria-expanded="false" href="#"><?= $loggedInUser->first_name?><i class="icon-arrow-down ml-2"></i></a>
+                                if (!is_null($this->session->userdata('user_id'))) {
+
+                                    ?>
+                                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link px-0" data-toggle="dropdown" aria-expanded="false" href="#"><?= $this->session->userdata('first_name')?><i class="icon-arrow-down ml-2"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <div class="logged-user">
-                                                <img> <p class="mb-0"><?= $loggedInUser->email?></p> </div>
+                                                <img> <p class="mb-0"><?= $this->session->userdata('phone')?></p> </div>
                                             <a class="dropdown-item text-left" href="<?= shop_url('orders'); ?>"><i class="icon-notebook mr-2"></i>My Orders<p class="mb-0">View past orders / Report an issue</p></a>
                                             <a class="dropdown-item text-left" href="<?= shop_url('address');?>"><i class="icon-location-pin mr-2"></i>My Addresses</a>
                                             <a class="dropdown-item text-left" href="<?= shop_url('faq');?>"><i class="icon-question mr-2"></i>FAQs</a>
@@ -65,9 +90,9 @@
                                             <a class="dropdown-item text-left" href="<?= site_url('logout');?>"><i class="icon-user mr-2"></i><?= lang('logout'); ?></a>
                                             </div>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge cart-total-items"></span><i class="typcn typcn-shopping-cart mr-2"></i><?= lang('my_cart');?></a></li>
+                                    <li class="nav-item"><a class="nav-link cart-browse" href="javascript:void(0)"><span class="badge">2</span><i class="typcn typcn-shopping-cart mr-2"></i><?= lang('my_cart');?></a></li>
                                     <?php
-                                } } else {
+                                }  else {
                                     ?>
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link p-0" data-toggle="dropdown" aria-expanded="false" href="#">My Account<span><?= lang('login'); ?><i class="icon-arrow-down ml-2"></i></span></a>
                         <div class="dropdown-menu dropdown-menu-right"><button class="btn btn-account-login" type="button"><?= lang('login'); ?></button><a class="dropdown-item text-left" href="#"><i class="icon-question mr-2"></i>FAQs</a><a class="dropdown-item text-left" href="#"><i class="icon-magic-wand mr-2"></i>Offers</a></div>
@@ -85,11 +110,24 @@
                 <div class="modal-body">
                     <h5 class="modal-head mb-0">Phone Number Verification</h5>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="footer_1">
                     <p class="text-center my-3 font-weight-bold">Enter your phone number to<br>Login/Sign up<br></p>
                     <form class="login-form">
-                        <div class="login-input"><input class="form-control input-number" type="tel" maxlength="10"></div>
-                        <button class="btn btn-primary btn-block my-3 btn-login" id ="btn-login" type="button" disabled>Next</button>
+                        <div class="login-input" ><input class="form-control input-number" id="login_number" type="tel" maxlength="10"></div>
+                        <button class="btn btn-primary btn-block my-3 btn-login" id ="btn-login" onclick="login_function()" type="button" >Next</button>
+                        <div id="recaptcha-container"></div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="footer_2" style="display: none">
+                    <p class="text-center my-3 font-weight-bold col-12">Enter otp to<br>Login / Sign up<br></p>
+                    <form class="login-form">
+                        <div id="divOuter">
+                            <div id="divInner">
+                                <input id="partitioned" type="text" maxlength="4" />
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block my-3 btn-login"  onclick="submitPhoneNumberAuthCode()" type="button" >Next</button>
+
                     </form>
                 </div>
             </div>

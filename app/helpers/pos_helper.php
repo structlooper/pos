@@ -2,6 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
 if (!function_exists('product_name')) {
     function product_name($name, $size = 0)
     {

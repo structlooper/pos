@@ -176,6 +176,146 @@
         </div>
     </div>
     <!-- End: Footer -->
+<script>
+    function login_function(){
+        let phone = $('#login_number').val();
+        $('.btn-login').html('Loading...')
+        if (phone == '' || phone == undefined){
+            alert('Please enter a phone number');
+        }else{
+            $.ajax({
+               method:"POST",
+               url:"<?= base_url('api/User/login') ?>",
+               data: { phone:phone,device_token:'web_login' },
+               xhrFields: {
+                   withCredentials: true
+               },
+               async: false,
+               crossDomain: true,
+               dataType: "json",
+
+               success: function(result) {
+                  decode_token(result.data.token)
+               },
+               error: function(fail)
+               {
+                   alert('internal server error please refresh page')
+                   console.log("fail");
+               },
+            });
+
+        }
+    }
+    function decode_token(token){
+        $.ajax({
+            method:"POST",
+            url:"<?= base_url('api/User/verify_web') ?>",
+            data: { Authorization:token },
+            xhrFields: {
+                withCredentials: true
+            },
+            async: false,
+            crossDomain: true,
+            dataType: "json",
+
+            success: function(result) {
+                if (result.status == false){
+                    alert(result.msg)
+                }else {
+                    setTimeout(function(){
+                        window.location.reload();
+                    },2000);
+
+                }
+            },
+
+            error: function(fail)
+            {
+                alert('internal server error please refresh page')
+                console.log("fail");
+            },
+        });
+    }
+</script>
+<!-- Add the latest firebase dependecies from CDN -->
+<script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js"></script>
+
+<script>
+    // Paste the config your copied earlier
+    var firebaseConfig = {
+        apiKey: "AIzaSyCc86h8PRxDMCtdogHOYrUhO7qtB6pNfxo",
+        authDomain: "the-best-one-22bb3.firebaseapp.com",
+        projectId: "the-best-one-22bb3",
+        storageBucket: "the-best-one-22bb3.appspot.com",
+        messagingSenderId: "927758053588",
+        appId: "1:927758053588:web:78c9f2868b9aecfb898b41",
+        measurementId: "G-NJFZS4D3XG"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    //firebase.analytics();
+
+    // Create a Recaptcha verifier instance globally
+    // Calls submitPhoneNumberAuth() when the captcha is verified
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+        "recaptcha-container",
+        {
+            size: "normal",
+            callback: function(response) {
+                submitPhoneNumberAuth();
+            }
+        }
+    );
+
+    // This function runs when the 'sign-in-button' is clicked
+    // Takes the value from the 'phoneNumber' input and sends SMS to that phone number
+    function submitPhoneNumberAuth() {
+        var phoneNumber = document.getElementById("login_number").value;
+        alert(phoneNumber)
+        var appVerifier = window.recaptchaVerifier;
+        firebase
+            .auth()
+            .signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then(function(confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                $('#footer_1').hide('fast')
+                $('#footer_2').hide('show')
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+
+    // This function runs when the 'confirm-code' button is clicked
+    // Takes the value from the 'code' input and submits the code to verify the phone number
+    // Return a user object if the authentication was successful, and auth is complete
+    function submitPhoneNumberAuthCode() {
+        var code = document.getElementById("partitioned").value;
+        confirmationResult
+            .confirm(code)
+            .then(function(result) {
+                var user = result.user;
+                console.log(user);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+
+    //This function runs everytime the auth state changes. Use to verify if the user is logged in
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("USER LOGGED");
+
+            login_function();
+        } else {
+            // No user is signed in.
+            console.log("USER NOT LOGGED IN");
+        }
+    });
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

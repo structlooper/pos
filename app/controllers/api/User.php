@@ -15,6 +15,7 @@ class User extends REST_Controller
          
          $this->load->helper(array('form'));
          $this->load->library('form_validation');
+         $this->load->library('session');
 	}
   
 	public function user_post()
@@ -73,7 +74,7 @@ class User extends REST_Controller
 
 		$final = array();
 		$final['status'] = true;
-		$final['msg'] = 'user looged in successfully';
+		$final['msg'] = 'user logged in successfully';
 		$final['data'] = ['token' => $tokenData,'phone'=> $token_data['phone']];
  
 		$this->response($final); 
@@ -86,6 +87,24 @@ class User extends REST_Controller
 
 		$this->response($decodedToken);  
 	}
+	public function verify_web_post()
+	{
+		$headers = $this->input->request_headers();
+		$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['status'] == true ) {
+            $result = $this->User_modal->get_user_profile_details($decodedToken['data']->user_id);
+//            print_r($result['data']);exit;
+            $this->session->set_userdata([
+                'token' => $_POST['Authorization'] ,
+                'user_id'=>$decodedToken['data']->user_id ,
+                'phone' =>  $result['data']['phone'],
+                'email' => $result['data']['email'],
+                'first_name' => $result['data']['first_name'],
+                'last_name' => $result['data']['last_name'],
+            ]);
+        }
+        $this->response($decodedToken);
+    }
 	
 	public function address_add_post(){
 	    $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);

@@ -56,37 +56,36 @@
                     <?= !empty($biller->logo) ? '<img src="' . base_url('assets/uploads/logos/' . $biller->logo) . '" alt="">' : ''; ?>
                     <h3 style="text-transform:uppercase;"><?=$biller->company && $biller->company != '-' ? $biller->company : $biller->name;?></h3>
                     <?php
-                    echo '<p>' . $biller->address . ' ' . $biller->city . ' ' . $biller->postal_code . ' ' . $biller->state . ' ' . $biller->country .
-                    '<br>' . lang('tel') . ': ' . $biller->phone;
+                    echo '<p>' . $biller->address . ' ' . $biller->city . ' ' . $biller->postal_code . ' ' . $biller->state . ' ' . $biller->country ;
 
                     // comment or remove these extra info if you don't need
-                    if (!empty($biller->cf1) && $biller->cf1 != '-') {
-                        echo '<br>' . lang('bcf1') . ': ' . $biller->cf1;
-                    }
-                    if (!empty($biller->cf2) && $biller->cf2 != '-') {
-                        echo '<br>' . lang('bcf2') . ': ' . $biller->cf2;
-                    }
-                    if (!empty($biller->cf3) && $biller->cf3 != '-') {
-                        echo '<br>' . lang('bcf3') . ': ' . $biller->cf3;
-                    }
-                    if (!empty($biller->cf4) && $biller->cf4 != '-') {
-                        echo '<br>' . lang('bcf4') . ': ' . $biller->cf4;
-                    }
-                    if (!empty($biller->cf5) && $biller->cf5 != '-') {
-                        echo '<br>' . lang('bcf5') . ': ' . $biller->cf5;
-                    }
-                    if (!empty($biller->cf6) && $biller->cf6 != '-') {
-                        echo '<br>' . lang('bcf6') . ': ' . $biller->cf6;
-                    }
+//                    if (!empty($biller->cf1) && $biller->cf1 != '-') {
+//                        echo '<br>' . lang('bcf1') . ': ' . $biller->cf1;
+//                    }
+//                    if (!empty($biller->cf2) && $biller->cf2 != '-') {
+//                        echo '<br>' . lang('bcf2') . ': ' . $biller->cf2;
+//                    }
+//                    if (!empty($biller->cf3) && $biller->cf3 != '-') {
+//                        echo '<br>' . lang('bcf3') . ': ' . $biller->cf3;
+//                    }
+//                    if (!empty($biller->cf4) && $biller->cf4 != '-') {
+//                        echo '<br>' . lang('bcf4') . ': ' . $biller->cf4;
+//                    }
+//                    if (!empty($biller->cf5) && $biller->cf5 != '-') {
+//                        echo '<br>' . lang('bcf5') . ': ' . $biller->cf5;
+//                    }
+//                    if (!empty($biller->cf6) && $biller->cf6 != '-') {
+//                        echo '<br>' . lang('bcf6') . ': ' . $biller->cf6;
+//                    }
                     // end of the customer fields
 
                     echo '<br>';
                     if ($pos_settings->cf_title1 != '' && $pos_settings->cf_value1 != '') {
                         echo $pos_settings->cf_title1 . ': ' . $pos_settings->cf_value1 . '<br>';
                     }
-                    if ($pos_settings->cf_title2 != '' && $pos_settings->cf_value2 != '') {
-                        echo $pos_settings->cf_title2 . ': ' . $pos_settings->cf_value2 . '<br>';
-                    }
+//                    if ($pos_settings->cf_title2 != '' && $pos_settings->cf_value2 != '') {
+//                        echo $pos_settings->cf_title2 . ': ' . $pos_settings->cf_value2 . '<br>';
+//                    }
                     echo '</p>';
                     ?>
                 </div>
@@ -95,22 +94,27 @@
                     ?>
                     <div class="col-sm-12 text-center">
                         <h4 style="font-weight:bold;"><?=lang('tax_invoice'); ?></h4>
+                        <h4 >**** Original copy ****</h4>
+                        <h3 ><?php echo  lang('tel') . ' : ' . $biller->phone; ?></h3>
                     </div>
                     <?php
                 }
-                echo '<p>' . lang('date') . ': ' . $this->sma->hrld($inv->date) . '<br>';
-                echo lang('sale_no_ref') . ': ' . $inv->reference_no . '<br>';
+                echo "*********************************************************************** <br>";
+                echo '<p> <B>' . lang('date') . '</B>: ' . date('d, M y',strtotime(str_replace('/','-',$this->sma->hrld($inv->date)))) . '  <B>'.lang('Time') . '</B> : ' . date('h:ia',strtotime(str_replace('/','-',$this->sma->hrld($inv->date)))). '<br>';
+                echo '<B>'.lang('sale_no_ref') . '</B>: ' . $inv->reference_no . '<br>';
                 if (!empty($inv->return_sale_ref)) {
-                    echo '<p>' . lang('return_ref') . ': ' . $inv->return_sale_ref;
+                    echo '<p><B>' . lang('return_ref') . '</B>: ' . $inv->return_sale_ref;
                     if ($inv->return_id) {
                         echo ' <a data-target="#myModal2" data-toggle="modal" href="' . admin_url('sales/modal_view/' . $inv->return_id) . '"><i class="fa fa-external-link no-print"></i></a><br>';
                     } else {
                         echo '</p>';
                     }
                 }
-                echo lang('sales_person') . ': ' . $created_by->first_name . ' ' . $created_by->last_name . '</p>';
+                echo '<B>'.lang('sales_person') . '</B>: ' . $created_by->first_name . ' ' . $created_by->last_name . '</p>';
                 echo '<p>';
-                echo lang('customer') . ': ' . ($customer->company && $customer->company != '-' ? $customer->company : $customer->name) . '<br>';
+                echo "*********************************************************************** <br>";
+
+                echo '<B>'.lang('customer') . '</B>: ' . ($customer->company && $customer->company != '-' ? $customer->company : $customer->name) . '<br>';
                 if ($pos_settings->customer_details) {
                     if ($customer->vat_no != '-' && $customer->vat_no != '') {
                         echo '<br>' . lang('vat_no') . ': ' . $customer->vat_no;
@@ -141,15 +145,28 @@
                     }
                 }
                 echo '</p>';
+                echo "*********************************************************************** <br>";
+
                 ?>
 
-                <div style="clear:both;"></div>
+                <div style="clear:both"></div>
                 <table class="table table-condensed">
+                    <thead>
+                        <th>Description <br> MRP</th>
+                        <th>Disc</th>
+                        <th>Rate</th>
+                        <th>Qty</th>
+                        <th>Tax</th>
+                        <th>Amount</th>
+                    </thead>
                     <tbody>
-                        <?php
+                        <?php $this->load->helper('product_details_helper');
+
                         $r           = 1; $category           = 0;
                         $tax_summary = [];
                         foreach ($rows as $row) {
+                            $product_basic_details = get_product_details($row->product_id);
+
                             if ($pos_settings->item_order == 1 && $category != $row->category_id) {
                                 $category = $row->category_id;
                                 echo '<tr><td colspan="100%" class="no-border"><strong>' . $row->category_name . '</strong></td></tr>';
@@ -158,7 +175,8 @@
                             if (!empty($row->second_name)) {
                                 echo '<tr><td colspan="2" class="no-border">' . $row->second_name . '</td></tr>';
                             }
-                            echo '<tr><td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ' x ' . ($row->item_discount != 0 ? '(' . $this->sma->formatMoney($row->unit_price + $row->item_discount) . ' - ' . $this->sma->formatMoney($row->item_discount) . ')' : $this->sma->formatMoney($row->unit_price)) . ($row->item_tax != 0 ? ' [' . lang('tax') . ' <small>(' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ')</small> ' . $this->sma->formatMoney($row->item_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') . '</td><td class="no-border border-bottom text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
+//                            echo '<tr><td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ' x ' . ($row->item_discount != 0 ? '(' . $this->sma->formatMoney($row->unit_price + $row->item_discount) . ' - ' . $this->sma->formatMoney($row->item_discount) . ')' : $this->sma->formatMoney($row->unit_price)) . ($row->item_tax != 0 ? ' [' . lang('tax') . ' <small>(' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ')</small> ' . $this->sma->formatMoney($row->item_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') . '</td><td class="no-border border-bottom text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
+                            echo '<tr><td class="no-border border-bottom">' . $this->sma->formatMoney($product_basic_details['cost']) . ' </td><td>'. ($row->item_discount != 0 ? '(' . $this->sma->formatMoney($row->unit_price + $row->item_discount) . ' - ' . $this->sma->formatMoney($row->item_discount) . ')' : $this->sma->formatMoney(0)) .'</td><td> ' .$this->sma->formatMoney($product_basic_details['price']). '</td><td>'.$this->sma->formatQuantity($row->unit_quantity).'</td><td>'. ($row->item_tax != 0 ? ' [' . lang('tax') . ' <small>(' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ')</small> ' . $this->sma->formatMoney($row->item_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : $this->sma->formatMoney(0)) . '</td><td class="no-border border-bottom text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
 
                             $r++;
                         }
@@ -185,49 +203,82 @@
                     </tbody>
                     <tfoot>
                         <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th><?=lang('total');?></th>
                             <th class="text-right"><?=$this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax));?></th>
                         </tr>
                         <?php
                         if ($inv->order_tax != 0) {
-                            echo '<tr><th>' . lang('tax') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_tax + $return_sale->order_tax) : $inv->order_tax) . '</th></tr>';
+                            echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><th>' . lang('tax') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_tax + $return_sale->order_tax) : $inv->order_tax) . '</th></tr>';
                         }
                         if ($inv->order_discount != 0) {
-                            echo '<tr><th>' . lang('order_discount') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_discount + $return_sale->order_discount) : $inv->order_discount) . '</th></tr>';
+                            echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><th>' . lang('order_discount') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_discount + $return_sale->order_discount) : $inv->order_discount) . '</th></tr>';
                         }
 
                         if ($inv->shipping != 0) {
-                            echo '<tr><th>' . lang('shipping') . '</th><th class="text-right">' . $this->sma->formatMoney($inv->shipping) . '</th></tr>';
+                            echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><th>' . lang('shipping') . '</th><th class="text-right">' . $this->sma->formatMoney($inv->shipping) . '</th></tr>';
                         }
 
                         if ($return_sale) {
                             if ($return_sale->surcharge != 0) {
-                                echo '<tr><th>' . lang('return_surcharge') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale->surcharge) . '</th></tr>';
+                                echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><th>' . lang('return_surcharge') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale->surcharge) . '</th></tr>';
                             }
                         }
 
                         if ($Settings->indian_gst) {
                             if ($inv->cgst > 0) {
                                 $cgst = $return_sale ? $inv->cgst + $return_sale->cgst : $inv->cgst;
-                                echo '<tr><td>' . lang('cgst') . '</td><td class="text-right">' . ($Settings->format_gst ? $this->sma->formatMoney($cgst) : $cgst) . '</td></tr>';
+                                echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><td>' . lang('cgst') . '</td><td class="text-right">' . ($Settings->format_gst ? $this->sma->formatMoney($cgst) : $cgst) . '</td></tr>';
                             }
                             if ($inv->sgst > 0) {
                                 $sgst = $return_sale ? $inv->sgst + $return_sale->sgst : $inv->sgst;
-                                echo '<tr><td>' . lang('sgst') . '</td><td class="text-right">' . ($Settings->format_gst ? $this->sma->formatMoney($sgst) : $sgst) . '</td></tr>';
+                                echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><td>' . lang('sgst') . '</td><td class="text-right">' . ($Settings->format_gst ? $this->sma->formatMoney($sgst) : $sgst) . '</td></tr>';
                             }
                             if ($inv->igst > 0) {
                                 $igst = $return_sale ? $inv->igst + $return_sale->igst : $inv->igst;
-                                echo '<tr><td>' . lang('igst') . '</td><td class="text-right">' . ($Settings->format_gst ? $this->sma->formatMoney($igst) : $igst) . '</td></tr>';
+                                echo '<tr>  <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th><td>' . lang('igst') . '</td><td class="text-right">' . ($Settings->format_gst ? $this->sma->formatMoney($igst) : $igst) . '</td></tr>';
                             }
                         }
 
                         if ($pos_settings->rounding || $inv->rounding != 0) {
                             ?>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><?=lang('rounding'); ?></th>
                                 <th class="text-right"><?= $this->sma->formatMoney($inv->rounding); ?></th>
                             </tr>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><?=lang('grand_total'); ?></th>
                                 <th class="text-right"><?=$this->sma->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)); ?></th>
                             </tr>
@@ -235,6 +286,10 @@
                         } else {
                             ?>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><?=lang('grand_total'); ?></th>
                                 <th class="text-right"><?=$this->sma->formatMoney($return_sale ? ($inv->grand_total + $return_sale->grand_total) : $inv->grand_total); ?></th>
                             </tr>
@@ -243,10 +298,18 @@
                         if ($inv->paid < ($inv->grand_total + $inv->rounding)) {
                             ?>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><?=lang('paid_amount'); ?></th>
                                 <th class="text-right"><?=$this->sma->formatMoney($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid); ?></th>
                             </tr>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><?=lang('due_amount'); ?></th>
                                 <th class="text-right"><?=$this->sma->formatMoney(($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)) - ($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid)); ?></th>
                             </tr>
@@ -255,6 +318,8 @@
                     </tfoot>
                 </table>
                 <?php
+                echo "*********************************************************************** <br>";
+
                 if ($payments) {
                     echo '<table class="table table-striped table-condensed"><tbody>';
                     foreach ($payments as $payment) {

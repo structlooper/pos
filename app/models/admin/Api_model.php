@@ -114,4 +114,25 @@ class Api_model extends CI_Model
             ->where($this->config->item('rest_key_column'), $key)
             ->update($this->config->item('rest_keys_table'), $data);
     }
+    public function get_app_about_settings(){
+        $this->db->select('*');
+        $this->db->from('sma_app_settings');
+        $app_settings = $this->db->get()->result_array();
+        return ['status' => true,'msg' => 'app about','data' => $app_settings];
+    }
+    public function update_app_settings(){
+        $data['about_us'] = $_POST['about_us'];
+        $data['terms_condition'] = $_POST['terms_condition'];
+        $data['privacy_policy'] = $_POST['privacy_policy'];
+        if($data['about_us'] == '' or $data['terms_condition'] == '' or $data['privacy_policy'] == ''){
+            return['status'=> 0,'msg' => 'all fields are required','data' => [] ];
+        }
+        $this->db->where('key_name','about_us');
+        $this->db->update('sma_app_settings',['value' => $data['about_us'],'updated_at' => date('Y-m-d')]);
+        $this->db->where('key_name','terms_condition');
+        $this->db->update('sma_app_settings',['value' => $data['terms_condition'],'updated_at' => date('Y-m-d')]);
+        $this->db->where('key_name','privacy_policy');
+        $this->db->update('sma_app_settings',['value' => $data['privacy_policy'],'updated_at' => date('Y-m-d')]);
+        return [ 'status' => 1,'msg' => 'app settings updated successfully','data' => []];
+    }
 }

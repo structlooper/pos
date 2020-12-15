@@ -506,15 +506,15 @@
                                 </a>
                                 <ul>
                                     <li id="banner_add">
-                                        <a class="submenu" href="<?= admin_url('offers/add'); ?>">
-                                            <i class="fa fa-plus"></i>
-                                            <span class="text"> Add Offers</span>
+                                        <a class="submenu" href="<?= admin_url('offers'); ?>">
+                                            <i class="fa fa-cogs"></i>
+                                            <span class="text"> Slid Offers</span>
                                         </a>
                                     </li>
                                     <li id="banner_index">
-                                        <a class="submenu" href="<?= admin_url('offers'); ?>">
+                                        <a class="submenu" href="<?= admin_url('offers/static'); ?>">
                                             <i class="fa fa-cogs"></i>
-                                            <span class="text"> Offers</span>
+                                            <span class="text">Static Offers</span>
                                         </a>
                                     </li>
 
@@ -951,6 +951,11 @@
                                     <span class="chevron closed"></span>
                                 </a>
                                 <ul>
+                                    <li id="app_settings_index">
+                                        <a href="<?= admin_url('app_settings') ?>">
+                                            <i class="fa fa-cog"></i><span class="text"> App Settings</span>
+                                        </a>
+                                    </li>
                                     <li id="shop_settings_index">
                                         <a href="<?= admin_url('shop_settings') ?>">
                                             <i class="fa fa-cog"></i><span class="text"> <?= lang('shop_settings'); ?></span>

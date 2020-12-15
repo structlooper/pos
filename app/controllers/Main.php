@@ -13,6 +13,8 @@ class Main extends MY_Shop_Controller
         }
         $this->load->library('ion_auth');
         $this->load->library('form_validation');
+        $this->load->api_model('Banners_model');
+
         $this->lang->admin_load('auth', $this->Settings->user_language);
     }
 
@@ -103,6 +105,8 @@ class Main extends MY_Shop_Controller
         $this->data['slider']            = json_decode($this->shop_settings->slider);
         $this->data['page_title']        = $this->shop_settings->shop_name;
         $this->data['page_desc']         = $this->shop_settings->description;
+        $result = $this->Banners_model->get_all_primary_banners();
+        $this->data['primary_banner']         = $result['data'];
         $this->page_construct('index', $this->data);
     }
 

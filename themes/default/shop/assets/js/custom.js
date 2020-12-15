@@ -68,6 +68,16 @@ $('.product-image-slider').slick({
 //   $('#brands-sublist').toggleClass('hide');
 // });
 
+
+$('.cat-box-outer').on('click', function(e) {
+        e.stopPropagation();
+		$('.cat-box-outer').not(this).find('.cat-sublist').slideUp();
+		$(this).find('.cat-sublist').slideToggle().toggleClass('open');
+		$(this).find('i').toggleClass('icon-arrow-down icon-arrow-up');
+		return true;
+	});
+
+	
 $('.close-tooltip').on('click',function(){
     $('.location-tooltip').css('display','none');
 });
@@ -94,34 +104,33 @@ $(window).ready(function(){
   }
 })
 
-$('a[href*="#"]')
-  .not('[href="#"]')
-  .not('[href="#0"]')
-  .click(function(event) {
-    if (
-      location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-      && 
-      location.hostname == this.hostname
-    ) {
-      var target = $(this.hash);
-      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-      if (target.length) {
-        event.preventDefault();
-        $('html, body').animate({
-          scrollTop: target.offset().top
-        }, 1000, function() {
-          var $target = $(target);
-          $target.focus();
-          if ($target.is(":focus")) {
-            return false;
-          } else {
-            $target.attr('tabindex','-1');
-            $target.focus();
-          };
-        });
-      }
-    }
-  });
+$('.cat-box')
+		.not('.cat-box')
+		.not('.cat-box')
+		.click(function(event) {
+			if(
+				location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+				location.hostname == this.hostname
+			) {
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+				if(target.length) {
+					event.preventDefault();
+					$('html, body').animate({
+						scrollTop: target.offset().top
+					}, 1000, function() {
+						var $target = $(target);
+						$target.focus();
+						if($target.is(":focus")) {
+							return false;
+						} else {
+							$target.attr('tabindex', '-1');
+							$target.focus();
+						};
+					});
+				}
+			}
+		});
   
 jQuery.validator.addMethod('answercheck', function(value, element) {
 			return this.optional(element) || /^\bcat\b$/.test(value)
